@@ -1,0 +1,151 @@
+.fullEntryContainer{
+  /* padding:5px; */
+  padding-top:0px;
+  margin:0;
+  width:100%;
+}
+.entryContainer .entryHeader{
+  margin:0;
+  padding:10px;
+  display:flex;
+}
+
+.entryContainer{
+  padding:0;
+  margin:0;
+  margin-bottom:30px;
+}
+
+.entryContainer .entryDesc{
+  padding-top:5px;
+  padding-left:10px;
+  /* padding-top:10px; */
+}
+
+.entryDesc a{
+  color:#757575;
+}
+
+.entryDesc a:hover{
+  color:#212121;
+}
+
+.entryHeader p{
+  padding:0;
+  margin:0;
+  width:110%;
+}
+
+.entryHeader > div{
+  flex:1;
+}
+
+.entryContainer .entryHeader p{
+  flex:5;
+  margin:0;
+  /* margin-left:100px; */
+  padding:0;
+  color:white;
+  /* text-align:center; */
+  font-size:19px;
+}
+
+.entryContainer .entryVotesDiv{
+  margin:auto;
+  text-align:center;
+  margin-bottom:10px;
+  /* border:solid black 1px */
+}
+
+.entryContainer .entryVotes{
+  color:#757575 !important;
+  font-family: 'Cantarell', sans-serif;
+  text-transform:none;
+  font-size:16px;
+  letter-spacing: .2px;
+  display:inline-block;
+  /* margin:0; */
+  border:solid #757575 2px;
+  padding:10px 20px;
+  margin-right:10px;
+  border-radius:10px;
+}
+
+.entryContent{
+  font-size:16px;
+  padding:10px;
+}
+
+.entryBottom{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: baseline;
+  align-content: space-around;
+  color:#212121;
+  text-transform:uppercase;
+
+}
+
+.votesContainer{
+  text-align:center;
+  /* padding:10px; */
+  font-weight:bold;
+  /* border:solid black 1px; */
+  margin:0;
+  /* background-color:black; */
+
+}
+
+.votesBottom{
+  /* margin:auto; */
+  font-size:13px;
+  text-align:center;
+  /* padding:10px; */
+  /* border:solid black 3px; */
+  border-radius: 50%;
+  margin:0;
+  padding:0;
+}
+
+.votesBottom p {
+  text-align:center;
+  width:60px;
+  padding:10px 30px;
+  margin:0;
+  /* color:#212121; */
+  color:white !important;
+  /* border:solid #212121 1px; */
+  border-radius: 10px;
+  font-size:15px !important;
+}
+
+.votesContainer p{
+  text-align:center;
+  width:60px;
+  padding:10px 30px;
+  margin:0;
+  color:#212121;
+  font-size:15px !important;
+  font-weight:100;
+}
+
+.addAComment{
+  margin-left:15px;
+}
+
+@media (min-width:992px){
+  .entryContainer .entryHeader p{
+    flex:5;
+    margin:0;
+    /* margin-left:100px; */
+    padding:0;
+    color:white;
+    font-size:22px;
+  }
+
+  .addAComment{
+    margin-left:5%;
+  }
+}

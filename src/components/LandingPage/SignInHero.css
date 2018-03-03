@@ -1,0 +1,105 @@
+.heroContainer{
+  /* height:300px; */
+  padding:10px;
+  /* display:flex; */
+  margin-left:-10px;
+  margin-bottom:20px;
+  /* background-image:url("/images/heroimg.jpg") */
+  position:relative;
+  width:100%;
+}
+
+.heroImg{
+  /* width:100%; */
+  background-image:url("/images/heroimg.jpg");
+  height:400px;
+  opacity: .9;
+  width:100%;
+}
+
+.blackout{
+  z-index:3;
+  position: absolute;
+  background-color:black;
+  width:98%;
+  height:400px;
+  opacity:.8;
+}
+
+.inputContainer{
+  position: absolute;
+  top:0;
+  padding:10px;
+  display:flex;
+  z-index: 10;
+  margin-left:10%;
+}
+
+.heroContainer > *{
+  /* margin-left:50px; */
+}
+
+.heroContainer .secondaryText{
+  color:white !important;
+  margin-left:12%;
+}
+
+.heroText{
+  font-size:75px;
+  color:white !important
+}
+
+.heroContainer .rightSide{
+  flex:3;
+  margin-top:20px;
+}
+
+.heroContainer .leftSide{
+  flex:2;
+}
+
+.heroContainer .rightSide input{
+  padding:15px;
+  width:60%;
+  margin-top:30px;
+  font-family: 'Cantarell', sans-serif;
+}
+
+.heroContainer .rightSide .inputLabel{
+  width:10%;
+  padding:0 20px;
+  display:inline-block;
+  color:white;
+  text-transform:uppercase;
+  font-family: 'Fjalla One', sans-serif;
+}
+
+.heroContainer .rightSide .auth{
+  margin-top:20px;
+  width:100%;
+  padding:0 20px;
+  display:inline-block;
+  color:white;
+  text-transform:uppercase;
+  font-family: 'Fjalla One', sans-serif;
+  margin-left:225px;
+}
+
+.heroContainer .rightSide button{
+  margin-top:20px;
+  margin-left:300px;
+}
+
+.heroContainer img{
+  width:200%;
+}
+
+.heroContainer .googleIcon{
+  background-image:url("/images/google.png")
+}
+
+@media (max-width:992px){
+  .heroContainer{
+    display:none;
+  }
+}

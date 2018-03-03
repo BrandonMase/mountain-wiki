@@ -1,0 +1,279 @@
+.headerContainer3{
+  margin-top:10px;
+  padding:0;
+  /* display:none; */
+}
+
+.headerContainer{
+  position:fixed;
+  width:100%;
+  bottom:0;
+  z-index: 100;
+}
+
+header{
+  padding-bottom:20px;
+  height:40px;
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+}
+
+header > div{
+  flex: 0 0 25%;
+}
+
+.account{
+  text-align:right;
+  /* border:solid black 1px; */
+}
+
+.logo{
+  margin-left:50px;
+}
+
+img{
+  margin-right:50px;
+  margin-top:20px;
+  width:30px;
+}
+
+.logo img{
+  transform: rotate(-90deg);
+  /* width:30px; */
+}
+
+.siteName{
+  display:none;
+  text-transform: uppercase;
+  color:white;
+  font-family: 'Fjalla One', sans-serif;
+  letter-spacing:2px;
+  font-size:30px;
+  margin-left:30px;
+}
+
+.signUpAccount{
+  margin-right:10px;
+  margin-top:15px;
+  padding:10px;
+  border-radius: 10px;
+}
+
+.signUpAccount a{
+  color:white;
+  text-decoration: none;
+  font-family: 'Fjalla One', sans-serif;
+}
+
+@keyframes searchJump{
+  0%{height:0px}
+  100%{height:60px}
+}
+
+.searchJumpBar{
+  /* display:none; */
+  /* height:60px; */
+  overflow:hidden;
+  animation-name:searchJump;
+  animation-duration:.2s;
+  animation-timing-function: linear;
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.25), 0 -6px 10px rgba(0,0,0,0.22);
+}
+
+.searchJumpBar *{
+  margin:15px auto;
+}
+
+.searchJumpBar input{
+  width:90%;
+  /* font-family: 'Cantarell', sans-serif;
+  font-size:15px; */
+  padding:10px;
+  border:none;
+  border-radius:5px;
+}
+
+.navLinks{
+  display:none;
+}
+
+.searchIcon{
+  display:none;
+}
+
+/* .headerContainer2{
+  position: absolute;
+  width:90%;
+  margin-bottom:100px;
+} */
+
+#MobileTHeader{
+  margin-top:0;
+  padding:0;
+  margin-bottom:20px;
+  padding:20px 0;
+  width:100%;
+}
+
+.MobileTopHeader{
+  text-align:center;
+  padding:5px 0;
+}
+
+.MobileTopHeader a{
+  color:white !important;
+  text-decoration: none;
+  /* border:solid black 1px; */
+  margin-top:10px;
+  padding-left:10px;
+
+}
+
+.MobileTopHeader a:hover{
+  color:#dedede !important;
+
+}
+
+.signUpAccount a{
+  font-size:13px !important;
+}
+
+
+
+@media (min-width:1025px){
+  #MobileTHeader{
+    display:none;
+  }
+
+  .MobileTopHeader{
+    display:none;
+  }
+
+  .headerContainer{
+    position: inherit;
+  }
+  header{
+    position: inherit;
+    height:40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: stretch;
+  }
+
+  img {
+    display:none;
+  }
+  .searchIcon{
+    /* border:solid black 1px; */
+    display:initial;
+  }
+  .searchIcon img{
+    display:inline;
+    margin-top:10px;
+    margin-left:10px;
+  }
+
+  .searchIcon a{
+    text-decoration:none;
+    color:white;
+    color:white;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-weight:100;
+    font-family: 'Fjalla One', sans-serif;
+  }
+
+  .searchIcon a span{
+    /* border:solid black 1px; */
+    margin-bottom:50px;
+    margin-left:-50px;
+  }
+
+  .searchIcon a span:hover{
+    color:#dedede;
+  }
+
+  header > div{
+    flex:none;
+  }
+
+  .header *{
+    margin-top:-40px;
+  }
+
+  .logo img{
+    width:3vw;
+    /* margin-left:250px; */
+    margin-top:10px;
+    transform: rotate(-90deg);
+    display:inherit;
+
+
+  }
+
+  .siteName{
+    margin-top:20px;
+    margin-left:-25px;
+    display:inherit;
+    font-size:2vw;
+    /* border:solid black 1px; */
+  }
+
+  .searchJumpBar{
+    /* display:none; */
+    
+  }
+
+  .navLinks{
+    text-align:right;
+    /* margin-left:100px; */
+    /* display:inline; */
+    display:initial;
+    /* float:right; */
+    margin-top:40px;
+    flex:1 1 30%;
+    /* float:right; */
+    
+  }
+
+  .navLinks li{
+    display:inline;
+    margin-right:1vw;
+    color:white;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-weight:100;
+    font-family: 'Fjalla One', sans-serif;
+  }
+
+  .navLinks li a{
+    color:white;
+    text-decoration: none;
+  }
+
+  .navLinks li a:hover{
+    color:#dedede;
+  }
+
+  .navLinks li button{
+    margin-top:-10px;
+  }
+
+  .signUpAccount{
+    display:none;
+  }
+
+}
+
+@media (min-width:1024px){
+  .siteName{
+    display:initial;
+  }
+}

@@ -1,0 +1,175 @@
+/* .newEntryContainer{
+  border:solid black 1px;
+  padding:20px;
+  margin:-10px;
+}
+
+.codeEditorContainer{
+  padding:0;
+  margin:-20px -10px;
+  background-color:#f3f1f1;
+  width:100%;
+}
+
+.codeEditorContainer > *{
+  margin-left:10px;
+}
+
+.codeEditorContainer textarea{
+  width:calc(99% - 15px);
+  resize:none;
+}
+
+.codeEditorContainer .ceContentTextArea{
+  height:500px;
+}
+
+.codeEditorContainer .labelTextArea{
+  height:50px;
+} */
+
+.newEntryContainer{
+  padding:0;
+  margin:0;
+
+}
+
+.codeEditorContainer input{
+  width:90%;
+}
+
+.codeEditorContainer textarea{
+  width:90%;
+  resize:none;
+}
+
+.codeEditorContainer{
+  /* padding:0; */
+  margin:0;
+  margin-top:10px;
+  margin-left:10px;
+}
+
+.newEntryHeader{
+  padding:10px;
+  margin-top:10px;
+  color:white !important;
+  font-size:15px;
+  display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+}
+
+.newEntryHeader > div{
+  margin-bottom:10px;
+}
+
+input{
+  padding:10px;
+}
+
+textarea{
+  padding:10px;
+}
+
+input[type="radio"]{
+  visibility: hidden;
+}
+
+.typeContainer label{
+  padding:2px;
+}
+
+.seenContainer label{
+  /* border:solid #536DFE 3px; */
+  padding:2px;
+}
+
+input[type="radio"]:checked + label{ 
+  box-sizing: border-box;
+  color:#212121;
+  background-color:white;
+  border-radius: 5px;
+  /* font-weight: bold; */
+  /* border:solid white 3px; */
+}
+
+.mobileContentSwitcher{
+  font-size:15px;
+  margin-top:15px;
+  text-align:center;
+  margin-right:10px;
+}
+
+.mobileContentSwitcher > *{
+  margin-left:-10px;
+  width:10%;
+}
+
+.mobileContentSwitcher label{
+  color:#212121;
+  padding:5px;
+}
+
+#c1:checked + label{
+  background-color:#212121;
+  color:white;
+}
+
+#c2:checked + label{
+  background-color:#212121;
+  color:white;
+}
+
+
+
+@media (min-width:992px){
+  .newEntryHeader{
+    padding:10px;
+    color:white !important;
+    font-size:20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+
+  .newEntryContainer{
+    margin:100px;
+  }
+
+  
+  .newEntryHeader > div{
+    margin-bottom:0px;
+  }
+
+  .codeEditorContainer{
+    flex:1;
+  }
+
+  .contentPreview{
+    flex:1;
+  }
+
+  .mainCodeEditorContainer{
+    display:flex;
+  }
+
+  .codeEditorContainer input{
+    width:95%;
+  }
+  
+  .codeEditorContainer textarea{
+    width:95%;
+    resize:none;
+  }
+
+  .mobileContentSwitcher{
+    display:none;
+  }
+}

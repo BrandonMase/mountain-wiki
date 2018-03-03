@@ -1,0 +1,252 @@
+
+.questionContainer button{
+  margin-top:10px;
+}
+.headerDiv{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+  align-content: center;
+  margin-bottom:10px;
+  padding:10px 0;
+  background-color:white;
+}
+
+.headerDiv > *{
+  text-align:center;
+  /* width:100%; */
+  width:100%;
+  margin-bottom:10px;
+  color:white;
+}
+
+.headerDiv p{
+  padding:0px;
+  margin:0;
+}
+
+.headerDiv > button{
+  display:block;
+  width:100%;
+  /* margin:10px; */
+}
+
+.questionContainer{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
+  align-content: stretch;
+  font-family: 'Cantarell', sans-serif;
+  padding:10px;
+  margin-bottom:10px;
+  background-color:#f3f1f1;
+  padding-bottom:30px;
+  
+}
+
+.newQuestionDiv {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
+  align-content: stretch;
+  font-family: 'Cantarell', sans-serif;
+  /* padding:10px; */
+  margin-bottom:10px;
+  /* padding-bottom:10px; */
+  background-color:white;
+
+}
+ .votesDiv {
+   text-align:center;
+   margin-top:10px;
+   display:none;
+   flex:4;
+  /* border:solid black 1px; */
+}
+
+.mobileVotesDiv{
+  flex:1;
+  text-align:center;
+  /* margin:auto 0;
+  height:100%; */
+  margin-right:3px;
+  margin:0 0;
+  font-weight:bold;
+  padding:10px 5px;
+  position: relative;
+  padding-bottom:13px;
+}
+
+.mobileVotesDiv > div{
+  margin:auto;
+}
+
+
+
+.votes{
+  margin-top:10px;
+  font-size:14px;
+}
+
+
+
+.mobileVotesDiv .votes:nth-last-child(1){
+  margin-left:-4px;
+  margin-top:4px;
+  position: absolute;
+  bottom:10px;
+  right:10px;
+}
+
+
+
+.rightQuestionDiv{
+  flex:7;
+  /* padding:10px; */
+  padding-left:10px;
+  /* border:solid black 1px; */
+}
+
+.questionHeaderText a{
+  font-size:16px;
+  text-transform:none;
+  padding-bottom:10px;
+}
+
+.questionLabel{
+  padding:5px 5px;
+  display:inline-block;
+  margin-right:10px;
+  /* margin:5px 3px; */
+  color:white;
+  background-color:#536DFE;
+  border:none;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:100;
+  border-radius:5px;
+  font-size:12px;
+  font-family: 'Fjalla One', sans-serif;
+}
+
+.questionDetails{
+  display:none;
+  text-align:right;
+  font-size:13px;
+}
+
+.buttonContainer{
+  padding-bottom:20px;
+  margin:auto;
+}
+
+@media (min-width:992px){
+  .mainContainer>div{
+    width:90%;
+    /* margin:10px auto; */
+   
+  }
+
+  .votesDiv{
+    display:inline-block;
+    flex:1;
+    /* background-color:blue; */
+    padding:0;
+    margin:0;
+    /* padding-right:50px; */
+    /* border:solid black 1px; */
+  }
+
+  .questionDetails{
+    display:inherit;
+    font-size:16px;
+  }
+
+
+
+  .votes{
+    /* border:solid black 1px;
+    padding:10px; */
+    /* width:50px; */
+    /* float:left; */
+    text-align:center;
+    /* margin-left:10px; */
+    /* margin-top:-5px; */
+    flex:1;
+    height:50%;
+    margin-top:-10px;
+    /* border-radius: 5px; */
+  }
+
+  .votes > p{
+    /* padding:10px; */
+    padding:0;
+    padding-top:5%;
+    margin:auto;
+    margin-top:10px;
+    font-size:15px;
+    /* font-weight:bold; */
+    color:#212121;
+    font-family: 'Fjalla One', sans-serif;
+    letter-spacing:2px;
+    /* background-color:rgb(154, 169, 255) */
+  }
+
+  .answersId{
+    background-color:rgb(154, 169, 255)
+  }
+
+
+  .mobileVotesDiv{
+    display:none;
+  }
+
+  .rightQuestionDiv{
+    flex:7;
+    /* padding:10px; */
+    /* border:solid black 1px; */
+  }
+
+  .questionHeaderText{
+    padding-bottom:10px;
+  }
+
+  .newQuestionDiv{
+    flex: 1 0 calc(50% - 100px);
+    margin-right:10px;
+  }
+
+  .headerDiv{
+    margin-right:10px;
+    display:block;
+    width:25%;
+    color:white;
+  }
+
+  .buttonContainer{
+    width:100%;
+    margin-left:44%;
+  }
+
+}
+
+
+/* @media (min-width:1400px){
+  .rightQuestionDiv{
+    flex:12;
+    padding:10px;
+    border:solid black 1px;
+  }
+
+  .votesDiv{
+    flex:2;
+    border:solid black 1px;
+  }
+
+} */

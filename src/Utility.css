@@ -1,0 +1,204 @@
+/*Utitly stuff
+header font - font-family: 'Fjalla One', sans-serif;
+body font: font-family: 'Cantarell', sans-serif;
+
+Colors
+*/
+.redColor{
+  background-color:rgb(255, 53, 53) !important;
+  border-color:rgb(255, 53, 53);
+}
+
+.greenColor{
+  background-color:rgb(0, 184, 0);
+  border-color:rgb(0, 184, 0);
+}
+
+.greenBorder{
+  border:solid rgb(0, 184, 0) 2px !important;
+}
+
+.redBorder{
+  border:solid rgb(255, 53, 53) 2px !important;
+}
+
+.primaryColor{
+  background-color:#ff5722 !important;
+}
+
+.darkPrimaryColor{
+  background-color:#E64A19 !important;
+}
+
+.lightPrimaryColor{
+  background-color:#FFCCBC !important;
+}
+
+.whiteTextColor{
+  color:white !important;
+  background-color:white;
+}
+
+.accentColor{
+  background-color:#536DFE !important;
+}
+
+.primaryText{
+  color:#212121 !important;
+}
+.secondaryText{
+  color:#757575 !important;
+  font-family: 'Cantarell', sans-serif;
+  text-transform:none;
+  font-size:16px;
+  letter-spacing: .2px;
+}
+.dividerColor{
+  margin:30px 0;
+  background-color:#BDBDBD !important;
+  border-color:#BDBDBD !important;
+}
+
+.headerText{
+  text-transform:uppercase;
+  font-family: 'Fjalla One', sans-serif;
+  letter-spacing: 1px;
+  font-size:25px;
+  color:#212121 !important;
+  /* text-align:center !important; */
+  /* background-color:blue !important; */
+}
+
+.questionHeaderText{
+  text-transform:uppercase;
+  font-family: 'Fjalla One', sans-serif;
+  letter-spacing: 1px;
+  font-size:20px;
+  color:#212121 !important;
+}
+
+.questionHeaderText a {
+  text-decoration: none;
+  color:inherit;
+}
+
+.questionHeaderText a:hover{
+  color:#757575;
+  text-decoration:underline;
+}
+
+
+.bodyText{
+  font-family: 'Cantarell', sans-serif;
+  text-transform:none;
+  font-size:14px;
+  letter-spacing: .1px;
+  word-spacing: .1px;
+  color:#212121 !important;
+}
+
+.upAndDownVotes{
+  margin-left:-10px;
+  width:70%;
+  padding-bottom:20px;
+  margin-bottom:10px;
+  display:block;
+  margin:auto 4px;
+}
+
+/*box shadows
+1dp - 3dp
+Maybe change transform for mobile?
+*/
+
+.dp1-bs{
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+  padding:10px;
+}
+
+/* .dp1-bs:hover{
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  z-index:2;
+  transform:scale(1.005);
+} */
+
+.dp2-bs{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+  /* transform:scale(1.005); */
+  z-index:2;
+}
+
+/* .dp2-bs:hover{
+  box-shadow: 0 30px 31px rgba(0,0,0,0.29), 0 12px 14px rgba(0,0,0,0.22);
+  z-index:3;
+  transform:scale(1.01);
+} */
+
+.dp3-bs{
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: all 0.2s cubic-bezier(.25,.8,.25,1);
+  /* transform:scale(1.01); */
+  z-index:3
+}
+
+/* .dp3-bs:hover{
+  box-shadow: 0 35px 30px rgba(0,0,0,0.19), 0 35px 30px rgba(0,0,0,0.23);
+  z-index:4;
+  transform:scale(1.03);
+} */
+
+
+button{
+  padding:10px 25px;
+  color:white;
+  background-color:#536DFE;
+  border:none;
+  z-index:10;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.1s cubic-bezier(.25,.8,.25,1);
+  border-radius:5px;
+  font-family: 'Fjalla One', sans-serif;
+  margin-top:-100px;
+
+}
+
+button:active{
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transform:scale(0.97);
+  z-index:20;
+}
+
+@media (min-width:992px){
+  button{
+    /* padding:10px 30px; */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+
+  button:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    transform:scale(1.01);
+    z-index:20;
+    cursor: pointer;
+  }
+
+  button:active{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transform:scale(0.97);
+    z-index:20;
+  }
+
+  .headerText{
+    font-size:25px;
+  }
+
+  .bodyText{
+    font-size:15px;
+  }
+  
+  
+}

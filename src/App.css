@@ -1,0 +1,31 @@
+.App {
+  text-align: center;
+  box-sizing: content-box;
+  text-align:center;
+  background-color:white;
+  /* margin-bottom:20px; */
+  /* width:99%; */
+  padding:0px;
+}
+
+.App > div{
+  margin:auto;
+}
+
+.mainContainer{
+  padding-bottom:50px;
+}
+
+.mainContainer>div{
+  background-color:white;
+  text-align:left;
+  margin: 0 auto;
+  /* padding:20px 10px; */
+  width:95%;
+  min-height:100px;
+  background-color:white;
+  margin-bottom:10px;
+}
+
+
+
