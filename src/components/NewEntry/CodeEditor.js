@@ -14,10 +14,16 @@ export default class CodeEditor extends Component {
 
     this.updateTitle = this.updateTitle.bind(this);
     this.updateContent = this.updateContent.bind(this);
+    this.updateLabels = this.updateLabels.bind(this);
+  }
+
+  componentDidMount() {
+ 
   }
 
   updateTitle() {
     return { __html: this.state.title };
+  
   }
 
   updateContent() {
@@ -25,7 +31,15 @@ export default class CodeEditor extends Component {
   }
 
   updateLabels() {
-    
+    let html = [];
+    if (this.state.labels) {
+      let labelArr = this.state.labels.split(",");
+      labelArr.map(e => {
+      html.push(<div className="questionLabel">{e}</div>);
+      })
+    }
+
+    return html;
   }
   render() {
     return (
@@ -40,16 +54,17 @@ export default class CodeEditor extends Component {
           <div className="ceContent">
             <label className="headerText">Content</label>
             <br />
-            <textarea className="bodyText ceContentTextArea" onChange={e=>this.setState({content:e.target.value})}></textarea>
+            <textarea className="bodyText ceContentTextArea" spellCheck="false" onChange={e=>this.setState({content:e.target.value})}></textarea>
           </div>
           <div className="ceContent">
             <label className="headerText">Label</label>
             <br />
-            <textarea className="bodyText labelTextArea"></textarea>
+            <textarea className="bodyText labelTextArea" onChange={e=>this.setState({labels:e.target.value})}></textarea>
+            {this.updateLabels()}
           </div>
         </div>
         <div id="conp" className="contentPreview">
-          <div className="titlePreview accentColor newEntryHeader headerText" dangerouslySetInnerHTML={this.updateTitle()}/>
+          <div id="titlePre" className="titlePreview accentColor newEntryHeader headerText" dangerouslySetInnerHTML={this.updateTitle()}/>
           <div className="contentPreview bodyText" dangerouslySetInnerHTML={this.updateContent()}>
           </div>
         </div>

@@ -31,7 +31,18 @@
 .newEntryContainer{
   padding:0;
   margin:0;
+  margin-bottom:10px !important;
 
+}
+
+.newEntryContainer button{
+  margin-top:10px;
+  margin-left:10px;
+  margin-bottom:20px;
+}
+
+.questionLabel{
+  margin-top:10px;
 }
 
 .codeEditorContainer input{
@@ -55,7 +66,6 @@
   margin-top:10px;
   color:white !important;
   font-size:15px;
-  display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	justify-content: space-between;
@@ -78,6 +88,17 @@ textarea{
 input[type="radio"]{
   visibility: hidden;
 }
+#typeContainer{
+  border:solid #536DFE 4px;
+  padding:1px;
+  padding-left:0px;
+}
+
+#seenContainer{
+  border:solid #536DFE 4px;
+  padding:1px;
+  padding-left:0px;
+}
 
 .typeContainer label{
   padding:2px;
@@ -86,6 +107,14 @@ input[type="radio"]{
 .seenContainer label{
   /* border:solid #536DFE 3px; */
   padding:2px;
+}
+
+.labelTextArea{
+  margin-bottom:10px;
+}
+
+.ceContentTextArea{
+  height:300px;
 }
 
 input[type="radio"]:checked + label{ 
@@ -122,6 +151,16 @@ input[type="radio"]:checked + label{
 #c2:checked + label{
   background-color:#212121;
   color:white;
+}
+
+.contentPreview p{
+  padding-left:5px;
+  margin:0;
+  margin-top:5px;
+}
+
+.titlePreview{
+  text-align:left;
 }
 
 
