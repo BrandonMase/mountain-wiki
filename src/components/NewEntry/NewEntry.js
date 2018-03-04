@@ -7,11 +7,16 @@ export default class NewEntry extends Component {
 
     this.state = {
       typeOfEntry: null,
-      seen:null,
+      seen: null,
+      title:null,
+      content: null,
+      labels:[],
     }
     
   }
 
+    //check if the window is in mobile mode
+    //set the content editor to checked and hide the preview div
   componentDidMount() {
     if (window.innerWidth <= 992) {
       document.getElementById('c1').checked = true;
@@ -23,7 +28,9 @@ export default class NewEntry extends Component {
     
   }
 
+  //update the mobile display from content editor to preview mode depending on which mode is selected
   updateDisplay(e) {
+    
     console.log(e.target.value)
     if (e.target.value == "preview") {
       document.getElementById('conp').style.display = "initial";
@@ -39,9 +46,13 @@ export default class NewEntry extends Component {
     }
   }
 
+  //check the submission for missing fields on submit click
+  //if all fields are there send it to the db
   checkSubmission() {
+    let count = 0;
     if (!this.state.typeOfEntry) {
-      document.getElementById('typeContainer').style.border ="solid red 4px"
+      document.getElementById('typeContainer').style.border = "solid red 4px"
+      count++;
     }
     else {
       document.getElementById('typeContainer').style.border ="solid #536DFE 4px"
@@ -49,9 +60,38 @@ export default class NewEntry extends Component {
 
     if (!this.state.seen) {
       document.getElementById('seenContainer').style.border ="solid red 4px"
+      count++;
     }
     else {
       document.getElementById('seenContainer').style.border ="solid #536DFE 4px"
+    }
+
+    if (!this.state.title) {
+      document.getElementById('titleText').style.border = "solid red 2px "
+      count++;
+    }
+    else {
+      document.getElementById('titleText').style.border = "solid black 1px "
+    }
+    
+    if (!this.state.content) {
+      document.getElementById('contentTextBox').style.border = "solid red 2px";
+      count++;
+    }
+    else {
+      document.getElementById('contentTextBox').style.border = "solid black 1px";
+    }
+    
+    if (this.state.labels !== []) {
+      document.getElementById('labelText').style.border = "solid red 2px";
+      count++;
+    }
+    else {
+      document.getElementById('labelText').style.border = "solid black 1px";
+    }
+
+    if(count === 0){
+      alert("yay")
     }
     
     
