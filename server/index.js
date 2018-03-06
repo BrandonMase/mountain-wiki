@@ -39,8 +39,9 @@ app.put('/api/updateUser')
 //ENTRIES STUFF
   //gets the entry and all answer assosiated with it
 app.get('/api/getEntry/:id',entryController.getEntry)
+app.get('/api/getEntryUpdater/:id',entryController.getEntryUpdater)
   //add entry returns the id so we can redirect to it
-app.post('/api/addEntry')
+app.post('/api/addEntry',entryController.addEntry)
   //update an entry
 app.post('/api/updateEntry/:id')
   //delete an entry

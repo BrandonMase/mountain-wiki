@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import marked from 'marked';
 import './../../Utility.css'
+import axios from 'axios'
 
 export default class CodeEditor extends Component {
   
@@ -17,11 +18,25 @@ export default class CodeEditor extends Component {
     this.updateContent = this.updateContent.bind(this);
     this.updateLabels = this.updateLabels.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
+
   }
 
-  componentDidMount() {
- 
+  componentDidMount() { 
+
   }
+  componentWillReceiveProps(props) {
+    console.log(props)
+    if (props.childProps !== null) {
+      console.log("PROPS",props.childProps)
+      axios.get(`/api/getEntryUpdater/${props.childProps}`)
+        .then(res => {
+          const { title, entryType, content, seen,labels } = res.data[0]
+          this.setState({ title: title, typeOfEntry: entryType, title: title, content: content, seen: seen,labels:labels },()=>this.props.updateState(this.state));
+        })
+    } 
+  }
+
+
 
   updateTitle() {
     return { __html: this.state.title };
@@ -54,7 +69,8 @@ export default class CodeEditor extends Component {
     e = e.replace(/(::end::)/gi,"<br /></div>")
 
 
-    console.log(e)
+    // console.log(e)
+    this.props.updateState(this.state);
     this.setState({ content: e })
   }
 
@@ -74,25 +90,31 @@ export default class CodeEditor extends Component {
 
     return html;
   }
+
+  checkSubmission() {
+    this.props.updateState(this.state)
+    this.props.checkSubmission();
+  }
   render() {
     return (
+      <div>
       <div className="mainCodeEditorContainer">
         <div for="c1" id="cec" className="codeEditorContainer">
           
           <div className="ceTitle">
             <label className="headerText">Title</label>
             <br/>
-            <input id="titleText" className="bodyText" onChange={e=>this.setState({title:e.target.value})}/>
+            <input id="titleText" className="bodyText" value={this.state.title} onChange={e=>this.setState({title:e.target.value},()=>this.props.updateState(this.state))}/>
           </div>
           <div className="ceContent">
             <label className="headerText">Content</label>
             <br />
-            <textarea id="contentTextBox" className="bodyText ceContentTextArea" spellCheck="false" onChange={e=>this.handleContentChange(e.target.value)}></textarea>
+            <textarea value={this.state.content} id="contentTextBox" className="bodyText ceContentTextArea" spellCheck="false" onChange={e=>this.handleContentChange(e.target.value)}></textarea>
           </div>
           <div className="ceContent">
             <label className="headerText">Label</label>
             <br />
-            <textarea id="labelText" className="bodyText labelTextArea" onChange={e=>this.setState({labels:e.target.value})}></textarea>
+            <textarea value={this.state.labels} id="labelText" className="bodyText labelTextArea" onChange={e=>this.setState({labels:e.target.value},()=>this.props.updateState(this.state))}></textarea>
             {this.updateLabels()}
           </div>
         </div>
@@ -101,6 +123,8 @@ export default class CodeEditor extends Component {
           <div className="contentPreview bodyText" dangerouslySetInnerHTML={this.updateContent()} disabled="true">
           </div>
         </div>
+        </div> 
+        <button className="greenColor" onClick={e=>this.checkSubmission()}>Submit</button>
       </div>  
     );
   }

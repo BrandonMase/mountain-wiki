@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './EntryView.css';
+import approval from './../../assets/approval.png'
 export default class Entry extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,7 @@ export default class Entry extends Component {
     let html = '';
     if (this.state.entry_id) {
       html = <div className="entryDesc headerText greenColor">
-        <a href="#">This question has an entry<div><img src="images/approval.png" /></div></a>
+        <a href={`/entry/${this.state.entry_id}`}>This question has an entry<div><img src={approval} /></div></a>
       </div>
     }  
   

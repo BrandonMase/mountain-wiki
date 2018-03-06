@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CodeEditor from './CodeEditor';
 import './NewEntry.css';
+import axios from 'axios'
 export default class NewEntry extends Component {
   constructor() {
     super();
@@ -10,8 +11,14 @@ export default class NewEntry extends Component {
       seen: null,
       title:null,
       content: null,
-      labels:[],
+      labels: null,
+      updateId: null,
+      userId: 34,
+      date: new Date()
     }
+
+    this.checkSubmission = this.checkSubmission.bind(this)
+    this.updateState = this.updateState.bind(this)
     
   }
 
@@ -24,6 +31,10 @@ export default class NewEntry extends Component {
       document.getElementById('c1').checked = true;
       document.getElementById('conp').style.display = "none";
       document.getElementById('titlePre').style.visibility = "hidden"
+    }
+
+    if (this.props.match.params.id) {
+      this.setState({updateId:+this.props.match.params.id})
     }
     
   }
@@ -85,7 +96,7 @@ export default class NewEntry extends Component {
       document.getElementById('contentTextBox').style.border = "solid black 1px";
     }
     
-    if (this.state.labels !== []) {
+    if (!this.state.labels) {
       document.getElementById('labelText').style.border = "solid red 2px";
       document.getElementById('labelText').placeholder = "You must have atleast one label.";
       count++;
@@ -95,11 +106,22 @@ export default class NewEntry extends Component {
     }
 
     if(count === 0){
-      alert("yay")
+      axios.post("/api/addEntry", this.state)
+        .then()
+        .catch(e => console.log(e))
     }
     
     
   }
+
+  updateState(e) {
+    const { title, content, labels, seen, entryType } = e
+    
+
+    this.setState({ title: title, content: content, labels: labels,seen:seen,typeOfEntry:entryType });
+  }
+
+ 
 
 
   render() {
@@ -122,10 +144,10 @@ export default class NewEntry extends Component {
           </div>
 
           <div id="seenContainer" className="seenContainer">
-            <input type="radio" id="s1" name="seen" value="private" onChange={e=>this.setState({seen:e.target.value})}/>
+            <input type="radio" id="s1" name="seen" value="false" onChange={e => this.setState({ seen: false })}/>
             <label for="s1">Private</label>
     
-            <input type="radio" id="s2" name="seen" value="public" onChange={e=>this.setState({seen:e.target.value})}/>
+            <input type="radio" id="s2" name="seen" value="true" onChange={e => this.setState({ seen: true })}/>
             <label for="s2">Public</label>
           </div>
         </div>
@@ -136,8 +158,7 @@ export default class NewEntry extends Component {
           <input type="radio" id="c2" name="contentSwitcher" value="preview" onChange={e=>this.updateDisplay(e)}/>
             <label for="c2">Preview</label>
           </div>
-        <CodeEditor />
-        <button className="greenColor" onClick={e=>this.checkSubmission()}>Submit</button>
+          <CodeEditor updateState={this.updateState} checkSubmission={this.checkSubmission} childProps={this.state.updateId} />
       </div>
     );
   }

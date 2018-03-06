@@ -4,20 +4,18 @@ export default class Answer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-
-    }
+    this.state = {}
   }
   componentDidMount(props){
-    const { auto_id, content, total_points } = this.props.childProps;
-
-    this.setState({auto_id:auto_id,content:content,total_points:total_points})
+    const { auto_id, content, total_points,date,name,picture,user_total_points } = this.props.childProps;
+    console.log(this.props.childProps)
+    this.setState({auto_id:auto_id,content:content,total_points:total_points,date:date,name:name,picture:picture,user_total_points:user_total_points})
   }
   render() {
     return (
                 <div className="commentContainer dp2-bs">
             <div className="commentDetails headerText lightPrimaryColor">
-              <div className="userName"><img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"/><div className="actualUserName"><p>Brandon</p></div><br /><div className="userPoints">320</div><p className="answeredText secondaryText">answered 3/2/2018</p> </div>
+          <div className="userName"><img src={this.state.picture} /><div className="actualUserName"><p>{this.state.name}</p></div><br /><div className="userPoints">{this.state.user_total_points}</div><p className="answeredText secondaryText">answered {this.state.date}</p> </div>
               <div className="votesDiv">
                 <img src="/images/chevron-up.png" />
             <p>{this.state.total_points}</p>

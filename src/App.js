@@ -15,7 +15,10 @@ class App extends Component {
         <Header />
         <div className="mainContainer">
             <Route exact path="/" component={LandingPage} />
-            <Route path="/entry/:id" component={EntryView}/>
+          <Route path="/entry/:id" component={EntryView} />
+          <Route exact path="/editEntry" component={NewEntry}/>
+          <Route path="/editEntry/:id" component={NewEntry} />
+          
           </div>
         </div>
     );

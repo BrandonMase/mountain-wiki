@@ -37,7 +37,9 @@ export default class  extends Component {
   hasAnswers() {
     let html = [];
     if (this.state.comments) {
-      this.state.comments.map(e => {
+      let comments = this.state.comments;
+      comments = comments.sort((a, b) => b.total_points - a.total_points);
+      comments.map(e => {
      
         html.push(
           <div className="fullcommentsContainer">

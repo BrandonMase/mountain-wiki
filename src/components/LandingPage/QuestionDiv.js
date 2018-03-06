@@ -15,9 +15,9 @@ export default class QuestionDiv extends Component {
     }
   }
   componentDidMount(props) {
-    const { title, total_points, answers, master_contributor, labels, date,auto_id } = this.props.childProps
+    const { title, total_points, answers, labels, date,auto_id,name } = this.props.childProps
     console.log(this.props)
-    this.setState({is_entry:this.props.childProps.is_entry,auto_id:auto_id, title: title, total_points: total_points, answers: answers, username: master_contributor, labels: labels, date: date },()=>console.log(this.state));
+    this.setState({auto_id:auto_id, title: title, total_points: total_points, answers: answers, username: name, labels: labels, date: date },()=>console.log(this.state));
     
   }
 
