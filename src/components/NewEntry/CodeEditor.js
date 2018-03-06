@@ -30,14 +30,14 @@ export default class CodeEditor extends Component {
 
   handleContentChange(e) {
     // console.log("before", e);
-    e = encodeURI(e)
-    e = e.replace(/%3C/gi, "&lt;")
-    e = e.replace(/%3E/gi, "&gt;")
-    e = e.replace(/%0A/gi, "<br />")
-    e = e.replace(/%20/gi, " ")
-    e = e.replace(/%7B/gi, "{")
-    e = e.replace(/%20/gi, "}")
-    e = decodeURI(e);
+    // e = encodeURI(e)
+    // e = e.replace(/%3C/gi, "&lt;")
+    // e = e.replace(/%3E/gi, "&gt;")
+    // e = e.replace(/%0A/gi, "<br />")
+    // e = e.replace(/%20/gi, " ")
+    // e = e.replace(/%7B/gi, "{")
+    // e = e.replace(/%20/gi, "}")
+    // e = decodeURI(e);
 
     e = e.replace(/(::goodCode::)/gi, "<div class='goodCode'>")
     e = e.replace(/(&gt;&lt;div class=\'goodCode\'&gt;)/gi, "<div class='goodCode'>");
@@ -97,7 +97,7 @@ export default class CodeEditor extends Component {
           </div>
         </div>
         <div id="conp" className="contentPreview">
-          <div id="titlePre" className="titlePreview accentColor newEntryHeader headerText" dangerouslySetInnerHTML={this.updateTitle()}/>
+          <div id="titlePre" className="titlePreview accentColor newEntryHeader headerText" >{this.state.title}</div>
           <div className="contentPreview bodyText" dangerouslySetInnerHTML={this.updateContent()} disabled="true">
           </div>
         </div>

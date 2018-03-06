@@ -5,33 +5,69 @@ import marked from 'marked';
 import Entry from './Entry';
 import Answer from './Answer';
 import Reply from './Reply';
+import axios from 'axios';
 export default class  extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      entry: '',
+      comments:null,
+    }
+
+    this.getEntry = this.getEntry.bind(this);
+      
   }
 
-  componentDidMount() {
-    document.getElementById('entryContentP').innerHTML = marked('# Lorem ipsum dolor sit amet, consectetur \r adipiscing elit. Etiam nec eros congue ante tincidunt dignissim. In egestas maximus nisl, vel finibus leo egestas id. Duis vitae ornare nulla, eget hendrerit sem. Nam ultrices odio nunc, sit amet elementum eros mollis quis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas elementum rhoncus est. Nullam placerat nisi sit amet turpis efficitur aliquam. Proin interdum, felis in vehicula venenatis, lorem sem ultricies mauris, at iaculis quam eros condimentum mauris. Aenean a tellus id nibh pretium consequat. Maecenas erat mauris, eleifend at nunc non, vulputate auctor augue. Nam in ullamcorper tellus, at tincidunt libero. Suspendisse iaculis mauris sit amet arcu volutpat pretium et sit amet est. Fusce vehicula est et massa laoreet elementum. Proin ut vulputate justo, a fringilla sem. Mauris lobortis sit amet ipsum eu ultricies.');
+  componentDidMount(props) {
+    const { id } = this.props.match.params
+    
+    axios.get(`/api/getEntry/${id}`)
+      .then(res => this.setState({ entry: res.data.entry[0], comments: res.data.comments }))
+      .catch(e => console.log(e));
+  }
+
+  getEntry() {
+    if (this.state.entry) {
+      return <Entry childProps={this.state.entry}/>
+    }
   }
 
   hasAnswers() {
     let html = [];
-
-    for (let i = 0; i < Math.random() * 10; i++){
-      let replies = []
-      for (let j = 0; j < Math.random() * 50; j++){
-        replies.push(<Reply/>)
-      }
-      html.push(
-        <div className="fullcommentsContainer">
-          <div className="fullCommentChainContainer dp1-bs">
-            <Answer />
-            {replies}
-            <div className="addAComment secondaryText"><button className="greenColor">add a comment</button></div>
+    if (this.state.comments) {
+      this.state.comments.map(e => {
+     
+        html.push(
+          <div className="fullcommentsContainer">
+            <div id="bg1" className="fullCommentChainContainer dp1-bs">
+              <Answer childProps={e} />
+              {/* {this.getReplies()} */}
+            </div>
           </div>
-        </div>  
         )
+      })  
+    }  
+
+    return html;
+  }
+
+  getReplies() {
+    let html = [];
+    let reply = Math.random() * 50;
+
+    if (reply >= 5) {
+      for (let i = 0; i < 5; i++){
+        html.push(<Reply />)
+      }
+      html.push(<div className="addAComment secondaryText"><button className="greenColor">See all comments</button></div>);
+    }
+    else {
+      for (let i = 0; i <= reply; i++){
+        html.push(<Reply />)
+      }
+      html.push(<div className="addAComment secondaryText"><button className="greenColor">add a comment</button></div>);
     }
 
     return html;
@@ -39,7 +75,8 @@ export default class  extends Component {
   render() {
     return (
       <div className="fullEntryContainer">
-        <Entry />
+        {/* {this.state.entry.content} */}
+        {this.getEntry()}
           {this.hasAnswers()}
       </div>  
     );

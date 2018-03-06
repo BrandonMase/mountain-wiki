@@ -52,6 +52,7 @@ export default class NewEntry extends Component {
     let count = 0;
     if (!this.state.typeOfEntry) {
       document.getElementById('typeContainer').style.border = "solid red 4px"
+
       count++;
     }
     else {
@@ -68,6 +69,7 @@ export default class NewEntry extends Component {
 
     if (!this.state.title) {
       document.getElementById('titleText').style.border = "solid red 2px "
+      document.getElementById('titleText').placeholder = "You must have a title.";
       count++;
     }
     else {
@@ -76,6 +78,7 @@ export default class NewEntry extends Component {
     
     if (!this.state.content) {
       document.getElementById('contentTextBox').style.border = "solid red 2px";
+      document.getElementById('contentTextBox').placeholder = "You must have some content.";
       count++;
     }
     else {
@@ -84,6 +87,7 @@ export default class NewEntry extends Component {
     
     if (this.state.labels !== []) {
       document.getElementById('labelText').style.border = "solid red 2px";
+      document.getElementById('labelText').placeholder = "You must have atleast one label.";
       count++;
     }
     else {

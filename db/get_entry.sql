@@ -1,0 +1,1 @@
+SELECT * FROM mw_entry WHERE auto_id = $1;

@@ -4,6 +4,7 @@ import './../../Utility.css'
 import QuestionDiv from './QuestionDiv';
 import MobileTopHeader from './../Header/MobileTopHeader';
 import SignInHero from './SignInHero';
+import axios from 'axios';
 export default class LandingPage extends Component {
 
   constructor() {
@@ -14,7 +15,8 @@ export default class LandingPage extends Component {
       height: 0,
       endNumQuestion: 9,
       endNumEntries: 9,
-      endNumSnippets:9,
+      endNumSnippets: 9,
+      entries:[],
       loadMoreQuestions: false,
       user: false,
     }
@@ -26,6 +28,10 @@ export default class LandingPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    axios.get('/api/getLandingEntries/').then(res => {
+      console.log(res.data)
+      this.setState({entries:res.data})
+    })
   }
 
   componentWillUnmount() {
@@ -39,14 +45,24 @@ export default class LandingPage extends Component {
   createQuestionDiv(type) {
     let html = [];
     let endNum = 0;
-    if (type === "q") { endNum = this.state.endNumQuestion; }
-    if (type === "e") { endNum = this.state.endNumEntries; }
-    if (type === "s") { endNum = this.state.endNumSnippets; }
-   
-    if (this.state.width <= 992) { endNum -=5 ;}
-    for (let i = 0; i < endNum; i++) {
-      html.push(<QuestionDiv />);
-    }
+    let entries = this.state.entries;
+    let count = 0;
+    let type2 = '';
+    if (this.state.entries) {
+      if (type === "q") { endNum = this.state.endNumQuestion; type2 = "is_question" }
+      if (type === "e") { endNum = this.state.endNumEntries; type2 = "is_entry" }
+      if (type === "s") { endNum = this.state.endNumSnippets; type2 = "is_snippet" }
+      
+      if (this.state.width <= 992) { endNum -= 5; }
+      entries.map(e => {
+        if (count >= endNum) { return }
+        if (e[type2] === true) {
+          html.push(<QuestionDiv childProps={e} />)
+          count++;
+        }
+        else { }
+      })
+    }  
     // console.log(html);
     return html;
   }
@@ -87,11 +103,11 @@ export default class LandingPage extends Component {
             <br />
             <div id="newEntries" className="dp2-bs headerDiv"><div><span className="headerText">Newest Entries</span></div><p className="secondaryText">Newest entries made by the community.</p> <div><button>Add An entry</button></div></div>
             {this.createQuestionDiv("e")}
-            <div className="buttonContainer"><button onClick={e => this.loadMore("q")} className="greenColor">See More entries</button></div>
+            <div className="buttonContainer"><button onClick={e => this.loadMore("e")} className="greenColor">See More entries</button></div>
 
             <div id="newSnippets" className="dp2-bs headerDiv"><div><span className="headerText">Newest Snippets</span></div><p className="secondaryText">Top snippets voted by the community.</p> <div><button>Add a snippet</button></div></div>
             {this.createQuestionDiv("s")}
-            <div className="buttonContainer"><button onClick={e => this.loadMore("q")} className="greenColor">See More snippets</button></div>
+            <div className="buttonContainer"><button onClick={e => this.loadMore("s")} className="greenColor">See More snippets</button></div>
 
 
 

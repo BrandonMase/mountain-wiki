@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import LandingPage from './components/LandingPage/LandingPage';
 import EntryView from './components/EntryView/EntryView';
 import NewEntry from './components/NewEntry/NewEntry';
+import {Switch,Route} from 'react-router-dom'
 
 class App extends Component {
   render() {
@@ -13,7 +14,8 @@ class App extends Component {
       <div className="App">
         <Header />
         <div className="mainContainer">
-          <NewEntry/>
+            <Route exact path="/" component={LandingPage} />
+            <Route path="/entry/:id" component={EntryView}/>
           </div>
         </div>
     );

@@ -1,0 +1,1 @@
+SELECT * FROM mw_comments WHERE entry_id = $1;

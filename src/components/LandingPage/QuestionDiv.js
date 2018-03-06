@@ -1,22 +1,46 @@
 import React, { Component } from 'react';
 import './LandingPage.css';
-export default class QuestionDiv  extends Component {
+export default class QuestionDiv extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: '',
+      total_points: 0,
+      answers: 0,
+      username: '',
+      labels: '',
+      date: '',
+      is_entry:'',
+    }
+  }
+  componentDidMount(props) {
+    const { title, total_points, answers, master_contributor, labels, date,auto_id } = this.props.childProps
+    console.log(this.props)
+    this.setState({is_entry:this.props.childProps.is_entry,auto_id:auto_id, title: title, total_points: total_points, answers: answers, username: master_contributor, labels: labels, date: date },()=>console.log(this.state));
+    
+  }
+
   render() {
     return (
       <div className="newQuestionDiv dp2-bs">
         <div className="mobileVotesDiv lightPrimaryColor">
-          <div className="votes primaryText">8765<br /><img className="upAndDownVotes" src="/images/chevron-up.png" /><img className="upAndDownVotes" src="/images/chevron-down.png" /></div>
-          <div className="votes primaryText">100<br />A</div>
+          <div className="votes primaryText">{this.state.total_points}<br /><img className="upAndDownVotes" src="/images/chevron-up.png" /><img className="upAndDownVotes" src="/images/chevron-down.png" /></div>
+          <div className="votes primaryText">{this.state.answers}<br />A</div>
         </div>
         <div className="votesDiv">
-          <div className="votes votesId lightPrimaryColor"><p>8765 <br />votes</p></div>
-          <div className="votes answerId accentColor"><p>100 <br />answers</p></div>
+          <div className="votes votesId lightPrimaryColor"><p>{this.state.total_points}<br />votes</p></div>
+          <div className="votes answerId accentColor"><p>{this.state.answers} <br />answers</p></div>
         </div>
         <div className="rightQuestionDiv">
-          <div className="questionHeaderText"><a href="#">This is a sample question bc why not? Super duper long question bc why should it ever be easy to make this responive?</a></div>
+          <div className="questionHeaderText"><a href={`/entry/${this.state.auto_id}`}>{this.state.title}</a>
+            is_entry:{this.state.is_entry.toString()}
+            {this.props.childProps.is_question}
+            {this.props.childProps.is_snippet}
+          </div>
           <div className="questionLabel ">Javascript</div>
           <div className="questionLabel ">Javascript</div>
-          <div className="questionDetails">by username 2/3/2016</div>
+          <div className="questionDetails">by {this.state.username} {this.state.date}</div>
         </div>
       </div>
     );
