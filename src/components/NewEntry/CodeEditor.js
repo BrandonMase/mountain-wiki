@@ -11,7 +11,8 @@ export default class CodeEditor extends Component {
     this.state = {
       title: '',
       content: '',
-      labels:'',
+      labels: '',
+      ran:false,
     }
 
     this.updateTitle = this.updateTitle.bind(this);
@@ -25,13 +26,13 @@ export default class CodeEditor extends Component {
 
   }
   componentWillReceiveProps(props) {
-    console.log(props)
-    if (props.childProps !== null) {
-      console.log("PROPS",props.childProps)
+    // console.log(props)
+    if (props.childProps !== null && !this.state.ran) {
+      // console.log("PROPS",props.childProps)
       axios.get(`/api/getEntryUpdater/${props.childProps}`)
         .then(res => {
-          const { title, entryType, content, seen,labels } = res.data[0]
-          this.setState({ title: title, typeOfEntry: entryType, title: title, content: content, seen: seen,labels:labels },()=>this.props.updateState(this.state));
+          const { title, entry_type, content, seen,labels } = res.data[0]
+          this.setState({ title: title, typeOfEntry: entry_type, title: title, content: content, seen: seen,labels:labels,ran:true },()=>this.props.updateState(this.state));
         })
     } 
   }

@@ -8,6 +8,7 @@ module.exports = {
         db.get_comments([id])
           .then(commentRes => {
             let obj = { entry: entryRes, comments: commentRes };
+            console.log(obj)
             res.status(200).send(obj)
           })
       })
@@ -34,5 +35,13 @@ module.exports = {
     db.add_entry([title, content, typeOfEntry, seen, date, userId, labels])
       .then(id => res.status(200).send(id))
       .catch(e=>console.log(e))
+  },
+  updateEntry: (req, res) => {
+    const db = req.app.get('db');
+    console.log(req.body);
+    const { title, content, typeOfEntry, seen, date, userId, labels,updateId } = req.body
+    db.update_entry([title, content, typeOfEntry, seen, labels, updateId])
+      .then(() => res.status(200).end)
+      .catch(() => { res.status(500).end(); console.log(e) })
   }
 }

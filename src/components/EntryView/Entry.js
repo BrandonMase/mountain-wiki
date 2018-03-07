@@ -15,7 +15,13 @@ export default class Entry extends Component {
   }
 
   componentDidMount(props) {
+    console.log(this.props.childProps)
     const { title, content, total_points, answers,entry_id } = this.props.childProps;
+    this.setState({title:title,content:content,total_points:total_points,answers:answers,entry_id:entry_id})
+  }
+
+  componentWillReceiveProps(props) {
+    const { title, content, total_points, answers,entry_id } = props.childProps;
     this.setState({title:title,content:content,total_points:total_points,answers:answers,entry_id:entry_id})
   }
 

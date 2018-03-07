@@ -5,6 +5,7 @@ const session = require('express-session');
 const axios = require('axios');
 const landingController = require('./controllers/landingController');
 const entryController = require('./controllers/entryController')
+const commentController = require('./controllers/commentController')
 
 require('dotenv').config();
 
@@ -43,18 +44,18 @@ app.get('/api/getEntryUpdater/:id',entryController.getEntryUpdater)
   //add entry returns the id so we can redirect to it
 app.post('/api/addEntry',entryController.addEntry)
   //update an entry
-app.post('/api/updateEntry/:id')
+app.put('/api/updateEntry/', entryController.updateEntry);
   //delete an entry
   //only a master contributor or an admi can delete
 app.delete('/api/deleteEntry/:id')
   
 //COMMENT STUFF
   //add a comment
-app.post('/api/addComment')
+app.post('/api/addAnswer',commentController.addComment)
   //delete comment
 app.delete('/api/deleteComment')
   //edit comment
-  app.put('/api/editComment')
+  app.put('/api/updateComment',commentController.updateComment)
 
 const port = 4000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

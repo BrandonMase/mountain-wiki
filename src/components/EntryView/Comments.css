@@ -170,6 +170,23 @@
   display:inline-block;
   margin-bottom:5px;
 }
+#answerContent{
+  min-height:100px;
+  /* border:solid black 1px; */
+}
+
+#editAnswerContent{
+  display:none;
+  width:97%;
+  min-height:100px;
+  resize:none;
+}
+
+.editContainer > button{
+  display:none;
+  margin-top:10px;
+  margin-left:10px;
+}
 
 @media (min-width:992px){
 

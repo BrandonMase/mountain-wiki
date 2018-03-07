@@ -42,7 +42,7 @@ export default class NewEntry extends Component {
   //update the mobile display from content editor to preview mode depending on which mode is selected
   updateDisplay(e) {
     
-    console.log(e.target.value)
+    // console.log(e.target.value)
     if (e.target.value == "preview") {
       document.getElementById('conp').style.display = "initial";
       document.getElementById('c2').checked = true;
@@ -70,7 +70,7 @@ export default class NewEntry extends Component {
       document.getElementById('typeContainer').style.border ="solid #536DFE 4px"
     }
 
-    if (!this.state.seen) {
+    if (this.state.seen === null) {
       document.getElementById('seenContainer').style.border ="solid red 4px"
       count++;
     }
@@ -105,20 +105,46 @@ export default class NewEntry extends Component {
       document.getElementById('labelText').style.border = "solid black 1px";
     }
 
-    if(count === 0){
-      axios.post("/api/addEntry", this.state)
-        .then()
-        .catch(e => console.log(e))
+    if (count === 0) {
+      if (this.state.updateId === null) {
+        axios.post("/api/addEntry", this.state)
+          .then(res => window.location = `/entry/${res.data[0].auto_id}`)
+          .catch(e => console.log(e))
+      }
+      else {
+        axios.put("/api/updateEntry", this.state)
+          .then(window.location=`/entry/${this.state.updateId}`)
+          .catch(e => console.log(e))
+          
+      }
     }
     
     
   }
 
   updateState(e) {
-    const { title, content, labels, seen, entryType } = e
-    
+    const { title, content, labels, seen, typeOfEntry } = e
+    // console.log("updateSTATE",e)
+    if (this.state.seen !== null) {
+      this.setState({ title: title, content: content, labels: labels })
+    }
+    else {
+      this.setState({ title: title, content: content, labels: labels, seen: seen, typeOfEntry: typeOfEntry});
+      if (seen) {
+        document.getElementById('s1').checked = false;
+        document.getElementById('s2').checked = true;
+      }
+      else {
+        document.getElementById('s2').checked =false;
+        document.getElementById('s1').checked = true;
+      }
 
-    this.setState({ title: title, content: content, labels: labels,seen:seen,typeOfEntry:entryType });
+      if (typeOfEntry) {
+        if(typeOfEntry === "entry") document.getElementById('t1').checked = true;
+        if(typeOfEntry === "question") document.getElementById('t2').checked = true;
+        if(typeOfEntry === "snippet") document.getElementById('t3').checked = true;
+      }
+    }
   }
 
  

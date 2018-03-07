@@ -1,0 +1,1 @@
+UPDATE mw_comments SET content = $1 WHERE auto_id = $2;

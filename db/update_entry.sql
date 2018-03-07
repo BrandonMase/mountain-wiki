@@ -1,0 +1,1 @@
+UPDATE mw_entry SET title = $1, content = $2, entry_type = $3,seen = $4,labels = $5 WHERE auto_id = $6

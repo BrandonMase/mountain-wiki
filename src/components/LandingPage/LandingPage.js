@@ -49,14 +49,14 @@ export default class LandingPage extends Component {
     let count = 0;
     let type2 = '';
     if (this.state.entries) {
-      if (type === "q") { endNum = this.state.endNumQuestion; type2 = "is_question" }
-      if (type === "e") { endNum = this.state.endNumEntries; type2 = "is_entry" }
-      if (type === "s") { endNum = this.state.endNumSnippets; type2 = "is_snippet" }
+      if (type === "q") { endNum = this.state.endNumQuestion; type2 = "question" }
+      if (type === "e") { endNum = this.state.endNumEntries; type2 = "entry" }
+      if (type === "s") { endNum = this.state.endNumSnippets; type2 = "snippet" }
       
       if (this.state.width <= 992) { endNum -= 5; }
       entries.map(e => {
         if (count >= endNum) { return }
-        if (e[type2] === true) {
+        if (e["entry_type"] === type2) {
           html.push(<QuestionDiv childProps={e} />)
           count++;
         }
