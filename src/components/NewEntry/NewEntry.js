@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import CodeEditor from './CodeEditor';
 import './NewEntry.css';
 import axios from 'axios'
-export default class NewEntry extends Component {
+import { checkUserStatus } from './../../utility'
+import { connect } from 'react-redux';
+
+class NewEntry extends Component {
   constructor() {
     super();
 
@@ -13,8 +16,8 @@ export default class NewEntry extends Component {
       content: null,
       labels: null,
       updateId: null,
-      userId: 34,
-      date: new Date()
+      userId: this.props.state.user_id,
+      date: new Date().toJSON().slice(0,10).replace(/-/g,'/')
     }
 
     this.checkSubmission = this.checkSubmission.bind(this)
@@ -25,6 +28,8 @@ export default class NewEntry extends Component {
     //check if the window is in mobile mode
     //set the content editor to checked and hide the preview div
   componentDidMount() {
+    
+    // console.log("STATUS",response);
     if (window.innerWidth <= 992) {
       document.getElementById('c1').checked = true;
       document.getElementById('cec').style.display = "initial";
@@ -38,6 +43,8 @@ export default class NewEntry extends Component {
     }
     
   }
+
+
 
   //update the mobile display from content editor to preview mode depending on which mode is selected
   updateDisplay(e) {
@@ -152,7 +159,7 @@ export default class NewEntry extends Component {
 
   render() {
     return (
-      <div className="newEntryContainer dp1-bs">
+      <div id = 'mainEntryContainer'className="newEntryContainer dp1-bs">
         <div className="newEntryHeader accentColor headerText ">
           <div>
             Entry Editor
@@ -189,3 +196,11 @@ export default class NewEntry extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state:state
+  }
+}
+
+export default connect(mapStateToProps)(NewEntry)

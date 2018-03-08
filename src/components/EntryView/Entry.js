@@ -62,7 +62,7 @@ export default class Entry extends Component {
               <div className="votesBottom">
               <p className="headerText redColor">{this.state.answers}</p>
               </div>
-              <p className="headerText">Answers</p>
+              <p className="headerText">comments</p>
             </div>
         
         </div> 

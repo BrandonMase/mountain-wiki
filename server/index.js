@@ -6,6 +6,8 @@ const axios = require('axios');
 const landingController = require('./controllers/landingController');
 const entryController = require('./controllers/entryController')
 const commentController = require('./controllers/commentController')
+const userController = require('./controllers/userController');
+const checkUserStatus = require('./middlewares/checkUserStatus');
 
 require('dotenv').config();
 
@@ -20,7 +22,7 @@ app.use(session({
   cookie: {
     //two weeks
     maxAge: 60 * 60 * 24 * 14 * 1000,
-  }
+  },
 }));
 
 //Landing page 
@@ -31,7 +33,7 @@ app.get('/api/getLandingEntries', landingController.getLandingEntries);
 
 //USER INFORMATION
   //check if user is logged in
-app.get('/api/getUser')
+app.get('/api/checkUserStatus',checkUserStatus.checkUserStatus,userController.getUserStatus)
   //delete user
 app.delete('/api/deleteUser')
   //update user

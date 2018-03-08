@@ -7,7 +7,8 @@ import Entry from './Entry';
 import Answer from './Answer';
 import Reply from './Reply';
 import axios from 'axios';
-export default class extends Component {
+import { connect } from 'react-redux';
+class EntryView extends Component {
 
   constructor(props) {
     super(props);
@@ -16,7 +17,7 @@ export default class extends Component {
       entry: '',
       comments: [],
       newAnswer: null,
-      user_id: 34,
+      user_id: null,
       entry_id: null,
       date: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
     }
@@ -48,13 +49,30 @@ export default class extends Component {
     if (this.state.comments !== []) {
       let comments = this.state.comments;
       comments = comments.sort((a, b) => b.total_points - a.total_points);
-      comments.map(e => {
+      let parentComments = comments.filter(e => {
+        if(!e.ref_answer_id){return e}
+      })
+
+      parentComments.map(e => {
+        comments.map(c => {
+          if (c.ref_answer_id == e.auto_id) {
+            if (e["replies"]) {
+              e["replies"].push(c)
+            }
+            else {
+              e["replies"] = []
+              e["replies"].push(c)
+            }
+          }
+        })
+      })
+      console.log("parent",parentComments);
+      parentComments.map(e => {
      
         html.push(
           <div className="fullcommentsContainer">
             <div id="bg1" className="fullCommentChainContainer dp1-bs">
               <Answer childProps={e} />
-              {/* {this.getReplies()} */}
             </div>
           </div>
         )
@@ -64,34 +82,15 @@ export default class extends Component {
     return html;
   }
 
-  getReplies() {
-    let html = [];
-    let reply = Math.random() * 50;
-
-    if (reply >= 5) {
-      for (let i = 0; i < 5; i++) {
-        html.push(<Reply />)
-      }
-      html.push(<div className="addAComment secondaryText"><button className="greenColor">See all comments</button></div>);
-    }
-    else {
-      for (let i = 0; i <= reply; i++) {
-        html.push(<Reply />)
-      }
-      html.push(<div className="addAComment secondaryText"><button className="greenColor">add a comment</button></div>);
-    }
-
-    return html;
-  }
-
   addAnswer() {
     let comments = this.state.comments;
-    let newAnswer = {content:this.state.newAnswer,name:this.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:34,total_points:0}
+    console.log(this.props)
+    let newAnswer = {content:this.state.newAnswer,name:this.props.state.name,user_id:this.props.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:34,total_points:0}
     comments.push(newAnswer)
 
     let newEntry = { ...this.state.entry }
     newEntry["answers"] = +newEntry.answers+1
-    this.setState({ comments: comments,entry:newEntry},()=>this.getEntry())
+    this.setState({ comments: comments,entry:newEntry},()=>this.addAnswerHTML())
     let obj = this.state
     axios.post('/api/addAnswer/',obj)
   }
@@ -110,15 +109,14 @@ export default class extends Component {
 
     let alreadyAnswered = false;
     alreadyAnswered = comments.map(e => {
-      console.log("comment MAp", e.user_id,this.state.user_id);
-      if(e.user_id == this.state.user_id){return true}
+      if(+e.user_id == this.props.state.user_id){return true}
     })
     console.log("addAnswerHTML",alreadyAnswered)
     if (alreadyAnswered[0]) {
       html =
         <div id="cannotAddAnswer" className="newAnswer dp1-bs">
           <div className="accentColor">
-            You already answered in this entry. Please edit your answer if you have to.
+            You already answered in this entry. Please edit your answer or add a comment if you have more to say.
         </div>
         </div>
     }
@@ -136,3 +134,11 @@ export default class extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    state: state,
+  }
+}
+
+export default connect(mapStateToProps)(EntryView)
