@@ -77,18 +77,18 @@ class Answer extends Component {
         for (let i = 0; i < 5; i++) {
           html.push(<Reply childProps={this.state.replies[i]} />)
         }
-        html.push(<div className="addAComment secondaryText"><button className="greenColor" onClick={e => this.setState({ seeAllComments: true })}>See all {this.state.replies.length} comments</button></div>);
+        html.push(<div className="addAComment secondaryText"><button  onClick={e => this.setState({ seeAllComments: true })}>See all {this.state.replies.length} comments</button></div>);
       }
       else {
         this.state.replies.map(e => {
           html.push(<Reply childProps={e} />)
           
         })
-        html.push(<div className="addAComment secondaryText"><button className="greenColor" onClick={e=>this.addCommentHTML()}>add a comment</button></div>);
+        html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText"></textarea><button className="greenColor" onClick={e=>this.addCommentHTML()}>add a comment</button></div>);
       }
     }
     else {
-      html.push(<div className="addAComment secondaryText"><button className="greenColor" onClick={e=>this.addCommentHTML()}>add a comment</button></div>);
+      html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText"></textarea><button className="greenColor" onClick={e=>this.addCommentHTML()}>add a comment</button></div>);
     } 
 
     return html;
@@ -114,8 +114,7 @@ class Answer extends Component {
         </div>
         
         </div>
-        {this.getReplies()}
-        <textarea></textarea>
+        {this.getReplies()} 
         </div>
     );
   }

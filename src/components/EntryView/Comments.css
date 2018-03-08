@@ -1,7 +1,7 @@
 
 .commentContainer{
   background-color:white;
-  z-index:100;
+  z-index:2;
 }
 
 .replyComment{
@@ -13,7 +13,7 @@
 }
 .fullCommentChainContainer{
   /* border:solid black 1px; */
-  
+  clear:both;
   margin:20px 0;
   /* width:110%; */
   /* padding:0px; */
@@ -40,6 +40,31 @@
   background-color:rgb(154, 169, 255) !important;
   font-size:13px;
   /* border:solid black 1px; */
+}
+
+.replyTextBox{
+  margin-top:10px;
+  /* position: absolute; */
+  float:right;
+  width:95%;
+  flex:.69;
+  height:100px;
+  margin-right:5px;
+  margin-left:5px;
+  /* margin-left:5%; */
+  /* margin-left:100px; */
+  /* border:solid white 1px; */
+  resize:none;
+  padding:10px;
+  margin-bottom:10px;
+}
+.fullCommentChainContainer > div{
+  display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: flex-start;
 }
 
 
@@ -185,9 +210,25 @@
 .editContainer > button{
   display:none;
   margin-top:10px;
+  margin-right:10px;
 }
 
 @media (min-width:992px){
+
+  .replyTextBox{
+    margin-top:10px;
+    /* position: absolute; */
+    float:right;
+    width:93%;
+    margin-right:100px;
+    flex:.69;
+    height:100px;
+    /* margin-left:5%; */
+    /* margin-left:100px; */
+    /* border:solid white 1px; */
+    resize:none;
+    padding:10px;
+  }
 
   .commentContainer{
     padding:0;

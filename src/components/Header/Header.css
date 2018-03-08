@@ -82,10 +82,12 @@ img{
   animation-duration:.2s;
   animation-timing-function: linear;
   box-shadow: 0 -10px 30px rgba(0,0,0,0.25), 0 -6px 10px rgba(0,0,0,0.22);
+  z-index:1000;
 }
 
 .searchJumpBar *{
   margin:15px auto;
+  z-index:1000;
 }
 
 .searchJumpBar input{
@@ -95,6 +97,7 @@ img{
   padding:10px;
   border:none;
   border-radius:5px;
+  z-index:1000;
 }
 
 .navLinks{
@@ -228,6 +231,7 @@ img{
 
   .searchJumpBar{
     /* display:none; */
+    z-index:100;
     
   }
 
