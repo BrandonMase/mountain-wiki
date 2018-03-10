@@ -19,10 +19,25 @@ class Answer extends Component {
     this.getReplies = this.getReplies.bind(this)
   }
   componentDidMount(props) {
-    const { auto_id, content, total_points, date, name, picture, user_total_points, user_id,replies } = this.props.childProps;
-    // console.log(this.props.childProps)
-    this.setState({ auto_id: auto_id, content: content, newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies })
+    const { auto_id, content, total_points, date, name, picture, user_total_points, user_id,replies,entry_id } = this.props.childProps;
+    this.setState({ auto_id: auto_id, content: content, newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies,entry_id:entry_id })
     // document.getElementById('editAnswerContent').style.display = "none";
+  }
+  
+
+  createNewComment(){
+    const {user_id,username} = this.props.state
+    if(this.state.newComment){
+      let replies = [];
+      if(this.state.replies){
+      replies = this.state.replies.slice()
+      }
+      let obj = {ref_answer_id:+this.state.auto_id,total_points:0,date:this.state.date,content:this.state.newComment,name:username,user_id:+user_id,entry_id:+this.state.entry_id}
+      axios.post("/api/addReply",obj)
+      replies.push(obj)
+      this.setState({...this.state,replies:replies,newComment:null})
+      document.getElementById('answerP').innerText = +document.getElementById('answerP').innerText + 1
+    }
   }
 
   makeAnwserEditable() {
@@ -31,7 +46,7 @@ class Answer extends Component {
     let html = '';
     if (this.state.user_id === user_id) {
       html = <div className="editContainer secondaryText">
-        <textarea onChange={e => this.setState({ newContent: e.target.value })} value={this.state.newContent} id="editAnswerContent">{this.state.content}</textarea>
+        <textarea  className="bodyText" onChange={e => this.setState({ newContent: e.target.value })} value={this.state.newContent} id="editAnswerContent">{this.state.content}</textarea>
         <a id="clickEdit" href="#" onClick={e => this.showEditableAnswer(e)}>edit answer</a>
         <button id='submitAnswer' className="greenColor" onClick={() => this.updateAnswer()}>submit answer</button>
         <button id='cancelAnswer' className="redColor" onClick={() => this.cancelAnswer()}>cancel edit</button>
@@ -81,14 +96,14 @@ class Answer extends Component {
       }
       else {
         this.state.replies.map(e => {
-          html.push(<Reply childProps={e} />)
+          html.push(<Reply childProps={e}/>)
           
         })
-        html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText"></textarea><button className="greenColor" onClick={e=>this.addCommentHTML()}>add a comment</button></div>);
+        html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText" onChange={e=>this.setState({newComment:e.target.value})}></textarea><button className="greenColor" onClick={e=>this.createNewComment()}>add a comment</button></div>);
       }
     }
     else {
-      html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText"></textarea><button className="greenColor" onClick={e=>this.addCommentHTML()}>add a comment</button></div>);
+      html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText" onChange={e=>this.setState({newComment:e.target.value})}></textarea><button className="greenColor" onClick={e=>this.createNewComment()}>add a comment</button></div>);
     } 
 
     return html;
@@ -98,7 +113,7 @@ class Answer extends Component {
       <div>
                 <div className="commentContainer dp2-bs">
         <div className="commentDetails headerText lightPrimaryColor">
-          <div className="userName"><img src={this.state.picture} /><div className="actualUserName"><p>{this.state.name}</p></div><br /><div className="userPoints">{this.state.user_total_points}</div><p className="answeredText secondaryText">answered {this.state.date}</p> </div>
+          <div className="userName"><img src={this.state.picture} /><div className="actualUserName"><p><a className="authorLink" href={`/u/${this.state.user_id}`}>{this.state.name}</a></p></div><br /><div className="userPoints">{this.state.user_total_points}</div><p className="answeredText secondaryText">answered {this.state.date}</p> </div>
               <div className="votesDiv">
                 <img src="/images/chevron-up.png" />
             <p>{this.state.total_points}</p>

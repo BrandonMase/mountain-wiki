@@ -34,6 +34,8 @@ app.get('/api/getLandingEntries', landingController.getLandingEntries);
 //USER INFORMATION
   //check if user is logged in
 app.get('/api/checkUserStatus',checkUserStatus.checkUserStatus,userController.getUserStatus)
+app.get('/api/getUserInfo/:id',userController.getUserInfo);
+app.get('/api/getUserActivity/:id',userController.getUserActivity);
   //delete user
 app.delete('/api/deleteUser')
   //update user
@@ -54,6 +56,7 @@ app.delete('/api/deleteEntry/:id')
 //COMMENT STUFF
   //add a comment
 app.post('/api/addAnswer',commentController.addComment)
+app.post('/api/addReply',commentController.addReply)
   //delete comment
 app.delete('/api/deleteComment')
   //edit comment

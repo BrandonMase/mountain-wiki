@@ -11,12 +11,12 @@ class NewEntry extends Component {
 
     this.state = {
       typeOfEntry: null,
-      seen: null,
+      seen: true,
       title:null,
       content: null,
       labels: null,
       updateId: null,
-      userId: this.props.state.user_id,
+      userId: null,
       date: new Date().toJSON().slice(0,10).replace(/-/g,'/')
     }
 
@@ -29,6 +29,7 @@ class NewEntry extends Component {
     //set the content editor to checked and hide the preview div
   componentDidMount() {
     
+    
     // console.log("STATUS",response);
     if (window.innerWidth <= 992) {
       document.getElementById('c1').checked = true;
@@ -37,6 +38,9 @@ class NewEntry extends Component {
       document.getElementById('conp').style.display = "none";
       document.getElementById('titlePre').style.visibility = "hidden"
     }
+
+    //ADD IF A USER ISN'T LOGGED IN THEY CAN'T EDIT A THING BC THAT MAKES COMPLETE SENSE
+    this.setState({userId:this.props.state.user_id})
 
     if (this.props.match.params.id) {
       this.setState({updateId:+this.props.match.params.id})
@@ -115,12 +119,12 @@ class NewEntry extends Component {
     if (count === 0) {
       if (this.state.updateId === null) {
         axios.post("/api/addEntry", this.state)
-          .then(res => window.location = `/entry/${res.data[0].auto_id}`)
+          .then(res => this.props.history.push(`/entry/${res.data[0].auto_id}`))
           .catch(e => console.log(e))
       }
       else {
         axios.put("/api/updateEntry", this.state)
-          .then(window.location=`/entry/${this.state.updateId}`)
+          .then(this.props.history.push(`/entry/${this.state.updateId}`))
           .catch(e => console.log(e))
           
       }

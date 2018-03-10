@@ -1,0 +1,203 @@
+.profileContainer{
+    display: flex;
+	flex-direction: column-reverse;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: stretch;
+	align-content: stretch;
+}
+
+ .accentColor{
+padding:10px;
+color:white !important;
+text-align:left;
+font-size:18px
+}
+
+.rightContainer span{
+    margin-bottom:100px !important;
+}
+
+.rightContainer img{
+    width:50px;
+    height:50px;
+    margin:auto;
+    display:inherit;
+    text-align:left;
+    border-radius:50%;
+}
+
+.rightContainer li{
+    list-style: none;
+    text-align:center;
+}
+
+.leftContainer{
+    margin-top:10px;
+}
+
+.mainProfilePostContainer{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: stretch;
+    padding:0;
+    margin-bottom:10px;
+    clear:both;
+}
+
+.mainProfilePostContainer .postLeftContainer{
+    flex:1;
+    display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: flex-start;
+}
+
+.mainProfilePostContainer  .postRightContainer{
+    flex:10;
+}
+
+a{
+    text-decoration: none;
+    color:white;
+}
+
+a:hover{
+    text-decoration: underline;
+    color:white;
+}
+
+.accentColor span:hover{
+    color:white;
+}
+
+.mainProfilePostContainer .bodyText{
+    margin-top:10px;
+    font-size:12px;
+    text-align:right;
+    padding-right:10px;
+    padding-bottom:10px;
+}
+.lightPrimaryColor{
+    flex:0 1;
+    padding:10px 5px;
+    text-align:center;
+    /* padding:0 5px; */
+    /* margin:auto 0; */
+    font-size:12px;
+    /* height:100%; */
+    /* padding:10px 5px; */
+    font-weight: bold;
+    /* line-height: 20px; */
+}
+.lightPrimaryColor p{
+}
+
+.leftPostContainer{
+    margin:auto;
+}
+
+.postRightContainer .bodyText{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+    align-content: stretch;
+    margin:0 10px;
+}
+
+.postRightContainer .accentColor{
+    text-align:left;
+}
+
+.accentColor{
+    text-align:center;
+}
+
+.alignLeft{
+    text-align:left;
+}
+
+.noMargin{
+    margin-bottom:0px;
+}
+
+.commentDiv{
+    float:right;
+    width:90%;
+    margin:0;
+    padding:0px;
+    margin-bottom:10px;
+}
+
+.commentDiv > *{
+    padding:0 5px;
+}
+
+.commentDiv .commentContent{
+    margin:10px 0 ;
+
+}
+
+.commentText{
+    padding:0;
+    font-size:12px;
+    text-align:left;
+    padding:5px 10px;
+    margin:0;
+}
+
+
+
+
+@media (min-width:992px){
+    .profileContainer{
+        display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+        margin:0;
+        padding:0;
+        background-color:#f3f1f1 !important;
+    }
+    
+    .profileContainer > *{
+        background-color:white;
+        margin:0;
+        padding:0;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    
+    .leftContainer{
+        margin-left:10px;   
+        margin-top:10px;
+       flex:3;
+       /* border:solid black 1px; */
+       margin-right:10px;
+    }
+    
+    .rightContainer{
+        margin-right:10px;
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        /* border:solid black 1px; */
+    }
+
+    .mainProfilePostContainer .bodyText{
+        font-size:14px;
+    }
+}

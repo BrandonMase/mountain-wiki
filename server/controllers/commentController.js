@@ -16,5 +16,12 @@ module.exports = {
     db.update_answer([newContent, auto_id])
       .then(res.status(200).end())
       .catch(e => { res.status(500).end(); console.log(e) })
+  },
+  addReply:(req,res) =>{
+    const db = req.app.get('db');
+    const {ref_answer_id,date,content,user_id,entry_id} = req.body
+    db.add_reply([ref_answer_id,date,content,user_id,entry_id])
+      .then(res.status(200).end())
+      .catch(err => console.log(err))
   }
 }

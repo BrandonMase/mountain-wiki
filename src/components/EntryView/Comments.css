@@ -21,6 +21,17 @@
   background-color:#f3f1f1;
 }
 
+#replyTextArea{
+  width:95%;
+  resize:none;
+  height:100px;
+}
+
+#mainReplyContainer  button {
+  margin:10px 0;
+  margin-left:10px;
+}
+
 .replyComment{
   padding:0;
   display: flex;
@@ -115,7 +126,7 @@
   margin:0;
   margin-right:5px;
   border-radius:50%;
-  width:15%;
+  width:40px;
   float:left;
 }
 

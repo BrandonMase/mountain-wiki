@@ -29,6 +29,7 @@ class EntryView extends Component {
   }
 
   componentDidMount(props) {
+    this.setState({user_id:this.props.state.user_id})
     const { id } = this.props.match.params
     this.setState({ entry_id: id })
     
@@ -39,7 +40,7 @@ class EntryView extends Component {
 
   getEntry() {
     if (this.state.entry) {
-      console.log("getEntry ran")
+      console.log("ENTRY",this.state.entry)
       return <Entry childProps={this.state.entry} />
     }
   }
@@ -85,7 +86,7 @@ class EntryView extends Component {
   addAnswer() {
     let comments = this.state.comments;
     console.log(this.props)
-    let newAnswer = {content:this.state.newAnswer,name:this.props.state.name,user_id:this.props.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:34,total_points:0}
+    let newAnswer = {content:this.state.newAnswer,name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:34,total_points:0}
     comments.push(newAnswer)
 
     let newEntry = { ...this.state.entry }
@@ -107,12 +108,13 @@ class EntryView extends Component {
     
     let comments = this.state.comments;
 
+    //Finds if a person has already answered on a top level comment and won't let them top level answer again.
     let alreadyAnswered = false;
     alreadyAnswered = comments.map(e => {
       if(+e.user_id == this.props.state.user_id){return true}
     })
     console.log("addAnswerHTML",alreadyAnswered)
-    if (alreadyAnswered[0]) {
+    if (~alreadyAnswered.indexOf(true)) {
       html =
         <div id="cannotAddAnswer" className="newAnswer dp1-bs">
           <div className="accentColor">

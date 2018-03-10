@@ -25,6 +25,21 @@
 
   /* padding-top:10px; */
 }
+.entryContainer .authorDiv{
+  text-align:right;
+  margin-right:10px;
+  margin-top:10px;
+}
+
+.authorLink{
+  text-decoration: none;
+  color:#212121;
+}
+
+.authorLink:hover{
+  color:grey;
+}
+
 
 
 
