@@ -35,7 +35,7 @@ class Reply extends Component {
     return html
   }
   editContainer(){
-    let html = <a href="#" onClick={(e)=>this.editComment(e)}>edit your comment</a>;
+    let html = <a className="editContent" href="#" onClick={(e)=>this.editComment(e)}>edit your comment</a>;
     if(this.state.show){
    html = <div id="mainReplyContainer">
     <textarea className="bodyText" id="replyTextArea" onChange={e=>this.setState({newContent:e.target.value})}>{this.state.newContent}</textarea>

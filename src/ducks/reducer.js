@@ -1,6 +1,7 @@
 const iState = {
   username: "Brandon",
-  user_id:34
+  user_id:34,
+  votes:[],
 }
 
 export function reduceRunner(action) {
@@ -10,13 +11,31 @@ export function reduceRunner(action) {
   }
 }
 
+const ADD_NEW_VOTE = "ADD_NEW_VOTE";
+export function addNewVote(action){
+  return{
+    type:ADD_NEW_VOTE,
+    payload:action
+  }
+}
+
 export default function (state = iState, action) {
-  if (state.hasOwnProperty(action.type)) {
-    let newState = { ...state };
-    newState[action.type] = action.payload;
-    return newState
+  let newState = {...state}
+  switch(action.type){
+    case ADD_NEW_VOTE:{
+      newState.votes.push(action.payload);
+      return {...newState}
+    }
+      default:{
+        return {...newState}
+      }
   }
-  else {
-    return state;
-  }
+  // if (state.hasOwnProperty(action.type)) {
+  //   let newState = { ...state };
+  //   newState[action.type] = action.payload;
+  //   return newState
+  // }
+  // else {
+  //   return state;
+  // }
 }

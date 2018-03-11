@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 export default class Post extends Component {
   render() {
-    console.log("POST PROPS", this.props.childProps)
+    let date = this.props.childProps.date.split("/")
+    date = `${date[1]}/${date[2]}/${date[0]}`;
     return (
       <div className="mainProfilePostContainer dp1-bs">
          
@@ -16,7 +17,7 @@ export default class Post extends Component {
           </div>
           <div className="bodyText">
             <span className="answers"><strong>{this.props.childProps.answers}</strong> comments</span>
-            <span>posted on {this.props.childProps.date} by <a href={`/u/${this.props.childProps.master_contributor}`} className="authorLink">{this.props.childProps.name}</a></span>
+            <span>posted on {date}</span>
           </div>
         </div>
       </div>

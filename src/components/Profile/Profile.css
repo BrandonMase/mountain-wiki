@@ -7,6 +7,18 @@
 	align-content: stretch;
 }
 
+.leftContainer{
+    background-color:#f3f1f1 !important;
+}
+
+.leftContainer > *{
+    background-color:white;
+}
+
+.superMainProfilePostContainer{
+    background-color:#f3f1f1 !important
+}
+
  .accentColor{
 padding:10px;
 color:white !important;
@@ -19,12 +31,18 @@ font-size:18px
 }
 
 .rightContainer img{
-    width:50px;
-    height:50px;
+    display:block;
+    width:80px;
+    height:80px;
+    text-align:center;
     margin:auto;
-    display:inherit;
-    text-align:left;
+    margin-top:5px;
     border-radius:50%;
+
+}
+
+.rightContainer ul{
+    padding:0;
 }
 
 .rightContainer li{
@@ -35,6 +53,8 @@ font-size:18px
 .leftContainer{
     margin-top:10px;
 }
+
+
 
 .mainProfilePostContainer{
     display: flex;
@@ -60,7 +80,17 @@ font-size:18px
 
 .mainProfilePostContainer  .postRightContainer{
     flex:10;
+    background:white;
+    text-align:center;
+    
 }
+
+.rightContainer span{
+    padding:0;
+    /* display:inline-block; */
+    margin:0;
+}
+
 
 a{
     text-decoration: none;
@@ -70,6 +100,10 @@ a{
 a:hover{
     text-decoration: underline;
     color:white;
+}
+
+.accentColor span{
+    text-align:center !important;
 }
 
 .accentColor span:hover{
@@ -82,8 +116,9 @@ a:hover{
     text-align:right;
     padding-right:10px;
     padding-bottom:10px;
+    background-color:white;
 }
-.lightPrimaryColor{
+.mainProfilePostContainer .lightPrimaryColor{
     flex:0 1;
     padding:10px 5px;
     text-align:center;
@@ -94,8 +129,6 @@ a:hover{
     /* padding:10px 5px; */
     font-weight: bold;
     /* line-height: 20px; */
-}
-.lightPrimaryColor p{
 }
 
 .leftPostContainer{
@@ -110,6 +143,7 @@ a:hover{
 	align-items: stretch;
     align-content: stretch;
     margin:0 10px;
+    
 }
 
 .postRightContainer .accentColor{
@@ -120,12 +154,29 @@ a:hover{
     text-align:center;
 }
 
+.superMainProfilePostContainer .accentColor{
+    font-size:14px;
+}
+
+.superMainProfilePostContainer .bodyText span{
+    font-size:13px;
+}
+.postRightContainer .answers{
+    margin-right:10px;
+}
+
+.postRightContainer span{
+    /* display:inline-block; */
+    text-align:left;
+}
+
+
 .alignLeft{
     text-align:left;
 }
 
 .noMargin{
-    margin-bottom:0px;
+    margin-bottom:1px;
 }
 
 .commentDiv{
@@ -134,6 +185,7 @@ a:hover{
     margin:0;
     padding:0px;
     margin-bottom:10px;
+    background-color:white;
 }
 
 .commentDiv > *{
@@ -153,10 +205,34 @@ a:hover{
     margin:0;
 }
 
+.postSelector{
+    padding:0;
+    margin:auto;
+    margin-bottom:10px;
+    padding:5px 0;
+    text-align:center;
+}
+
+.postSelector li{
+    display:inline;
+    margin:auto;
+    padding:5px 10px;
+    /* margin-left:10px; */
+}
+
+.postSelector .headerText a{
+    color:#212121;
+    font-size:15px;
+}
+
 
 
 
 @media (min-width:992px){
+
+    .postSelector{
+        text-align:left;
+    }
     .profileContainer{
         display: flex;
 	flex-direction: row;

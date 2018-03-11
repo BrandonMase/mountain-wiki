@@ -8,6 +8,7 @@ const entryController = require('./controllers/entryController')
 const commentController = require('./controllers/commentController')
 const userController = require('./controllers/userController');
 const checkUserStatus = require('./middlewares/checkUserStatus');
+const voteController = require('./controllers/voteController');
 
 require('dotenv').config();
 
@@ -43,7 +44,7 @@ app.put('/api/updateUser')
   
 //ENTRIES STUFF
   //gets the entry and all answer assosiated with it
-app.get('/api/getEntry/:id',entryController.getEntry)
+app.get('/api/getEntry/:id/:user_id',entryController.getEntry)
 app.get('/api/getEntryUpdater/:id',entryController.getEntryUpdater)
   //add entry returns the id so we can redirect to it
 app.post('/api/addEntry',entryController.addEntry)
@@ -52,6 +53,9 @@ app.put('/api/updateEntry/', entryController.updateEntry);
   //delete an entry
   //only a master contributor or an admi can delete
 app.delete('/api/deleteEntry/:id')
+
+//VOTE STUFF
+app.post('/api/voter',voteController.voter,voteController.update_entry)
   
 //COMMENT STUFF
   //add a comment

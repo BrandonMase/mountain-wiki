@@ -6,7 +6,12 @@ module.exports = {
     // console.log(req.body);
 
     db.add_answer([date, newAnswer, entry_id, user_id])
-      .then(res.status(200).end())
+      .then(id =>{
+        db.add_vote(user_id,false,id[0].auto_id,true)
+          .then().catch(err => console.log(err));
+
+        res.status(200).end();
+      })
       .catch(res.status(500).end());
   },
   updateComment: (req, res) => {
@@ -21,7 +26,11 @@ module.exports = {
     const db = req.app.get('db');
     const {ref_answer_id,date,content,user_id,entry_id} = req.body
     db.add_reply([ref_answer_id,date,content,user_id,entry_id])
-      .then(res.status(200).end())
+      .then(id =>{
+        db.add_vote(user_id,false,id[0].auto_id,true)
+          .then().catch(err => console.log(err))
+        res.status(200).end()
+      })
       .catch(err => console.log(err))
   }
 }

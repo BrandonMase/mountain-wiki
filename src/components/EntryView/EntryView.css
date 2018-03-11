@@ -172,7 +172,7 @@
 
 .votesContainer p{
   text-align:center;
-  width:60px;
+  /* width:60px; */
   padding:10px 30px;
   margin:0;
   color:#212121;
@@ -218,7 +218,78 @@
 .addAComment{
   margin-left:15px;
 }
+.votesBottom{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+}
+
+.entryBottom{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+  align-content: center;
+  margin:0 10px;
+}
+
+.entryBottom .headerText{
+  padding:10px;
+}
+
+.votesContainer p:last-of-type{
+  margin:0;
+  /* text-align:center; */
+}
+
+#votesText{
+  padding-left:10px;
+}
+
+
+.votesBottom .greenColor{
+  border-radius: 0;
+}
+
+.voteIcon{
+  /* background-color:red; */
+  display:inline;
+  margin:0;
+  padding:0;
+  padding:4.6px;
+}
+
+#upvote{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color:#757575;
+  
+}
+
+#downvote{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #757575;
+}
+
+/* .votesBottom .greenColor > *{
+  flex:0 0;
+} */
 @media (min-width:992px){
+  .entryBottom{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    margin:0 10px;
+  }
+
   .newAnswer div{
     text-align:left;
     margin:0 !important;
@@ -271,5 +342,9 @@
     width:20px;
     margin-top:5px;
     /* margin-left:10px; */
+  }
+
+  .entryHeader p{
+    text-align:left;
   }
 }

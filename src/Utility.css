@@ -81,6 +81,9 @@ Colors
   text-transform:none;
   font-size:16px;
   letter-spacing: .2px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .dividerColor{
   margin:30px 0;

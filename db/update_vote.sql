@@ -1,0 +1,1 @@
+UPDATE mw_votes SET is_upvote = $4 WHERE user_id = $1 AND is_entry = $2 AND vote_id = $3

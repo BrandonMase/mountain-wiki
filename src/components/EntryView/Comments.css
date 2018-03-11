@@ -4,6 +4,12 @@
   z-index:2;
 }
 
+.editContent{
+  color:grey !important;
+}
+
+
+
 .replyComment{
   margin-top:-20px;
   font-size:13px;

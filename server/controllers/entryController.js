@@ -1,9 +1,9 @@
 module.exports = {
   getEntry: (req, res) => {
     const db = req.app.get('db');
-    const {id} = req.params;
+    const {id,user_id} = req.params;
 
-    db.get_entry([id])
+    db.get_entry([id,user_id])
       .then(entryRes => {
         db.get_comments([id])
           .then(commentRes => {
@@ -30,11 +30,14 @@ module.exports = {
   },
   addEntry: (req, res) => {
     const db = req.app.get('db');
-    console.log(req.body)
+    // console.log(req.body)
     const { title, content, typeOfEntry, seen, date, userId, labels } = req.body
-    console.log(req.body)
+    // console.log(req.body)
     db.add_entry([title, content, typeOfEntry, seen, date, userId, labels])
-      .then(id => res.status(200).send(id))
+      .then(id =>{
+
+        db.add_vote(userId,true,id[0].auto_id,true).then().catch(err => console.log(err))
+        res.status(200).send(id)})
       .catch(e=>console.log(e))
   },
   updateEntry: (req, res) => {

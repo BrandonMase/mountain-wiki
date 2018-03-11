@@ -4,6 +4,7 @@ import './NewEntry.css';
 import axios from 'axios'
 import { checkUserStatus } from './../../utility'
 import { connect } from 'react-redux';
+import {addNewVote} from './../../ducks/reducer';
 
 class NewEntry extends Component {
   constructor() {
@@ -38,6 +39,9 @@ class NewEntry extends Component {
       document.getElementById('conp').style.display = "none";
       document.getElementById('titlePre').style.visibility = "hidden"
     }
+
+    document.getElementById('s1').checked = false;
+        document.getElementById('s2').checked = true;
 
     //ADD IF A USER ISN'T LOGGED IN THEY CAN'T EDIT A THING BC THAT MAKES COMPLETE SENSE
     this.setState({userId:this.props.state.user_id})
@@ -119,9 +123,13 @@ class NewEntry extends Component {
     if (count === 0) {
       if (this.state.updateId === null) {
         axios.post("/api/addEntry", this.state)
-          .then(res => this.props.history.push(`/entry/${res.data[0].auto_id}`))
+          .then(res => {
+            this.props.addNewVote({user_id:this.props.state.user_id,is_entry:true,vote_id:res.data[0].auto_id,is_upvote:true})
+            this.props.history.push(`/entry/${res.data[0].auto_id}`)})
           .catch(e => console.log(e))
       }
+
+      
       else {
         axios.put("/api/updateEntry", this.state)
           .then(this.props.history.push(`/entry/${this.state.updateId}`))
@@ -207,4 +215,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(NewEntry)
+export default connect(mapStateToProps,{addNewVote})(NewEntry)
