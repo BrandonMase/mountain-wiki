@@ -9,6 +9,7 @@ const commentController = require('./controllers/commentController')
 const userController = require('./controllers/userController');
 const checkUserStatus = require('./middlewares/checkUserStatus');
 const voteController = require('./controllers/voteController');
+var stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 
 require('dotenv').config();
 
@@ -55,8 +56,10 @@ app.put('/api/updateEntry/', entryController.updateEntry);
 app.delete('/api/deleteEntry/:id')
 
 //VOTE STUFF
-app.post('/api/voter',voteController.voter,voteController.update_entry)
-  
+app.post('/api/voter',voteController.voter,voteController.update_entry,voteController.update_comment)
+
+
+
 //COMMENT STUFF
   //add a comment
 app.post('/api/addAnswer',commentController.addComment)

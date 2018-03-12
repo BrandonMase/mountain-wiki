@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {NavLink} from 'react-router-dom';
 
 export default class Comment extends Component {
     render() {
@@ -12,19 +13,19 @@ export default class Comment extends Component {
          
          <div className="postRightContainer">
            <div className="accentColor headerText">
-           <a className="entryLink" href={`/entry/${this.props.childProps.entry_id}`}>
+           <NavLink className="entryLink" to={`/entry/${this.props.childProps.entry_id}`}>
              {this.props.childProps.title}
-           </a>
+           </NavLink>
            </div>
            <div className="bodyText">
              <span className="answers"><strong>{this.props.childProps.answers}</strong> comments</span>
-             <span>posted on {this.props.childProps.entry_date} by <a href={`/u/${this.props.childProps.master_contributor}`} className="authorLink">{this.props.childProps.entry_name}</a></span>
+             <span>posted on {this.props.childProps.entry_date} by <NavLink to={`/u/${this.props.childProps.master_contributor}`} className="authorLink">{this.props.childProps.entry_name}</NavLink></span>
              
            </div>
          </div>
         </div>
             <div className="dp1-bs commentDiv">
-                <p className="bodyText commentText lightPrimaryColor"> <a href={`/u/${this.props.childProps.auto_id}`} className="authorLink alignRight">{this.props.childProps.name}</a> {this.props.childProps.total_points} points {date}</p>
+                <p className="bodyText commentText lightPrimaryColor"> <NavLink to={`/u/${this.props.childProps.auto_id}`} className="authorLink alignRight">{this.props.childProps.name}</NavLink> {this.props.childProps.total_points} points {date}</p>
                 <p className="bodyText commentContent">{this.props.childProps.content}</p>
                 
             </div>

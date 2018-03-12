@@ -1,0 +1,70 @@
+.logVal{
+    width:250px;
+    /* padding:10px; */
+    font-size:15px;
+    position:absolute;
+    background-color:white;
+    /* position: relative; */
+    overflow:hidden;
+
+}
+
+.moveLogUp{
+    animation:.3s moveLogUp;
+    animation-fill-mode: forwards;
+}
+
+.moveLogDown{
+    animation:.3s moveLog;
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveLogUp{
+    from{height:100px;}
+    to {height:0px;}
+}
+
+@keyframes moveLog{
+    from{height:0;}
+    to {height:100px;}
+}
+.once{
+    display:flex;
+    position: relative;
+    padding:0 !important;
+    margin:0;
+}
+
+.logVal img{
+    margin:2px;
+    display:inherit;
+    position: absolute;
+    top:0;
+    right:0;
+    width:20px;
+}
+
+.logVal img:hover{
+    cursor: pointer;
+}
+
+.logVal .headerText{
+    font-size:14px;
+    background-color:white;
+    color:white !important;
+}
+
+.logVal .primaryColor{
+    padding:5px;
+    padding-top:10px;
+    margin:0;
+    margin-bottom:10px;
+
+}
+
+.logVal button{
+    margin:auto;
+    margin-left:20px;
+    margin-bottom:10px;
+
+}

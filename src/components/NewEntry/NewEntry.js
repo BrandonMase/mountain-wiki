@@ -4,7 +4,6 @@ import './NewEntry.css';
 import axios from 'axios'
 import { checkUserStatus } from './../../utility'
 import { connect } from 'react-redux';
-import {addNewVote} from './../../ducks/reducer';
 
 class NewEntry extends Component {
   constructor() {
@@ -29,8 +28,6 @@ class NewEntry extends Component {
     //check if the window is in mobile mode
     //set the content editor to checked and hide the preview div
   componentDidMount() {
-    
-    
     // console.log("STATUS",response);
     if (window.innerWidth <= 992) {
       document.getElementById('c1').checked = true;
@@ -215,4 +212,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps,{addNewVote})(NewEntry)
+export default connect(mapStateToProps)(NewEntry)

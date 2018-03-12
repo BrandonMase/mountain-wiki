@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './Comments.css';
 import './EntryView.css';
-
+import LogValidator from './../LogValidator/LogValidator'
 import marked from 'marked';
 import Entry from './Entry';
 import Answer from './Answer';
 import Reply from './Reply';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import {logValidator} from './../../ducks/reducer';
 class EntryView extends Component {
 
   constructor(props) {
@@ -21,6 +22,7 @@ class EntryView extends Component {
       entry_id: null,
       date: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
       loading:false,
+      showValidator:false,
     }
 
     this.getEntry = this.getEntry.bind(this);
@@ -50,6 +52,8 @@ class EntryView extends Component {
     else{
       this.setState({user_id:0,entry_id:id},() => this.runInitialAxiosCall())
     }
+
+    console.log("alskdjalkjsd",this.props)
   }
 
   
@@ -87,6 +91,7 @@ class EntryView extends Component {
       })
 
       //PUSHES ALL THE REPLIES TO EACH PARENT
+      parentComments.map(e=>e.replies = [])
       parentComments.map(e => {
         comments.map(c => {
           if (c.ref_answer_id == e.auto_id) {
@@ -101,6 +106,7 @@ class EntryView extends Component {
         })
       })
 
+      console.log("ENTRY STATE",this.state)
       //CREATES THE PARENTS ANSWERS
       parentComments.map(e => {
      
@@ -122,7 +128,7 @@ class EntryView extends Component {
 
     //PUSHS THE NEW ANSWER TO STATE
     let comments = this.state.comments;
-    let newAnswer = {content:this.state.newAnswer,name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:this.props.state.user_id,total_points:1}
+    let newAnswer = {content:this.state.newAnswer,name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:this.props.state.user_id,total_points:1,vote_upvote:1,vote_downvote:0}
     comments.push(newAnswer)
 
     let newEntry = { ...this.state.entry }
@@ -134,9 +140,11 @@ class EntryView extends Component {
     axios.post('/api/addAnswer/',obj)
   }
 
+
   //ADDS THE ANSWER TEXTBOX BASED ON IF THE USER HAS ALREADY MADE A TOP LEVEL ANSWER
   //IF THEY ALREADY HAVE IT DOESN'T LET YOU MAKE ANOTHER TOP LEVEL COMMENT
   addAnswerHTML() {
+    const {logValidator} = this.props;
     let html = '';
 
     if(this.state.loaded){
@@ -147,7 +155,10 @@ class EntryView extends Component {
             Know the answer? Share with others!
           </div>
           <textarea className="bodyText" onChange={e => this.setState({newAnswer:e.target.value})} ></textarea>
-          <div><button className="greenColor" onClick={this.addAnswer}>Add answer</button></div>
+          <div><button className="greenColor" onClick={this.state.user_id !== 0 ? this.addAnswer : (e) => {
+    
+            logValidator({mousePosX:e.clientX,mousePosY:e.clientY+window.pageYOffset})}
+            }>Add answer</button></div>
         </div>
       
       let comments = this.state.comments;
@@ -188,4 +199,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(EntryView)
+export default connect(mapStateToProps,{logValidator})(EntryView)

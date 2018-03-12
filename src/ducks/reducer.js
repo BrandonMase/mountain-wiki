@@ -1,7 +1,12 @@
 const iState = {
   username: "Brandon",
-  user_id:34,
+  // user_id:34,
   votes:[],
+  logValidator:false,
+  mousePosX: null,
+  mousePosY: null,
+  width:window.innerWidth,
+  height:window.innerHeight,
 }
 
 export function reduceRunner(action) {
@@ -11,24 +16,27 @@ export function reduceRunner(action) {
   }
 }
 
-const ADD_NEW_VOTE = "ADD_NEW_VOTE";
-export function addNewVote(action){
-  return{
-    type:ADD_NEW_VOTE,
-    payload:action
+const LOG_VALIDATOR = "LOG_VALIDATOR"
+export function logValidator(action){
+  return {
+    type:LOG_VALIDATOR,
+    payload:action,
   }
 }
 
 export default function (state = iState, action) {
   let newState = {...state}
   switch(action.type){
-    case ADD_NEW_VOTE:{
-      newState.votes.push(action.payload);
+    case LOG_VALIDATOR:
+      newState.logValidator = !newState.logValidator;
+  
+      newState.mousePosX = action.payload.mousePosX;
+      newState.mousePosY = action.payload.mousePosY;
       return {...newState}
-    }
-      default:{
+    
+      default:
         return {...newState}
-      }
+      
   }
   // if (state.hasOwnProperty(action.type)) {
   //   let newState = { ...state };

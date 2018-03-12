@@ -5,6 +5,9 @@ import approval from './../../assets/approval.png';
 import downvote from './../../assets/downvote.png';
 import upvote from './../../assets/upvote.png';
 import axios from 'axios'
+import LogValidator from './../LogValidator/LogValidator'
+import {logValidator} from './../../ducks/reducer';
+import {NavLink} from 'react-router-dom'
 
 class Entry extends Component {
   constructor(props) {
@@ -17,6 +20,7 @@ class Entry extends Component {
       answers:0,
       entry_id:null,
       vote:10,
+      showValidator:false,
     }
 
     this.voteIconChanger = this.voteIconChanger.bind(this)
@@ -49,7 +53,7 @@ class Entry extends Component {
     let html = '';
     if (this.state.entry_id) {
       html = <div className="entryDesc headerText greenColor">
-        <a href={`/entry/${this.state.user_id}`}>This question has an entry<div><img src={approval} /></div></a>
+        <NavLink to={`/entry/${this.state.user_id}`}>This question has an entry<div><img src={approval} /></div></NavLink>
       </div>
     }  
   
@@ -60,38 +64,50 @@ class Entry extends Component {
   //IF A USER ISN'T LOGGED IN IT WON'T LET THEM VOTE
   //IF THEY ARE LOGGED IN LETS THEM VOTE AND CHANGES COLOR OF THE ARROW CHOSE
   voteIconChanger(){
+    const {logValidator} = this.props;
     let style={backgroundColor:'#ff5722'}
     let style2={backgroundColor:'#536DFE '}
     let voteStyle = {}
+    if(this.state.total_points <= 0){
+      voteStyle={backgroundColor:'#212121'}
+    }
+
     let html = ''
 
     //DON'T LET SOMEONE WHO ISN'T LOGGED IN VOTE
     if(!this.props.state.user_id){
       return (<div className="votesBottom">
-                <img src={upvote} id="upvote" className="voteIcon" /><p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p><img id="downvote" className="voteIcon" src={downvote}/>
+                <img onClick={(e) => this.props.logValidator({mousePosX:e.clientX,mousePosY:e.clientY + window.pageYOffset})} src={upvote} id="upvote" className="voteIcon" />
+                <p style={voteStyle} className="headerText greenColor">
+                  <span>{this.state.total_points}</span>
+                </p>
+                <img onClick={(e) => this.props.logValidator({mousePosX:e.clientX,mousePosY:e.clientY + window.pageYOffset})} id="downvote" className="voteIcon" src={downvote}/>
               </div>)
     }
     else{
-      if(this.state.total_points <= 0){
-        voteStyle={backgroundColor:'#212121'}
-      }
 
         //IF THERE ISN'T A VOTE SETS EVERYTHING TO NORMAL
         html = <div className="votesBottom">
-                <img src={upvote} id="upvote" className="voteIcon" onClick={() => this.setState({vote:true,total_points:+this.state.total_points+1},()=>this.addVote("insert",true))} /><p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p><img id="downvote" onClick={() => this.setState({vote:false,total_points:+this.state.total_points -1},()=>this.addVote("insert",false))} className="voteIcon" src={downvote}/>
+                <img src={upvote} id="upvote" className="voteIcon" onClick={() => this.setState({vote:true,total_points:+this.state.total_points+1},()=>this.addVote("insert",true))} />
+                <p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p>
+                <img id="downvote" onClick={() => this.setState({vote:false,total_points:+this.state.total_points -1},()=>this.addVote("insert",false))} className="voteIcon" src={downvote}/>
               </div>
       if(this.state.vote !== ''){
 
         if(!this.state.vote){
           //IF THERE IS A DOWNVOTE SET THE DOWNVOTE ARROW TO BLUE
           html = <div className="votesBottom">
-                  <img src={upvote}onClick={() => this.setState({vote:true,total_points:+this.state.total_points+2},()=>this.addVote("update",true))} id="upvote" className="voteIcon" /><p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p><img onClick={() => this.setState({vote:'',total_points:+this.state.total_points+1},()=>this.addVote("delete",false))} style={style2} id="downvote" className="voteIcon" src={downvote}/>
+                  <img src={upvote}onClick={() => this.setState({vote:true,total_points:+this.state.total_points+2},()=>this.addVote("update",true))} id="upvote" className="voteIcon" />
+                  <p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p>
+                  <img onClick={() => this.setState({vote:'',total_points:+this.state.total_points+1},()=>this.addVote("delete",false))} style={style2} id="downvote" className="voteIcon" src={downvote}/>
                 </div>
         }
         else{
           //IF THERE IS AN UPVOTE SET THE UPVOTE ARROW TO ORANGE
           html = <div className="votesBottom">
-                  <img onClick={() => this.setState({vote:'',total_points:+this.state.total_points - 1},()=>this.addVote("delete",true))} style={style} src={upvote} id="upvote" className="voteIcon" /><p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p><img onClick={() => this.setState({vote:false,total_points:+this.state.total_points - 2},()=>this.addVote("update",false))}  id="downvote" className="voteIcon" src={downvote}/>
+                  <img onClick={() => this.setState({vote:'',total_points:+this.state.total_points - 1},()=>this.addVote("delete",true))} style={style} src={upvote} id="upvote" className="voteIcon" />
+                  <p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p>
+                  <img onClick={() => this.setState({vote:false,total_points:+this.state.total_points - 2},()=>this.addVote("update",false))}  id="downvote" className="voteIcon" src={downvote}/>
                 </div>
         }
 
@@ -128,7 +144,7 @@ class Entry extends Component {
         {this.hasEntry()}
 
         <div className="authorDiv bodyText">
-          <a className="authorLink" href={`/u/${this.state.user_id}`}>{this.state.username}</a> on {this.state.date}
+          <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}
         </div>
 
         <hr />
@@ -153,6 +169,7 @@ class Entry extends Component {
           </div>
             
         </div> 
+        {this.state.showValidator ? <LogValidator childProps={this.state} resetState={() => this.resetState()} /> : ''}
       </div>
     );
   }
@@ -164,4 +181,4 @@ const mapStateToProps = (state) =>{
   }
 }
 
-export default connect(mapStateToProps)(Entry)
+export default connect(mapStateToProps,{logValidator})(Entry)

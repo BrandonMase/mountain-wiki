@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './LandingPage.css';
-export default class QuestionDiv extends Component {
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+class QuestionDiv extends Component {
   constructor(props) {
     super(props);
 
@@ -33,10 +35,7 @@ export default class QuestionDiv extends Component {
           <div className="votes answerId accentColor"><p>{this.state.answers} <br />answers</p></div>
         </div>
         <div className="rightQuestionDiv">
-          <div className="questionHeaderText"><a href={`/entry/${this.state.auto_id}`}>{this.state.title}</a>
-            is_entry:{this.state.is_entry.toString()}
-            {this.props.childProps.is_question}
-            {this.props.childProps.is_snippet}
+          <div className="questionHeaderText"><Link to={`/entry/${this.state.auto_id}`}>{this.state.title}</Link>
           </div>
           <div className="questionLabel ">Javascript</div>
           <div className="questionLabel ">Javascript</div>
@@ -46,3 +45,5 @@ export default class QuestionDiv extends Component {
     );
   }
 }
+
+export default connect()(QuestionDiv)

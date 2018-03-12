@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {NavLink} from 'react-router-dom';
 export default class Post extends Component {
   render() {
     let date = this.props.childProps.date.split("/")
@@ -11,9 +11,9 @@ export default class Post extends Component {
          
         <div className="postRightContainer">
           <div className="accentColor headerText">
-          <a className="entryLink" href={`/entry/${this.props.childProps.auto_id}`}>
+          <NavLink className="entryLink" to={`/entry/${this.props.childProps.auto_id}`}>
             {this.props.childProps.title}
-          </a>
+          </NavLink>
           </div>
           <div className="bodyText">
             <span className="answers"><strong>{this.props.childProps.answers}</strong> comments</span>

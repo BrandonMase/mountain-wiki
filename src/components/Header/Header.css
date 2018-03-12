@@ -10,6 +10,11 @@
   bottom:0;
   z-index: 100;
 }
+header .noMargin{
+  margin:0;
+  margin-top:20px;
+  padding:0;
+}
 
 header{
   padding-bottom:20px;

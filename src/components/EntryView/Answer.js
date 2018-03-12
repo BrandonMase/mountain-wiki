@@ -3,7 +3,10 @@ import './Comments.css';
 import axios from 'axios'
 import Reply from './Reply'
 import { connect } from 'react-redux';
-
+import {logValidator} from './../../ducks/reducer';
+import downvote from './../../assets/downvote.png';
+import upvote from './../../assets/upvote.png';
+import {NavLink} from 'react-router-dom'
 class Answer extends Component {
   constructor(props) {
     super(props);
@@ -12,22 +15,30 @@ class Answer extends Component {
       seeAllComments: false,
       newComment:null,
       date:new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+      vote:false,
     }
     this.makeAnwserEditable = this.makeAnwserEditable.bind(this)
     this.showEditableAnswer = this.showEditableAnswer.bind(this)
     this.updateAnswer = this.updateAnswer.bind(this)
     this.getReplies = this.getReplies.bind(this)
+    this.voteIconChanger = this.voteIconChanger.bind(this)
   }
   componentDidMount(props) {
     const { auto_id, content, total_points, date, name, picture, user_total_points, user_id,replies,entry_id } = this.props.childProps;
-    this.setState({ auto_id: auto_id, content: content, newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies,entry_id:entry_id })
+    console.log(this.props.childProps);
+    let vote = '';
+    if(+this.props.childProps.vote_upvote >= 1){vote=true}
+    if(+this.props.childProps.vote_downvote >= 1){vote=false}
+    console.log("SKJDFLKDJFLSKJDF",vote)
+
+    this.setState({ auto_id: auto_id, content: content, newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies,entry_id:entry_id,vote:vote })
   }
   
   //CREATES A NEW REPLY TO AN ANSWER
   createNewComment(){
     const {user_id,username} = this.props.state
 
-    if(this.state.newComment){
+    if(this.state.newComment  && user_id){
       let replies = [];
       if(this.state.replies){
       replies = this.state.replies.slice()
@@ -115,14 +126,87 @@ class Answer extends Component {
           html.push(<Reply childProps={e}/>)
         })
 
-        html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText" onChange={e=>this.setState({newComment:e.target.value})}></textarea><button className="greenColor" onClick={e=>this.createNewComment()}>add a comment</button></div>);
+        html.push(this.props.state.user_id ? <div className="addAComment secondaryText"><textarea className="replyTextBox bodyText" onChange={e=>this.setState({newComment:e.target.value})}></textarea>
+            <button className="greenColor" onClick={(e) => this.createNewComment() }>add a comment</button></div> :<div className="addAComment secondaryText"><button className="greenColor">Log in to add a comment</button></div>);
+
       }
     }
     else {
-      html.push(<div className="addAComment secondaryText"><textarea className="replyTextBox bodyText" onChange={e=>this.setState({newComment:e.target.value})}></textarea><button className="greenColor" onClick={e=>this.createNewComment()}>add a comment</button></div>);
+      html.push(this.props.state.user_id ? <div className="addAComment secondaryText"><textarea className="replyTextBox bodyText" onChange={e=>this.setState({newComment:e.target.value})}></textarea>
+      <button className="greenColor" onClick={(e) => this.createNewComment() }>add a comment</button></div> :<div className="addAComment secondaryText"><button className="greenColor">Log in to add a comment</button></div>);
+
     } 
 
     return html;
+  }
+
+  voteIconChanger(){
+    let style={backgroundColor:'#ff5722'}
+    let style2={backgroundColor:'#536DFE '}
+    let voteStyle = {}
+    if(+this.state.total_points <= 0){
+      voteStyle={backgroundColor:'#212121'}
+    }
+    let html = ''
+
+    //DON'T LET SOMEONE WHO ISN'T LOGGED IN VOTE
+    if(!this.props.state.user_id){
+      return (<div className="votesBottom">
+                <img src={upvote} onClick={(e) => this.props.logValidator({mousePosX:e.clientX,mousePosY:e.clientY+window.pageYOffset})} id="upvote" className="voteIcon" />
+                <p style={voteStyle} className="headerText greenColor">
+                  <span>{this.state.total_points}</span>
+                  </p>
+                <img onClick={(e) => this.props.logValidator({mousePosX:e.clientX,mousePosY:e.clientY+window.pageYOffset})} id="downvote" className="voteIcon" src={downvote}/>
+              </div>)
+    }
+    else{
+
+        //IF THERE ISN'T A VOTE SETS EVERYTHING TO NORMAL
+        html = <div className="votesBottom">
+                <img src={upvote} id="upvote" className="voteIcon" onClick={() => this.setState({vote:true,total_points:+this.state.total_points+1},()=>this.addVote("insert",true))} />
+                <p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p>
+                <img id="downvote" onClick={() => this.setState({vote:false,total_points:+this.state.total_points -1},()=>this.addVote("insert",false))} className="voteIcon" src={downvote}/>
+              </div>
+      if(this.state.vote !== ''){
+
+        if(!this.state.vote){
+          //IF THERE IS A DOWNVOTE SET THE DOWNVOTE ARROW TO BLUE
+          html = <div className="votesBottom">
+                  <img src={upvote}onClick={() => this.setState({vote:true,total_points:+this.state.total_points+2},()=>this.addVote("update",true))} id="upvote" className="voteIcon" />
+                  <p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p>
+                  <img onClick={() => this.setState({vote:'',total_points:+this.state.total_points+1},()=>this.addVote("delete",false))} style={style2} id="downvote" className="voteIcon" src={downvote}/>
+                </div>
+        }
+        else{
+          //IF THERE IS AN UPVOTE SET THE UPVOTE ARROW TO ORANGE
+          html = <div className="votesBottom">
+                  <img onClick={() => this.setState({vote:'',total_points:+this.state.total_points - 1},()=>this.addVote("delete",true))} style={style} src={upvote} id="upvote" className="voteIcon" />
+                  <p style={voteStyle} className="headerText greenColor"><span>{this.state.total_points}</span></p>
+                  <img onClick={() => this.setState({vote:false,total_points:+this.state.total_points - 2},()=>this.addVote("update",false))}  id="downvote" className="voteIcon" src={downvote}/>
+                </div>
+        }
+
+      }
+
+    return html;
+    }
+  }
+
+  //ADDS A VOTES TO THE STATE AND THE DB
+  addVote(type,voteType){
+    let obj = {
+      user_id:this.props.state.user_id,
+      vote_id:this.state.auto_id,
+      is_entry:false,
+      is_upvote:voteType,
+      type:type,
+      
+    }
+    
+    axios.post('/api/voter',obj).then().catch(err => console.log(err));
+
+
+    console.log("VOTER",type,obj)
   }
   render() {
     return (
@@ -132,7 +216,7 @@ class Answer extends Component {
             <div className="userName">
               <img src={this.state.picture} />
                 <div className="actualUserName">
-                  <p><a className="authorLink" href={`/u/${this.state.user_id}`}>{this.state.name}</a></p>
+                  <p><NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.name}</NavLink></p>
                 </div>
 
               <br />
@@ -143,11 +227,7 @@ class Answer extends Component {
 
             </div>
 
-            <div className="votesDiv">
-              <img src="/images/chevron-up.png" />
-              <p>{this.state.total_points}</p>
-              <img src="/images/chevron-down.png"/>
-            </div>
+            {this.voteIconChanger()}
 
           </div>
           <div className="commentContent bodyText">
@@ -158,6 +238,7 @@ class Answer extends Component {
         </div>
         
       </div>
+      {console.log("FKSLJLKDJFLKSJDFLKJSDF",this.state)}
       {this.getReplies()} 
     </div>
     );
@@ -170,4 +251,4 @@ const mapStateToProps = (state) =>{
 }
 }
 
-export default connect(mapStateToProps)(Answer)
+export default connect(mapStateToProps,{logValidator},null,{pure:false})(Answer)

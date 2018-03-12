@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './Header.css';
 import logo from './../../images/MW.png'
+import {connect} from 'react-redux'; 
+import {Link} from 'react-router-dom';
 
-export default class Header extends Component {
+class Header extends Component {
   constructor() {
     super()
 
@@ -43,7 +45,7 @@ export default class Header extends Component {
   displayProfileMobile() {
     
     let html = <div className="account"><a href="#"><img src="/../../images/account.png" /></a></div>
-    if (!this.state.req.session.user) {
+    if (!this.props.state.user_id) {
       html = <div className="signUpAccount accentColor"><a href="#">SIGN UP / LOGIN</a></div>
     }
 
@@ -53,8 +55,9 @@ export default class Header extends Component {
   displayProfile() {
    
     let html = [[<li className="whiteText"><a href="#">login</a></li>],[ <li><button>Sign up</button></li>]]
-    if (this.state.req.session.user) {
-      html = <li><button>Brandon</button></li>
+    if (this.props.state.user_id) {
+      console.log("PROPSPOSPOS",this.props)
+      html = <li><Link to={`/u/${this.props.state.user_id}`}><button>{this.props.state.username}</button></Link></li>
     }
     return html;
   }
@@ -69,9 +72,9 @@ export default class Header extends Component {
         {this.searchBar()}
 
         <header className="primaryColor">
-          
-        <div className="logo"><img src="/../../images/MW.png" /></div>
-          <div className="siteName">mountainwiki</div> 
+        
+        <Link to="/"><div className="logo"><img src="/../../images/MW.png" /></div></Link>
+        <Link className="noMargin" to="/"><div className="siteName">mountainwiki</div> </Link>
 
           <div className="searchIcon"><a onClick={e => this.toggleSearchBar(e)} href="#"><img src="/../../images/magnify.png" /><span>...Search for a answer</span></a></div>
           <a onClick={e=> this.toggleSearchBar(e)} href="#"><img src="/../../images/magnify.png" /></a>
@@ -90,3 +93,11 @@ export default class Header extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) =>{
+  return {
+    state:state,
+  }
+}
+
+export default connect(mapStateToProps)(Header)

@@ -230,6 +230,19 @@
   margin-right:10px;
 }
 
+.commentContainer .votesBottom{
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+.commentContainer .votesBottom p{
+  flex:.3 ;
+}
+
 @media (min-width:992px){
 
   .replyTextBox{

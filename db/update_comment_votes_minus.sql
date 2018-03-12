@@ -1,0 +1,1 @@
+UPDATE mw_comments SET total_points = total_points - $2 WHERE auto_id = $1;

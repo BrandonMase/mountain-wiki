@@ -65,9 +65,16 @@
  .votesDiv {
    text-align:center;
    margin-top:10px;
+   /* margin:auto !important; */
+   /* padding-top:10px !important; */
    display:none;
    flex:4;
   /* border:solid black 1px; */
+}
+
+.votesDiv > * > *{
+  /* margin:auto !important; */
+  padding-top:15px !important;
 }
 
 .mobileVotesDiv{
@@ -147,6 +154,7 @@
   margin:auto;
 }
 
+
 @media (min-width:992px){
   .mainContainer>div{
     width:90%;
@@ -169,6 +177,9 @@
     font-size:16px;
   }
 
+  .questionContainer .accentColor{
+    padding:0;
+  }
 
 
   .votes{

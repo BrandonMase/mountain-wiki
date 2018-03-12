@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Comments.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import {NavLink} from 'react-router-dom'
 
 class Reply extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class Reply extends Component {
     return (
                   <div className="commentContainer replyComment dp1-bs">
             <div className="commentDetails headerText lightPrimaryColor">
-          <div className="userName"><img src={this.props.childProps.picture}/><div className="actualUserName"><p><a className="authorLink" href={`/u/${this.props.childProps.user_id}`}>{this.props.childProps.name}</a></p></div></div>
+          <div className="userName"><img src={this.props.childProps.picture}/><div className="actualUserName"><p><NavLink className="authorLink" to={`/u/${this.props.childProps.user_id}`}>{this.props.childProps.name}</NavLink></p></div></div>
             </div>
 
             <div className="commentContent bodyText">
