@@ -9,6 +9,7 @@ const commentController = require('./controllers/commentController')
 const userController = require('./controllers/userController');
 const checkUserStatus = require('./middlewares/checkUserStatus');
 const voteController = require('./controllers/voteController');
+const searchController = require('./controllers/searchController');
 var stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 
 require('dotenv').config();
@@ -36,8 +37,8 @@ app.get('/api/getLandingEntries', landingController.getLandingEntries);
 //USER INFORMATION
   //check if user is logged in
 app.get('/api/checkUserStatus',checkUserStatus.checkUserStatus,userController.getUserStatus)
-app.get('/api/getUserInfo/:id',userController.getUserInfo);
-app.get('/api/getUserActivity/:id',userController.getUserActivity);
+app.get('/api/getUserInfo/:id/:seen',userController.getUserInfo);
+app.get('/api/getUserActivity/:id/:seen',userController.getUserActivity);
   //delete user
 app.delete('/api/deleteUser')
   //update user
@@ -57,6 +58,9 @@ app.delete('/api/deleteEntry/:id')
 
 //VOTE STUFF
 app.post('/api/voter',voteController.voter,voteController.update_entry,voteController.update_comment)
+
+app.get('/api/goSearch',searchController.goSearch)
+app.get('/api/goSearchLabel',searchController.goSearchLabel)
 
 
 

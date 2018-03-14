@@ -16,6 +16,27 @@
   margin-bottom:30px;
 }
 
+.entryContainer .privateText{
+  color:white !important;
+  padding:5px;
+  font-size:14px;
+}
+
+.entryContainer .privateText{
+
+    color:#212121 !important;
+    font-size:13px;
+    padding:5px;
+    background-color:#f3f1f1;
+
+}
+
+
+
+.entryContainer .privateText span{
+  text-transform: initial;
+}
+
 .entryContainer .entryDesc{
   /* text-align:center; */
   padding:10px 10px;
@@ -27,8 +48,7 @@
 }
 .entryContainer .authorDiv{
   text-align:right;
-  margin-right:10px;
-  margin-top:10px;
+  font-size:15px;
 }
 
 .authorLink{
@@ -38,6 +58,16 @@
 
 .authorLink:hover{
   color:grey;
+}
+
+.entryHeader img{
+  display:inline-block;
+  margin:0;
+  padding:0;
+  width:25px;
+  height:25px;
+  vertical-align: center;
+  flex: 0 0;
 }
 
 

@@ -3,25 +3,28 @@ import axios from 'axios';
 import './Profile.css'
 import Post from './Post';
 import Comment from './Comment'
+import {connect} from 'react-redux'
+import magnify from './../../assets/magnify.png';
 
-export default class Profile extends Component {
+class Profile extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      postSelector:"overview"
+      postSelector:"overview",
+      content:null,
+      searchTerm:null,
     };
 
     this.getContent = this.getContent.bind(this);
     this.postSelector = this.postSelector.bind(this)
-    this.getContent = this.getContent.bind(this);
-    this.getCount = this.getCount.bind(this);
   }
   
   componentDidMount(){
-    const {id} = this.props.match.params
+    let id = this.props.state.user_id
+
     //GET THE BASIC USER INFORMATION
-    axios.get(`/api/getUserInfo/${id}/false`)
+    axios.get(`/api/getUserInfo/${id}/true`)
       .then(res => {
         const {name,total_points,picture} = res.data[0];
         this.setState({name:name,points:total_points,picture:picture})
@@ -29,21 +32,9 @@ export default class Profile extends Component {
       .catch(err => console.log(err))
     
     //GET ALL THE POSTS AND COMMENTS THE USER HAS MADE THAT ISN'T PRIVATE
-    axios.get(`/api/getUserActivity/${id}/false`)
-      .then(res=>this.setState({content:res.data},()=>this.getCount()))
+    axios.get(`/api/getUserActivity/${id}/true`)
+      .then(res=> this.setState({content:res.data}))
       .catch(err => console.log(err))
-  }
-
-  getCount(){
-    let postCount = 0;
-    let commentCount = 0;
-    console.log("RAN")
-    if(this.state.content){
-      this.state.content.map(e =>{
-        e.labels ? postCount++ : commentCount++
-      })
-     this.setState({postCount:postCount,commentCount:commentCount})
-    }
   }
 
   //SORTS AND DISPLAYS ALL OF THE USER'S CONTENT
@@ -78,15 +69,24 @@ export default class Profile extends Component {
         return d-c
       });
 
-
       //MAP AND PUSH BASED ON WHICH TYPE OF CONTENT IT IS
       content.map(e =>{
         if(e.labels){
-         
+          if(this.state.searchTerm){
+            if(!e.title.includes(this.state.searchTerm) || !e.content.includes(this.state.searchTerm)){
+              return
+            }
+          }
+          console.log("CONTENTNTNTNT",e.content)
           html.push(<Post childProps={e} />);
         }
         else{
-          console.log("COMMENTS",e)
+          if(this.state.searchTerm){
+            if(!e.content.includes(this.state.searchTerm)){
+              return
+            }
+          }
+          console.log("CONTENTNTNTNT",e.content)
           html.push(<Comment childProps={e}/>)
         }
       })
@@ -97,7 +97,7 @@ export default class Profile extends Component {
 
     //IF THERE ISN'T ANY OF A CERTAIN CONTENT TYPE, DISPLAY NOTHING HERE
     if(!html[0]){html = <p className="accentColor headerText dp1-bs">Nothing here</p>}
-    
+
     return html
   }
 
@@ -128,13 +128,14 @@ export default class Profile extends Component {
         <div className="leftContainer">
           <div>
             <ul className="postSelector dp1-bs">
+            <li className="searchBar bodyText"><input className="searchBarInput" placeholder="Search" onChange={e => this.setState({searchTerm:e.target.value})}/><div className="searchIcons"><img src={magnify}/></div></li>
+              
               {this.postSelector()}
+              {/* <li className="searchBar bodyText"><input className="searchBarInput" placeholder="Search"/><div className="searchIcon"><img src={magnify}/></div></li> */}
             </ul>
           </div>
         {this.getContent()}
           </div>
-          
-          <div className="mainRightContainer">
           <div className="rightContainer dp1-bs">
             <div className="accentColor headerText">
               <span>{this.state.name}</span><img src={this.state.picture}/>
@@ -143,13 +144,6 @@ export default class Profile extends Component {
               <li>points <strong>{this.state.points}</strong></li>
               <li>member since 2018/07/30</li>
             </ul>
-            </div>
-
-            <div className="dp1-bs bottomRightContainer">
-              <span className="bodyText">Posts:<strong>{this.state.postCount}</strong></span>
-              <br/>
-              <span className="bodyText">Comments:<strong>{this.state.commentCount}</strong></span>
-            </div>
           </div>
         
       </div>
@@ -157,3 +151,10 @@ export default class Profile extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) =>{
+  return {
+    state:state
+  }
+}
+export default connect(mapStateToProps)(Profile)

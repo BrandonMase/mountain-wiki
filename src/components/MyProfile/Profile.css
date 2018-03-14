@@ -11,6 +11,49 @@
     background-color:#f3f1f1 !important;
 }
 
+.postSelector .searchBar{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
+.commentCon {
+    display:block;
+}
+
+.commentCon > *{
+    flex:1;
+}
+.postSelector .searchBarInput{
+    flex:1;
+}
+/*
+.postSelector .searchBar img{
+    display:inline-block;
+    width:20px;
+    background-color:#536DFE;
+    padding:9.5px;
+    margin:auto;
+} */
+
+.postSelector .searchBar img{
+    flex:1;
+    margin:0;
+    padding:4.5px;
+    width:30px;
+    background-color:#536DFE;
+}
+
+.privateText{
+    color:#212121 !important;
+    font-size:13px;
+    padding:5px;
+    background-color:#f3f1f1;
+}
+
 .leftContainer > *{
     background-color:white;
 }
@@ -80,7 +123,7 @@ font-size:18px
 
 .mainProfilePostContainer  .postRightContainer{
     flex:10;
-    background:#f3f1f1;
+    background:white;
     text-align:center;
     
 }
@@ -148,10 +191,6 @@ a:hover{
 
 .postRightContainer .accentColor{
     text-align:left;
-}
-
-.rightContainer .bottomRightContainer{
-    margin-top:10px;
 }
 
 .postRightContainer .isPost{
@@ -235,11 +274,6 @@ a:hover{
     font-size:15px;
 }
 
-.bottomRightContainer{
-    margin-top:10px;
-    text-align:center;
-}
-
 
 
 
@@ -261,7 +295,7 @@ a:hover{
     }
     
     .profileContainer > *{
-        background-color:#f3f1f1 !important;
+        background-color:white;
         margin:0;
         padding:0;
         margin-top:10px;
@@ -277,7 +311,7 @@ a:hover{
     }
     
     .rightContainer{
-        /* margin-right:10px;
+        margin-right:10px;
         flex:1;
         display: flex;
         flex-direction: column;
@@ -285,42 +319,31 @@ a:hover{
         justify-content: flex-start;
         align-items: stretch;
         align-content: stretch;
-        padding:0; */
         /* border:solid black 1px; */
-        padding:0;
     }
-
-    .rightContainer *{
-        padding:0 20px;
-    }
-
-    .mainRightContainer{
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: stretch;
-        align-content: flex-start;
-        background-color:#212121;
-    }
-
-    .bottomRightContainer{
-        margin-top:10px;
-        width:88%;
-        background-color:white;
-        
-    }
-
-    .rightContainer ul{
-        margin:0;
-        padding:20px !important;
-        background-color:white;
-    }
-    
-
-
 
     .mainProfilePostContainer .bodyText{
         font-size:14px;
+    }
+
+    .postSelector .searchBar{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+    
+    .postSelector .searchBarInput{
+        flex:1;
+    }
+    
+    .postSelector .searchBar img{
+        display:inline-block;
+        width:20px;
+        background-color:#536DFE;
+        padding:9.5px;
+        margin:auto;
     }
 }

@@ -1,11 +1,11 @@
 module.exports = {
   addComment: (req, res) => {
     const db = req.app.get('db');
-    const { date, newAnswer, entry_id, user_id } = req.body;
-
+    const { newDate, newAnswer, entry_id, user_id } = req.body;
+    console.log("LOOK DATE",req.body)
     // console.log(req.body);
 
-    db.add_answer([date, newAnswer, entry_id, user_id])
+    db.add_answer([newDate, newAnswer, entry_id, user_id])
       .then(id =>{
         db.add_vote(user_id,false,id[0].auto_id,true)
           .then().catch(err => console.log(err));

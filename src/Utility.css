@@ -105,8 +105,9 @@ Colors
 .questionHeaderText{
   text-transform:uppercase;
   font-family: 'Fjalla One', sans-serif;
-  letter-spacing: 1px;
+  letter-spacing: .25px;
   font-size:20px;
+  font-weight: lighter;
   color:#212121 !important;
 }
 

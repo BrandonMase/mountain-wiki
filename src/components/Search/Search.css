@@ -11,6 +11,10 @@ img:hover{
     cursor: pointer;   
 }
 
+.searchLink:hover{
+    cursor: pointer;
+}
+
 .mainSearchContainer .searchBox{
     /* width:90%; */
     display:flex;
@@ -42,7 +46,8 @@ img:hover{
     font-size:14px;
     list-style: none;
     display:inline-block;
-    margin-right:10px;
+    padding-right:10px;
+    margin-left:2px;
 }
 
 .searchFilters .headerText{
@@ -54,6 +59,10 @@ img:hover{
 
 .searchFilters .filter{
     padding:10px 5px;
+}
+
+.searchFilters .filter:hover{
+    cursor: pointer;
 }
 
 @media(min-width:992px){

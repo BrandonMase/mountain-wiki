@@ -7,7 +7,8 @@ import upvote from './../../assets/upvote.png';
 import axios from 'axios'
 import LogValidator from './../LogValidator/LogValidator'
 import {logValidator} from './../../ducks/reducer';
-import {NavLink} from 'react-router-dom'
+import {NavLink,Link} from 'react-router-dom'
+import edit from './../../assets/pencil.png'
 
 class Entry extends Component {
   constructor(props) {
@@ -27,8 +28,12 @@ class Entry extends Component {
   }
 
   componentDidMount(props) {
-    const { title, content, total_points, answers,entry_id,name,date,master_contributor } = this.props.childProps;
+    const { title, content, total_points, answers,entry_id,name,master_contributor } = this.props.childProps;
+    let date = this.props.childProps.date
+    date = date.slice(0,10).split("-");
 
+    date = `${date[1]}/${date[2]}/${date[0]}`
+    console.log("date",date)
     //SETS THE VOTE STATE BASED ON IF THERE IS AN VOTE IN FOR THE CURRENT ENTRY IN THE DB
     let vote = '';
     if(+this.props.childProps.vote_upvote >= 1){vote=true}
@@ -135,19 +140,20 @@ class Entry extends Component {
   }
 
   render() {
+    let style = {fontFamily:'Fjalla One',textTransform:'uppercase',fontSize:'20px',color:'white',padding:'5px',textAlign:'right',paddingRight:'10px'};
+    {this.props.childProps.entry_type === "entry" ? style.backgroundColor='rgb(0, 184, 0)' : ''}
+    {this.props.childProps.entry_type === "question" ? style.backgroundColor='rgb(255, 53, 53)' : ''}
+    {this.props.childProps.entry_type === "snippet" ? style.backgroundColor='#536DFE' : ''}
     return (
       <div className="entryContainer dp1-bs">
+        
         <div className="entryHeader headerText accentColor">
           <p>{this.state.title}</p>
+          {+this.props.childProps.master_contributor === this.props.state.user_id ?
+          <Link to={`/editEntry/${this.props.childProps.auto_id}`}><img className="editIcons"src={edit}/></Link> : ''}
         </div>
 
         {this.hasEntry()}
-
-        <div className="authorDiv bodyText">
-          <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}
-        </div>
-
-        <hr />
 
         <div className="entryContent bodyText">
           <p id="entryContentP">
@@ -169,6 +175,11 @@ class Entry extends Component {
           </div>
             
         </div> 
+        <div style={style}>{this.props.childProps.entry_type}<div className="authorDiv">by <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}</div></div>
+          
+          
+        {!this.props.childProps.seen && this.props.childProps.master_contributor == this.props.state.user_id ? 
+            <div className="privateText headerText">this post is private. use <span>{`${window.location.protocol}//${window.location.host}/entry/${this.props.childProps.auto_id}?ssc=${this.props.childProps.secret}`}</span> to share.</div> : ''}
         {this.state.showValidator ? <LogValidator childProps={this.state} resetState={() => this.resetState()} /> : ''}
       </div>
     );

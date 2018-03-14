@@ -2,4 +2,4 @@ SELECT mw_entry.auto_id as entry_id,mw_entry.master_contributor,mw_entry.title,m
 FROM mw_comments
 JOIN mw_entry
 ON mw_comments.entry_id = mw_entry.auto_id
-WHERE mw_comments.user_id = $1 and mw_entry.seen = true;
+WHERE mw_comments.user_id = $1 AND mw_entry.seen = true

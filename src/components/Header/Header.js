@@ -3,6 +3,7 @@ import './Header.css';
 import logo from './../../images/MW.png'
 import {connect} from 'react-redux'; 
 import {Link} from 'react-router-dom';
+import magnify from './../../assets/magnify.png';
 
 class Header extends Component {
   constructor() {
@@ -36,7 +37,7 @@ class Header extends Component {
   searchBar() {
     let html = "";
     if (this.state.searchJumpBar) {
-      html = <div className="searchJumpBar primaryColor"><input className="dp1-bs" value={this.state.searchQuery} onChange={e => this.setState({searchQuery:e.target.value})} className="bodyText" placeholder="Search"/></div>
+      html = <div className="searchJumpBar primaryColor"><input className="inputBox dp1-bs" value={this.state.searchQuery} onChange={e => this.setState({searchQuery:e.target.value})} className="bodyText" placeholder="Search"/><Link to={`/s?q=${this.state.searchQuery}`}><div className="accentColor searchLink"><img src={magnify} /></div></Link></div>
     }
 
     return html;
@@ -57,7 +58,7 @@ class Header extends Component {
     let html = [[<li className="whiteText"><a href="#">login</a></li>],[ <li><button>Sign up</button></li>]]
     if (this.props.state.user_id) {
       console.log("PROPSPOSPOS",this.props)
-      html = <li><Link to={`/u/${this.props.state.user_id}`}><button>{this.props.state.username}</button></Link></li>
+      html = <li><Link to={`/myProfile`}><button>{this.props.state.username}</button></Link></li>
     }
     return html;
   }

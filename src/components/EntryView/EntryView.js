@@ -20,7 +20,7 @@ class EntryView extends Component {
       newAnswer: null,
       user_id: 0,
       entry_id: null,
-      date: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+      newDate: new Date(),
       loading:false,
       showValidator:false,
     }
@@ -29,6 +29,7 @@ class EntryView extends Component {
     this.addAnswer = this.addAnswer.bind(this)
     this.addAnswerHTML = this.addAnswerHTML.bind(this)
     this.runInitialAxiosCall = this.runInitialAxiosCall.bind(this);
+    this.showContainer = this.showContainer.bind(this);
       
   }
 
@@ -53,7 +54,6 @@ class EntryView extends Component {
       this.setState({user_id:0,entry_id:id},() => this.runInitialAxiosCall())
     }
 
-    console.log("alskdjalkjsd",this.props)
   }
 
   
@@ -128,7 +128,10 @@ class EntryView extends Component {
 
     //PUSHS THE NEW ANSWER TO STATE
     let comments = this.state.comments;
-    let newAnswer = {content:this.state.newAnswer,name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.date,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:this.props.state.user_id,total_points:1,vote_upvote:1,vote_downvote:0}
+    console.log(this.state.newDate)
+    let newAnswer = {content:this.state.newAnswer,name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.newDate,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:this.props.state.user_id,total_points:1,vote_upvote:1,vote_downvote:0}
+    
+    newAnswer.date = JSON.stringify(newAnswer.date).replace('"',"")
     comments.push(newAnswer)
 
     let newEntry = { ...this.state.entry }
@@ -148,7 +151,7 @@ class EntryView extends Component {
     let html = '';
 
     if(this.state.loaded){
-        // if(this.props.)
+        if(this.props.state.user_id){
       html =
         <div id ="canAddAnswer"className="newAnswer dp1-bs">
           <div className="accentColor">
@@ -160,6 +163,12 @@ class EntryView extends Component {
             logValidator({mousePosX:e.clientX,mousePosY:e.clientY+window.pageYOffset})}
             }>Add answer</button></div>
         </div>
+        }
+        else{
+          html = <div className="accentColor headerText dp1-bs">
+            You must be logged in to comment.
+          </div>
+        }
       
       let comments = this.state.comments;
 
@@ -181,13 +190,37 @@ class EntryView extends Component {
 
     return html;
   }
+
+  showContainer(){
+    let html =[];
+    if(this.state.entry){
+      let search = this.props.location.search;
+      let ssc = [];
+      if(search.indexOf("?scc=")){
+        search = search.split("=");
+        search = search[1];
+      }
+
+      if(this.state.entry.seen || +this.state.entry.master_contributor === this.props.state.user_id || search === this.state.entry.secret){
+        html.push(this.getEntry());
+        html.push(this.hasAnswers());
+        html.push(this.addAnswerHTML());
+      }
+      else{
+          html.push( <div className="privateContainer">
+            <div className="accentColor headerText dp1-bs">{`Sorry this is private`}</div>
+          </div>)
+      }
+    
+    }
+
+
+    return html;
+  }
   render() {
     return (
       <div className="fullEntryContainer">
-        {/* {this.state.entry.content} */}
-        {this.getEntry()}
-        {this.hasAnswers()}
-        {this.addAnswerHTML()}
+        {this.showContainer()}
       </div>  
     );
   }

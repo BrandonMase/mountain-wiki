@@ -19,6 +19,8 @@ export default class Post extends Component {
             <span className="answers"><strong>{this.props.childProps.answers}</strong> comments</span>
             <span>posted on {date}</span>
           </div>
+          {!this.props.childProps.seen ?
+          <div className="headerText privateText">this post is private</div> : ''}
         </div>
       </div>
     );

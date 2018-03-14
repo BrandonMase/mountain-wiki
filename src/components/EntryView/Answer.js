@@ -14,7 +14,7 @@ class Answer extends Component {
     this.state = {
       seeAllComments: false,
       newComment:null,
-      date:new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+      newDate:new Date(),
       vote:false,
     }
     this.makeAnwserEditable = this.makeAnwserEditable.bind(this)
@@ -24,12 +24,13 @@ class Answer extends Component {
     this.voteIconChanger = this.voteIconChanger.bind(this)
   }
   componentDidMount(props) {
-    const { auto_id, content, total_points, date, name, picture, user_total_points, user_id,replies,entry_id } = this.props.childProps;
-    console.log(this.props.childProps);
+    const { auto_id, content, total_points, name, picture, user_total_points, user_id,replies,entry_id } = this.props.childProps;
+    let date = this.props.childProps.date.slice(0,10).split("-");
+    date = `${date[1]}/${date[2]}/${date[0]}`
+
     let vote = '';
     if(+this.props.childProps.vote_upvote >= 1){vote=true}
     if(+this.props.childProps.vote_downvote >= 1){vote=false}
-    console.log("SKJDFLKDJFLSKJDF",vote)
 
     this.setState({ auto_id: auto_id, content: content, newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies,entry_id:entry_id,vote:vote })
   }
@@ -44,7 +45,7 @@ class Answer extends Component {
       replies = this.state.replies.slice()
       }
 
-      let obj = {ref_answer_id:+this.state.auto_id,total_points:0,date:this.state.date,content:this.state.newComment,name:username,user_id:+user_id,entry_id:+this.state.entry_id}
+      let obj = {ref_answer_id:+this.state.auto_id,total_points:0,date:this.state.newDate,content:this.state.newComment,name:username,user_id:+user_id,entry_id:+this.state.entry_id}
       axios.post("/api/addReply",obj)
 
       replies.push(obj)
@@ -238,7 +239,6 @@ class Answer extends Component {
         </div>
         
       </div>
-      {console.log("FKSLJLKDJFLKSJDFLKJSDF",this.state)}
       {this.getReplies()} 
     </div>
     );

@@ -12,8 +12,23 @@ module.exports = {
   },
   getUserActivity:(req,res) =>{
     const db = req.app.get('db');
-    const {id} = req.params;
+    const {id,seen} = req.params;
+    console.log(seen)
+    if(seen == "true"){
+      console.log("hi")
+      db.get_user_posts_own([id])
+      .then(post =>{
+        db.get_user_comments_own([id])
+          .then(comments =>{
+            let obj = post.concat(comments)
+            res.status(200).send(obj);
+          })
+      })
+      .catch(err => console.log(err))
+    }
 
+
+    if(seen == "false"){
     db.get_user_posts([id])
       .then(post =>{
         db.get_user_comments([id])
@@ -23,5 +38,6 @@ module.exports = {
           })
       })
       .catch(err => console.log(err))
+    }
   }
 }

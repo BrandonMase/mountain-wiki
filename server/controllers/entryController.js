@@ -19,7 +19,7 @@ module.exports = {
     const { id } = req.params;
     // console.log(req.params)
     
-    db.get_entry([+id])
+    db.get_entry_for_update([+id])
       .then(response => {
         res.status(200).send(response);
       })
@@ -32,8 +32,14 @@ module.exports = {
     const db = req.app.get('db');
     // console.log(req.body)
     const { title, content, typeOfEntry, seen, date, userId, labels } = req.body
-    // console.log(req.body)
-    db.add_entry([title, content, typeOfEntry, seen, date, userId, labels])
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 30; i++){
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    
+    db.add_entry([title, content, typeOfEntry, seen, date, userId, labels,text])
       .then(id =>{
 
         db.add_vote(userId,true,id[0].auto_id,true).then().catch(err => console.log(err))

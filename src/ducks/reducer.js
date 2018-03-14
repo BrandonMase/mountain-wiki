@@ -1,6 +1,6 @@
 const iState = {
   username: "Brandon",
-  // user_id:34,
+  user_id:34,
   votes:[],
   logValidator:false,
   mousePosX: null,

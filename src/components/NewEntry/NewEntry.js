@@ -17,7 +17,7 @@ class NewEntry extends Component {
       labels: null,
       updateId: null,
       userId: null,
-      date: new Date().toJSON().slice(0,10).replace(/-/g,'/')
+      date: new Date()
     }
 
     this.checkSubmission = this.checkSubmission.bind(this)
@@ -118,10 +118,10 @@ class NewEntry extends Component {
     }
 
     if (count === 0) {
+      console.log("LKSJFLKJDKJSFD",this.state.date)
       if (this.state.updateId === null) {
         axios.post("/api/addEntry", this.state)
           .then(res => {
-            this.props.addNewVote({user_id:this.props.state.user_id,is_entry:true,vote_id:res.data[0].auto_id,is_upvote:true})
             this.props.history.push(`/entry/${res.data[0].auto_id}`)})
           .catch(e => console.log(e))
       }
@@ -140,6 +140,7 @@ class NewEntry extends Component {
 
   updateState(e) {
     const { title, content, labels, seen, typeOfEntry } = e
+    console.log(typeOfEntry);
     // console.log("updateSTATE",e)
     if (this.state.seen !== null) {
       this.setState({ title: title, content: content, labels: labels })
@@ -154,13 +155,11 @@ class NewEntry extends Component {
         document.getElementById('s2').checked =false;
         document.getElementById('s1').checked = true;
       }
-
-      if (typeOfEntry) {
-        if(typeOfEntry === "entry") document.getElementById('t1').checked = true;
-        if(typeOfEntry === "question") document.getElementById('t2').checked = true;
-        if(typeOfEntry === "snippet") document.getElementById('t3').checked = true;
-      }
+        
     }
+      if(typeOfEntry === "entry") {document.getElementById('t1').checked = true;}
+      if(typeOfEntry === "question") {  document.getElementById('t2').checked = true;}
+      if(typeOfEntry === "snippet") {document.getElementById('t3').checked = true;}
   }
 
  

@@ -8,6 +8,7 @@ import EntryView from './components/EntryView/EntryView';
 import NewEntry from './components/NewEntry/NewEntry';
 import Profile from './components/Profile/Profile';
 import LogValidator from './components/LogValidator/LogValidator';
+import MyProfile from './components/MyProfile/Profile'
 import Search from './components/Search/Search';
 import {logValidator} from './ducks/reducer';
 import {Switch,Route} from 'react-router-dom'
@@ -30,6 +31,7 @@ class App extends Component {
           <Route path="/editEntry/:id" component={NewEntry} />
           <Route path="/u/:id" component={Profile}/>
           <Route path="/s" component={Search} />
+          <Route path="/myProfile" component={MyProfile} />
           </Switch>
           
           </div>
