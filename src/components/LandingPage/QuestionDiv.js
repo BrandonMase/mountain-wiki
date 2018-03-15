@@ -45,11 +45,12 @@ class QuestionDiv extends Component {
 
 
   render() {
-    let style = {fontFamily:'Fjalla One',textTransform:'uppercase',fontSize:'20px',color:'white',padding:'5px',textAlign:'right',paddingRight:'10px'};    
+    let style = {fontFamily:'Fjalla One',textTransform:'uppercase',fontSize:'18px',color:'white',padding:'5px',textAlign:'right',paddingRight:'10px'};    
     {this.state.entry_type === "entry" ? style.backgroundColor='rgb(0, 184, 0)' : ''}
     {this.state.entry_type === "question" ? style.backgroundColor='rgb(255, 53, 53)' : ''}
     {this.state.entry_type === "snippet" ? style.backgroundColor='#536DFE' : ''}
 
+    let bgStyle = {}
     return (
   
       <div className="newQuestionDiv dp2-bs" key={this.props.index}>
@@ -66,8 +67,9 @@ class QuestionDiv extends Component {
           <div className="mobileAnswer">{this.state.answers}<br />A</div>
           </div>
         <div className="votesDiv">
-          <div className="votes votesId lightPrimaryColor"><p>{this.state.total_points}<br />votes</p></div>
-          <div className="votes answerId accentColor"><p>{this.state.answers} <br />answers</p></div>
+          
+          <div style={bgStyle} className="votes votesId"><p style={bgStyle}>{this.state.total_points}<br />votes</p></div>
+          <div style={bgStyle} className="votes answerId"><p style={bgStyle}>{this.state.answers} <br />answers</p></div>
         </div>
         <div className="rightQuestionDiv">
           <div className="questionHeaderText"><Link to={`/entry/${this.state.auto_id}`}>{this.state.title}</Link>

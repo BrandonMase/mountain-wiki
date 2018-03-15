@@ -7,8 +7,11 @@ import Entry from './Entry';
 import Answer from './Answer';
 import Reply from './Reply';
 import axios from 'axios';
+import alert from './../../assets/alert-box.png';
+import approval from './../../assets/approval.png';
 import { connect } from 'react-redux';
 import {logValidator} from './../../ducks/reducer';
+import {Link} from 'react-router-dom'
 class EntryView extends Component {
 
   constructor(props) {
@@ -23,6 +26,7 @@ class EntryView extends Component {
       newDate: new Date(),
       loading:false,
       showValidator:false,
+      soAPI:null,
     }
 
     this.getEntry = this.getEntry.bind(this);
@@ -30,6 +34,8 @@ class EntryView extends Component {
     this.addAnswerHTML = this.addAnswerHTML.bind(this)
     this.runInitialAxiosCall = this.runInitialAxiosCall.bind(this);
     this.showContainer = this.showContainer.bind(this);
+    this.soAPI = this.soAPI.bind(this);
+    this.addSO = this.addSO.bind(this);
       
   }
 
@@ -62,7 +68,7 @@ class EntryView extends Component {
   //AND GRABS ANY VOTES THE USER DID FOR THAT ENTRY + COMMENTS
   runInitialAxiosCall(){
     axios.get(`/api/getEntry/${this.state.entry_id}/${this.state.user_id}`)
-      .then(res => this.setState({ entry: res.data.entry[0], comments: res.data.comments,loaded:true },()=> console.log("KSALKJASD",this.state)))
+      .then(res => this.setState({ entry: res.data.entry[0], comments: res.data.comments,loaded:true },()=>this.soAPI()))
       .catch(e => console.log(e));
   }
 
@@ -191,6 +197,45 @@ class EntryView extends Component {
     return html;
   }
 
+  soAPI(){
+    if(this.state.entry){
+      axios.get(`https://api.stackexchange.com/2.2/search?order=desc&sort=votes&intitle=${this.state.entry.title}&site=stackoverflow&key=${process.env.REACT_APP_STACKOVER_API_KEY}`)
+        .then(res => this.setState({soAPI:res.data}))
+        .catch(err => console.log(err))
+    }
+  }
+
+  addSO(){
+    let html = [];
+    if(this.state.soAPI){
+      try{
+    if(this.state.soAPI.items.length !== 0){
+      let end = this.state.soAPI.length < 10 ? this.state.soAPI.length : 10;
+      for(let i = 0;i<end;i++){
+        let item = this.state.soAPI.items[i];
+        html.push(<div className="SOQuestionContainer dp1-bs">
+                  <div className="primaryColor headerText"><a href={item.link} dangerouslySetInnerHTML={{__html:item.title}}></a></div>
+                  <div className="soQuestionDetails bodyText">
+                    <div className=""><span>{item.view_count}<br/>views</span></div>
+                    <div className=""><span>{item.score}<br/>score</span></div>
+                    <div className="" ><span>{item.answer_count}<br/>answers</span></div>
+                    {item.is_answered ? <div className="greenColor"><span><img className="answerIcon" src={approval} /><br/>answered</span></div> 
+                    : <div className="redColor"><span><img className="answerIcon" src={alert} /><br/>answered</span></div> }
+                  </div>  
+                  </div>
+        );
+          
+      }
+
+    }
+  }
+  catch(error){console.log(error)}
+    
+  }
+
+    return html;
+  }
+
   showContainer(){
     let html =[];
     if(this.state.entry){
@@ -221,6 +266,12 @@ class EntryView extends Component {
     return (
       <div className="fullEntryContainer">
         {this.showContainer()}
+         {this.state.soAPI ? this.state.soAPI.items.length !== 0 ? <div className="soAPI dp1-bs">
+          <div className="accentColor headerText">Didn't answer your question? Here are some similar questions from stackoverflow</div>
+          <div className="SOQuestionMainContainer">
+          {this.addSO()} 
+          </div>
+        </div> : '': ''} 
       </div>  
     );
   }

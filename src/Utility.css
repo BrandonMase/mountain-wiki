@@ -126,8 +126,8 @@ Colors
   font-family: 'Cantarell', sans-serif;
   text-transform:none;
   font-size:14px;
-  letter-spacing: .1px;
-  word-spacing: .1px;
+  /* letter-spacing: .1px;
+  word-spacing: .1px; */
   color:#212121 !important;
 }
 

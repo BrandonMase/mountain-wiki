@@ -14,18 +14,11 @@ export default class Comment extends Component {
         <div className="superMainProfilePostContainer">
         <div className="mainProfilePostContainer noMargin dp1-bs">
                 
-            <div className="lightPrimaryColor"><p>{this.props.childProps.entry_points}<br />votes</p></div>
-         
          <div className="postRightContainer">
            <div className="accentColor headerText">
            <NavLink className="entryLink" to={`/entry/${this.props.childProps.entry_id}`}>
              {this.props.childProps.title}
            </NavLink>
-           </div>
-           <div className="bodyText">
-             <span className="answers"><strong>{this.props.childProps.answers}</strong> comments</span>
-             <span>posted on {entry_date} by <NavLink to={`/u/${this.props.childProps.master_contributor}`} className="authorLink">{this.props.childProps.entry_name}</NavLink></span>
-             
            </div>
          </div>
         </div>

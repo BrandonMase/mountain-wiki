@@ -10,6 +10,8 @@ const userController = require('./controllers/userController');
 const checkUserStatus = require('./middlewares/checkUserStatus');
 const voteController = require('./controllers/voteController');
 const searchController = require('./controllers/searchController');
+const reportController = require('./controllers/reportController');
+const mailController = require('./controllers/mailController')
 var stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 
 require('dotenv').config();
@@ -62,6 +64,7 @@ app.post('/api/voter',voteController.voter,voteController.update_entry,voteContr
 app.get('/api/goSearch',searchController.goSearch)
 app.get('/api/goSearchLabel',searchController.goSearchLabel)
 
+app.post('/api/addReport',reportController.addReport);
 
 
 //COMMENT STUFF
@@ -72,6 +75,12 @@ app.post('/api/addReply',commentController.addReply)
 app.delete('/api/deleteComment')
   //edit comment
   app.put('/api/updateComment',commentController.updateComment)
+
+
+  //NODE MAILER
+  app.post('/api/updateNodeMailer/:user_id/:mailer',userController.nodeMailer)
+
+  app.get('/api/sendMail',mailController.sendMail)
 
 const port = 4000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

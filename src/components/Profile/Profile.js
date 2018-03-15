@@ -23,8 +23,8 @@ export default class Profile extends Component {
     //GET THE BASIC USER INFORMATION
     axios.get(`/api/getUserInfo/${id}/false`)
       .then(res => {
-        const {name,total_points,picture} = res.data[0];
-        this.setState({name:name,points:total_points,picture:picture})
+        const {name,total_points,picture,sign_up_date} = res.data[0];
+        this.setState({name:name,points:total_points,picture:picture,sign_up_date:sign_up_date})
       })
       .catch(err => console.log(err))
     
@@ -141,7 +141,7 @@ export default class Profile extends Component {
             </div>
             <ul className="bodyText">
               <li>points <strong>{this.state.points}</strong></li>
-              <li>member since 2018/07/30</li>
+              <li>{`member since ${this.state.sign_up_date}`}</li>
             </ul>
             </div>
 

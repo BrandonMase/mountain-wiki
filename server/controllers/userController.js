@@ -39,5 +39,14 @@ module.exports = {
       })
       .catch(err => console.log(err))
     }
+  },
+
+  nodeMailer:(req,res) => {
+    const db = req.app.get('db');
+    const {user_id,mailer} = req.params;
+
+    db.node_mailer([mailer,user_id])
+      .then(res=>res.status(200).end())
+      .catch(err => console.log(err));
   }
 }

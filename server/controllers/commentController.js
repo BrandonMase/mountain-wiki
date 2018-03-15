@@ -8,11 +8,15 @@ module.exports = {
     db.add_answer([newDate, newAnswer, entry_id, user_id])
       .then(id =>{
         db.add_vote(user_id,false,id[0].auto_id,true)
-          .then().catch(err => console.log(err));
+          .then(console.log("slkdjfslkdjflskjdf")).catch(err => console.log(err));
 
         res.status(200).end();
       })
       .catch(res.status(500).end());
+
+      db.add_user_point([user_id])
+      .then(res => res.status(200).end())
+      .catch(err => console.log(err))
   },
   updateComment: (req, res) => {
     const db = req.app.get('db');

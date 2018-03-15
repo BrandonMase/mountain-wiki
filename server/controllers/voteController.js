@@ -11,6 +11,17 @@ module.exports = {
 		const { user_id, vote_id, is_entry, is_upvote, type } = req.body;
 		const db = req.app.get('db');
 
+		if(is_upvote === true){
+			db.add_user_point([user_id])
+			.then(res => res.status(200).end())
+			.catch(err => console.log(err))
+		}
+		if(is_upvote === false){
+			db.delete_user_point([user_id])
+			.then(res => res.status(200).end())
+			.catch(err => console.log(err))
+		}
+
 		if (type === "insert") {
 			db.add_vote([user_id, is_entry, vote_id, is_upvote])
 				.then(next())
@@ -28,6 +39,7 @@ module.exports = {
 				.then(next())
 				.catch(err => console.log(err));
 		}
+
 	},
 	update_entry: (req, res, next) => {
 		if (req.body.is_entry) {

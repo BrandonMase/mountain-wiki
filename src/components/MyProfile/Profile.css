@@ -39,6 +39,11 @@
     margin:auto;
 } */
 
+.commentDiv .authorLink{
+    color:#212121;
+
+}
+
 .postSelector .searchBar img{
     flex:1;
     margin:0;
@@ -274,6 +279,11 @@ a:hover{
     font-size:15px;
 }
 
+.settingsDiv{
+    background-color:white;
+    padding-bottom:10px;
+}
+
 
 
 
@@ -345,5 +355,11 @@ a:hover{
         background-color:#536DFE;
         padding:9.5px;
         margin:auto;
+    }
+
+    .commentDiv .authorLink{
+        color:#212121 !important;
+        
+        
     }
 }

@@ -11,7 +11,7 @@ class Profile extends Component {
     super(props);
 
     this.state = {
-      postSelector:"overview",
+      postSelector:"posts",
       content:null,
       searchTerm:null,
     };
@@ -26,8 +26,9 @@ class Profile extends Component {
     //GET THE BASIC USER INFORMATION
     axios.get(`/api/getUserInfo/${id}/true`)
       .then(res => {
-        const {name,total_points,picture} = res.data[0];
-        this.setState({name:name,points:total_points,picture:picture})
+        const {name,total_points,picture,sign_up_date,node_mailer_setting} = res.data[0];
+        
+        this.setState({name:name,points:total_points,picture:picture,sign_up_date:sign_up_date,node_mailer:node_mailer_setting})
       })
       .catch(err => console.log(err))
     
@@ -122,6 +123,14 @@ class Profile extends Component {
   return html;
   }
 
+  nodeMailer(){
+    let mailer = !this.state.node_mailer
+    axios.post(`/api/updateNodeMailer/${this.props.state.user_id}/${mailer}`)
+      .then()
+      .catch(err => console.log(err));
+      this.setState({node_mailer:mailer})
+  }
+
   render() {
     return (
       <div className="profileContainer">
@@ -142,8 +151,15 @@ class Profile extends Component {
             </div>
             <ul className="bodyText">
               <li>points <strong>{this.state.points}</strong></li>
-              <li>member since 2018/07/30</li>
+              <li>member since {this.state.sign_up_date}</li>
             </ul>
+            <div className="settingsDiv">
+              {this.state.node_mailer === true ?
+              <input type="checkbox" onChange={()=>this.nodeMailer()} checked="checked"/>
+              : <input type="checkbox" onChange={()=>this.nodeMailer()}/>}
+              
+              <label className="bodyText">Yes, send me weekly best ofs</label> 
+            </div>
           </div>
         
       </div>

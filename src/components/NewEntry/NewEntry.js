@@ -143,7 +143,7 @@ class NewEntry extends Component {
     console.log(typeOfEntry);
     // console.log("updateSTATE",e)
     if (this.state.seen !== null) {
-      this.setState({ title: title, content: content, labels: labels })
+      this.setState({ title: title, content: content, labels: labels,typeOfEntry: typeOfEntry })
     }
     else {
       this.setState({ title: title, content: content, labels: labels, seen: seen, typeOfEntry: typeOfEntry});

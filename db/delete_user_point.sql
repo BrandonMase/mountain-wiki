@@ -1,0 +1,1 @@
+UPDATE mw_users SET total_points = total_points - 1 WHERE auto_id = $1;

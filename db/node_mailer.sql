@@ -1,0 +1,1 @@
+UPDATE mw_users SET node_mailer_setting = $1 WHERE auto_id = $2;

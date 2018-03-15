@@ -9,6 +9,8 @@ import LogValidator from './../LogValidator/LogValidator'
 import {logValidator} from './../../ducks/reducer';
 import {NavLink,Link} from 'react-router-dom'
 import edit from './../../assets/pencil.png'
+import alert from './../../assets/alert.png';
+import {check} from './../../utility';
 
 class Entry extends Component {
   constructor(props) {
@@ -22,15 +24,23 @@ class Entry extends Component {
       entry_id:null,
       vote:10,
       showValidator:false,
+      report:false,
+      reportContent:{
+        reason:"not enough information",
+        additional:null,
+      }
     }
 
     this.voteIconChanger = this.voteIconChanger.bind(this)
+    this.addReport = this.addReport.bind(this)
   }
 
   componentDidMount(props) {
-    const { title, content, total_points, answers,entry_id,name,master_contributor } = this.props.childProps;
+    const { title, content, total_points, answers,entry_id,name,master_contributor,auto_id } = this.props.childProps;
     let date = this.props.childProps.date
     date = date.slice(0,10).split("-");
+    let checkt = check.bind(this)
+    checkt()
 
     date = `${date[1]}/${date[2]}/${date[0]}`
     console.log("date",date)
@@ -39,7 +49,7 @@ class Entry extends Component {
     if(+this.props.childProps.vote_upvote >= 1){vote=true}
     if(+this.props.childProps.vote_downvote >= 1){vote=false}
 
-    this.setState({title:title,content:content,total_points:total_points,answers:answers,entry_id:entry_id,username:name,date:date,user_id:+master_contributor,vote:vote})
+    this.setState({auto_id:auto_id,title:title,content:content,total_points:total_points,answers:answers,entry_id:entry_id,username:name,date:date,user_id:+master_contributor,vote:vote})
   }
 
   componentWillReceiveProps(props) {
@@ -122,6 +132,24 @@ class Entry extends Component {
     }
   }
 
+  addReport(){
+    const {auto_id} = this.state;
+    const {reason,additional} = this.state.reportContent
+
+    axios.post('/api/addReport',{entry_id:auto_id,report_type:reason,report_comment:additional,user_id:this.props.state.user_id})
+      .then(res=> {
+        if(res.data === "successful"){
+          let reason = this.state.reportContent
+          reason.additional = "Thank you for your report. We will be looking into it."
+          this.setState({reportContent:reason})
+        }
+        setTimeout(() =>{
+          this.setState({report:false})
+        },2000)  
+      })
+      .catch(err =>console.log(err))
+  }
+
   //ADDS A VOTES TO THE STATE AND THE DB
   addVote(type,voteType){
     let obj = {
@@ -140,10 +168,12 @@ class Entry extends Component {
   }
 
   render() {
-    let style = {fontFamily:'Fjalla One',textTransform:'uppercase',fontSize:'20px',color:'white',padding:'5px',textAlign:'right',paddingRight:'10px'};
-    {this.props.childProps.entry_type === "entry" ? style.backgroundColor='rgb(0, 184, 0)' : ''}
-    {this.props.childProps.entry_type === "question" ? style.backgroundColor='rgb(255, 53, 53)' : ''}
-    {this.props.childProps.entry_type === "snippet" ? style.backgroundColor='#536DFE' : ''}
+    let style = {fontFamily:'Fjalla One',textTransform:'uppercase',fontSize:'20px',color:'#212121',padding:'5px',textAlign:'right',paddingRight:'10px'};
+    // {this.props.childProps.entry_type === "entry" ? '': ''}
+    // {this.props.childProps.entry_type === "question" ? style.backgroundColor='rgb(255, 53, 53)' : ''}
+    // {this.props.childProps.entry_type === "snippet" ? style.backgroundColor='#536DFE' : ''}
+
+    let reportStyle 
     return (
       <div className="entryContainer dp1-bs">
         
@@ -175,12 +205,30 @@ class Entry extends Component {
           </div>
             
         </div> 
-        <div style={style}>{this.props.childProps.entry_type}<div className="authorDiv">by <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}</div></div>
+        <div style={style}>{this.props.childProps.entry_type}<div className="authorDiv"><img className="reportIcon" src={alert} onClick={()=>this.setState({report:!this.state.report})}/><div>by <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}</div></div></div>
           
           
         {!this.props.childProps.seen && this.props.childProps.master_contributor == this.props.state.user_id ? 
             <div className="privateText headerText">this post is private. use <span>{`${window.location.protocol}//${window.location.host}/entry/${this.props.childProps.auto_id}?ssc=${this.props.childProps.secret}`}</span> to share.</div> : ''}
         {this.state.showValidator ? <LogValidator childProps={this.state} resetState={() => this.resetState()} /> : ''}
+          {this.state.report ? <div className="reportDiv reportAni dp3-bs"><div className="redColor headerText">report a post <br />Select a reason</div>
+          <br/>
+            <select name="reportType" onChange={e=>{ let newReport = {...this.state.reportContent}; 
+              newReport.reason = e.target.value; 
+              this.setState({reportContent:{...newReport}});
+              }}>
+
+              <option value="not enough information">not enough information</option>
+              <option value="duplicate">duplicate</option>
+              <option value="other">other</option>
+            </select>
+            <br/>
+            <textarea value={this.state.reportContent.additional} onChange={e=>{
+              let report = this.state.reportContent;
+              report.additional = e.target.value
+              this.setState({reportContent:report})}}></textarea>
+            <button className="greenColor" onClick={()=>this.addReport()}>submit</button>
+          </div> : ''}
       </div>
     );
   }

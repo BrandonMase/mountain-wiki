@@ -5,6 +5,7 @@ import QuestionDiv from './QuestionDiv';
 import MobileTopHeader from './../Header/MobileTopHeader';
 import SignInHero from './SignInHero';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 export default class LandingPage extends Component {
 
   constructor() {
@@ -97,15 +98,15 @@ export default class LandingPage extends Component {
         <div className="fullQuestionContainer">
 
           <div className="questionContainer">
-            <div id="topQuestions" className="dp2-bs headerDiv"><div><span className="headerText">top questions</span></div><p className="secondaryText">Top questions voted by the community.</p> <div><button>ask a question</button></div></div>
+            <div id="topQuestions" className="dp2-bs headerDiv"><div><span className="headerText">top questions</span></div><p className="secondaryText">Top questions voted by the community.</p> <div><Link to={`/editEntry`}><button>ask a question</button></Link></div></div>
             {this.createQuestionDiv("q")}
             <div className="buttonContainer"><button onClick={e => this.loadMore("q")} className="greenColor">See More QUestions</button></div>
             <br />
-            <div id="newEntries" className="dp2-bs headerDiv"><div><span className="headerText">Newest Entries</span></div><p className="secondaryText">Newest entries made by the community.</p> <div><button>Add An entry</button></div></div>
+            <div id="newEntries" className="dp2-bs headerDiv"><div><span className="headerText">Newest Entries</span></div><p className="secondaryText">Newest entries made by the community.</p> <div><Link to={`/editEntry`}><button>ask a question</button></Link></div></div>
             {this.createQuestionDiv("e")}
             <div className="buttonContainer"><button onClick={e => this.loadMore("e")} className="greenColor">See More entries</button></div>
 
-            <div id="newSnippets" className="dp2-bs headerDiv"><div><span className="headerText">Newest Snippets</span></div><p className="secondaryText">Top snippets voted by the community.</p> <div><button>Add a snippet</button></div></div>
+            <div id="newSnippets" className="dp2-bs headerDiv"><div><span className="headerText">Newest Snippets</span></div><p className="secondaryText">Top snippets voted by the community.</p> <div><Link to={`/editEntry`}><button>ask a question</button></Link></div></div>
             {this.createQuestionDiv("s")}
             <div className="buttonContainer"><button onClick={e => this.loadMore("s")} className="greenColor">See More snippets</button></div>
 

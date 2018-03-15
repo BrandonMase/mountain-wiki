@@ -45,6 +45,10 @@ module.exports = {
         db.add_vote(userId,true,id[0].auto_id,true).then().catch(err => console.log(err))
         res.status(200).send(id)})
       .catch(e=>console.log(e))
+
+      db.add_user_point([userId])
+      .then(res => res.status(200).end())
+      .catch(err => console.log(err))
   },
   updateEntry: (req, res) => {
     const db = req.app.get('db');

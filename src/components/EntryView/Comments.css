@@ -243,6 +243,7 @@
   flex:.3 ;
 }
 
+
 @media (min-width:992px){
 
   .replyTextBox{
@@ -336,5 +337,15 @@
 
   .replyComment .actualUserName{
     margin-top:7%;
+  }
+
+  .soQuestionMainContainer{
+    display:flex;
+    flex-wrap:wrap;
+
+  }
+
+  .soQuestionMainContainer > *{
+    flex: 0 0 50%;
   }
 }
