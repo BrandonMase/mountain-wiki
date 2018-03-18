@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
+import decodeContent from './../NewEntry/decodeContent';
 
 export default class Comment extends Component {
     render() {
-       console.log(this.props.childProps.entry_date)
         let date = this.props.childProps.date.slice(0,10).split("-")
         date = `${date[1]}/${date[2]}/${date[0]}`;
 
@@ -27,7 +27,7 @@ export default class Comment extends Component {
         </div>
             <div className="dp1-bs commentDiv">
                 <p className="bodyText commentText lightPrimaryColor"> <NavLink to={`/u/${this.props.childProps.auto_id}`} className="authorLink alignRight">{this.props.childProps.name}</NavLink> {this.props.childProps.comment_points} points {date}</p>
-                <p className="bodyText commentContent">{this.props.childProps.content}</p>
+                <p className="bodyText commentContent" dangerouslySetInnerHTML={{__html:decodeURI(decodeContent(this.props.childProps.content))}}></p>
                 
             </div>
         </div>

@@ -13,9 +13,7 @@ module.exports = {
   getUserActivity:(req,res) =>{
     const db = req.app.get('db');
     const {id,seen} = req.params;
-    console.log(seen)
     if(seen == "true"){
-      console.log("hi")
       db.get_user_posts_own([id])
       .then(post =>{
         db.get_user_comments_own([id])

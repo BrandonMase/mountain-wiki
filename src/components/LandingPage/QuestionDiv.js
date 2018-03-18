@@ -24,7 +24,7 @@ class QuestionDiv extends Component {
     
     let date = this.props.childProps.date.slice(0,10).split("-");
     date = `${date[1]}/${date[2]}/${date[0]}`
-    this.setState({auto_id:auto_id, title: title, total_points: total_points, answers: answers, username: name, labels: labels, date: date,entry_type:entry_type,index:this.props.index,user_id:master_contributor },()=>console.log(this.state));
+    this.setState({auto_id:auto_id, title: title, total_points: total_points, answers: answers, username: name, labels: labels, date: date,entry_type:entry_type,index:this.props.index,user_id:master_contributor });
     
   }
 
@@ -64,12 +64,12 @@ class QuestionDiv extends Component {
           <div className="votes">{this.state.total_points}</div>
           <div className="img"><img src={downvote} /></div>
           </div>
-          <div className="mobileAnswer">{this.state.answers}<br />A</div>
+          <div className="mobileAnswer">{this.state.answers}<br />C</div>
           </div>
         <div className="votesDiv">
           
           <div style={bgStyle} className="votes votesId"><p style={bgStyle}>{this.state.total_points}<br />votes</p></div>
-          <div style={bgStyle} className="votes answerId"><p style={bgStyle}>{this.state.answers} <br />answers</p></div>
+          <div style={bgStyle} className="votes answerId"><p style={bgStyle}>{this.state.answers} <br />comments</p></div>
         </div>
         <div className="rightQuestionDiv">
           <div className="questionHeaderText"><Link to={`/entry/${this.state.auto_id}`}>{this.state.title}</Link>

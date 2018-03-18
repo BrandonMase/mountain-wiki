@@ -284,11 +284,20 @@ a:hover{
     padding-bottom:10px;
 }
 
+.addNewPost{
+    margin-left:10px;
+}
+
+.postSelector button{
+    margin:10px 0;
+}
+
 
 
 
 @media (min-width:992px){
-
+    
+  
     .postSelector{
         text-align:left;
     }

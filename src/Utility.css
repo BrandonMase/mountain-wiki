@@ -9,20 +9,120 @@ Colors
   border-color:rgb(255, 53, 53);
 }
 .goodCode{
-  color:rgb(0, 184, 0);
+  color:rgb(0, 184, 0) !important;
   font-family: monospace;
   background-color:#f3f1f1;
-  padding:2px 10px;
+  /* display:inline-block; */
+  /* padding:10px 10px; */
+  /* padding-right:5px; */
+  padding:0px 5px;
   margin:0;
   white-space: pre-wrap;
   overflow:auto;
 
 }
+
+.green{
+  color:rgb(0, 184, 0);
+}
+
+.red{
+  color:red;
+}
+
+.blue{
+  color:rgb(139, 139, 253);
+}
+
+.purple{
+  color:rgb(255, 97, 255);
+}
+
+.yellow{
+  color:rgb(255, 152, 67);
+}
+
+.mainShowoffContainer{
+  overflow:auto;
+  background-color:#222222;
+}
+
+.showoffContainer{
+  background-color:#222222;
+  color:white;
+  font-size:14px;
+  font-family: 'Source Code Pro', monospace;
+  padding:0 10px;
+  display:flex;
+  /* font-weight:300; */
+}
+
+.showoffContainer:hover{
+  background-color:#535353;
+  /* width:100%; */
+}
+
+.showoffContainer:hover *{
+  background-color:#535353;
+}
+.outShowoff{
+  position: absolute;
+  background-color:#222222;
+  width:30px;
+  margin-left:-10px;
+  /* margin-right:3px; */
+  border-right:dashed #bcbcbc 1px;
+  color:#bcbcbc;
+  /* flex:0 0 30px; */
+}
+
+.outShowoff > *{
+  padding-left:10px;
+}
+
+
+.inShowoff{
+  display:inline;
+  box-sizing:padding-box;
+  /* border:solid white 1px; */
+  margin:1px;
+  margin-left:40px;
+
+}
+
+.entryLink{
+  color:#ff5722;
+}
+
+.entryLink:hover{
+  color:#E64A19;
+}
+
+h1{
+  padding:0;
+  margin:0;
+  /* border:solid black 1px; */
+  /* margin-bottom:-20px; */
+}
+
+h2{
+  padding:0;
+  margin:0;
+  /* border:solid black 1px; */
+  /* margin-bottom:-20px; */
+}
+
+h3{
+  padding:0;
+  margin:0;
+  /* border:solid black 1px; */
+  /* margin-bottom:-20px; */
+}
 .badCode{
   color:rgb(255, 53, 53) !important;
   font-family: monospace;
   background-color:#f3f1f1;
-  padding:2px 10px;
+  padding:0 10px;
   margin:0;
   white-space: pre-wrap;
   overflow:auto;
@@ -32,10 +132,13 @@ Colors
   color:#212121 !important;
   font-family: monospace;
   background-color:#f3f1f1;
-  padding:2px 10px;
+  padding:0px 10px;
   margin:0;
   white-space: pre-wrap;
   overflow:auto;
+  display:inline;
+  font-weight:bold;
+  padding:1px;
 }
 
 .greenColor{

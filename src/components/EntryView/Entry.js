@@ -11,6 +11,7 @@ import {NavLink,Link} from 'react-router-dom'
 import edit from './../../assets/pencil.png'
 import alert from './../../assets/alert.png';
 import {check} from './../../utility';
+import decodeContent from './../NewEntry/decodeContent';
 
 class Entry extends Component {
   constructor(props) {
@@ -36,14 +37,13 @@ class Entry extends Component {
   }
 
   componentDidMount(props) {
-    const { title, content, total_points, answers,entry_id,name,master_contributor,auto_id } = this.props.childProps;
+    const { title,total_points, answers,entry_id,name,master_contributor,auto_id } = this.props.childProps;
     let date = this.props.childProps.date
     date = date.slice(0,10).split("-");
-    let checkt = check.bind(this)
-    checkt()
-
     date = `${date[1]}/${date[2]}/${date[0]}`
-    console.log("date",date)
+
+    let content = decodeURI(decodeContent(this.props.childProps.content));
+
     //SETS THE VOTE STATE BASED ON IF THERE IS AN VOTE IN FOR THE CURRENT ENTRY IN THE DB
     let vote = '';
     if(+this.props.childProps.vote_upvote >= 1){vote=true}
@@ -53,8 +53,10 @@ class Entry extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const { title, content, total_points, answers,entry_id,name,date,master_contributor} = props.childProps;
-
+    const { title,total_points, answers,entry_id,name,master_contributor} = props.childProps;
+    let content = decodeURI(decodeContent(this.props.childProps.content));
+    let date = this.props.childProps.date
+    date = date.slice(0,10).split("-");
     //SETS THE VOTE STATE BASED ON IF THERE IS AN VOTE IN FOR THE CURRENT ENTRY IN THE DB
     let vote = '';
     if(+this.props.childProps.vote_upvote >= 1){vote=true}
@@ -164,7 +166,6 @@ class Entry extends Component {
     axios.post('/api/voter',obj).then().catch(err => console.log(err));
 
 
-    console.log("VOTER",type,obj)
   }
 
   render() {
@@ -186,26 +187,27 @@ class Entry extends Component {
         {this.hasEntry()}
 
         <div className="entryContent bodyText">
-          <p id="entryContentP">
-            {this.state.content}          
-          </p>
+          <div id="entryContentP" dangerouslySetInnerHTML={{__html:this.state.content}}></div>
         </div>
 
         <div className="entryBottom primaryText">
+        <img className="reportIcon" src={alert} onClick={()=>this.setState({report:!this.state.report})}/>
+        <div className="mainVoteContainer">
           <div className="votesContainer">  
             {this.voteIconChanger()}
               <p id="votesText" className="headerText">Votes</p>
           </div>
-
+            
           <div className="votesContainer">  
             <div className="votesBottom">
               <p id= "answerP" className="headerText redColor">{this.state.answers}</p>
             </div>
             <p className="headerText">comments</p>
           </div>
-            
+          </div>
+        <div style={style}>{this.props.childProps.entry_type}<div className="authorDiv"><div>by <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}</div></div>
+          </div>  
         </div> 
-        <div style={style}>{this.props.childProps.entry_type}<div className="authorDiv"><img className="reportIcon" src={alert} onClick={()=>this.setState({report:!this.state.report})}/><div>by <NavLink className="authorLink" to={`/u/${this.state.user_id}`}>{this.state.username}</NavLink> on {this.state.date}</div></div></div>
           
           
         {!this.props.childProps.seen && this.props.childProps.master_contributor == this.props.state.user_id ? 

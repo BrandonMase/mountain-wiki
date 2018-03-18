@@ -7,6 +7,7 @@ import {logValidator} from './../../ducks/reducer';
 import downvote from './../../assets/downvote.png';
 import upvote from './../../assets/upvote.png';
 import {NavLink} from 'react-router-dom'
+import decodeContent from './../NewEntry/decodeContent';
 class Answer extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +33,7 @@ class Answer extends Component {
     if(+this.props.childProps.vote_upvote >= 1){vote=true}
     if(+this.props.childProps.vote_downvote >= 1){vote=false}
 
-    this.setState({ auto_id: auto_id, content: content, newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies,entry_id:entry_id,vote:vote })
+    this.setState({ auto_id: auto_id, content:content,decodedContent: decodeURI(decodeContent(content)), newContent: content, total_points: total_points, date: date, name: name, picture: picture, user_total_points: user_total_points, user_id: +user_id,replies:replies,entry_id:entry_id,vote:vote })
   }
   
   //CREATES A NEW REPLY TO AN ANSWER
@@ -45,7 +46,7 @@ class Answer extends Component {
       replies = this.state.replies.slice()
       }
 
-      let obj = {ref_answer_id:+this.state.auto_id,total_points:0,date:this.state.newDate,content:this.state.newComment,name:username,user_id:+user_id,entry_id:+this.state.entry_id}
+      let obj = {ref_answer_id:+this.state.auto_id,total_points:0,date:this.state.newDate,content:encodeURI(this.state.newComment),name:username,user_id:+user_id,entry_id:+this.state.entry_id,picture:this.props.state.picture}
       axios.post("/api/addReply",obj)
 
       replies.push(obj)
@@ -206,8 +207,6 @@ class Answer extends Component {
     
     axios.post('/api/voter',obj).then().catch(err => console.log(err));
 
-
-    console.log("VOTER",type,obj)
   }
   render() {
     return (
@@ -232,9 +231,9 @@ class Answer extends Component {
 
           </div>
           <div className="commentContent bodyText">
-          <p id="answerContent">
-            {this.state.content}
-          </p>
+          <div id="answerContent" dangerouslySetInnerHTML={{__html:this.state.content ? decodeURI(decodeContent(this.state.content)) : ''}}>
+           
+          </div>
           {this.makeAnwserEditable()}
         </div>
         

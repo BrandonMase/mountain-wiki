@@ -1,6 +1,8 @@
 const iState = {
-  username: "Brandon",
-  user_id:34,
+  username: '',
+  user_id:null,
+  picture:'',
+  total_points:0,
   votes:[],
   logValidator:false,
   mousePosX: null,
@@ -24,6 +26,14 @@ export function logValidator(action){
   }
 }
 
+const UPDATE_USER = "UPDATE_USER";
+export function updateUser(action){
+  return{
+    type:UPDATE_USER,
+    payload:action,
+  }
+}
+
 export default function (state = iState, action) {
   let newState = {...state}
   switch(action.type){
@@ -34,6 +44,14 @@ export default function (state = iState, action) {
       newState.mousePosY = action.payload.mousePosY;
       return {...newState}
     
+    case UPDATE_USER:
+      newState.username = action.payload.username;
+      newState.user_id = action.payload.user_id;
+      newState.picture = action.payload.picture;
+      newState.total_points = action.payload.total_points;
+
+      return {...newState}
+
       default:
         return {...newState}
       

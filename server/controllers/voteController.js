@@ -58,8 +58,7 @@ module.exports = {
 		}
 	},
 	update_comment:(req,res) =>{
-		console.log("hi");
-		console.log(req.body)
+
 		const db = req.app.get('db');
 		const { user_id, vote_id, is_upvote, type } = req.body;
 		let addVote = (num) => db.update_comment_votes_plus([vote_id, num]).then(res.status(200).end()).catch(err => res.status(500).send(err));

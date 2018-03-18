@@ -59,7 +59,7 @@ module.exports={
 
                 let message = {
                     from:"no.reply.mountain.wiki@gmail.com",
-                    to:"no.reply.mountain.wiki@gmail.com",
+                    to:"jordanmbush@gmail.com",
                     subject:'༜ MOUNTAIN WIKI TOP POSTS OF THE WEEK ༜',
                     text:'',
                     html:html,
@@ -71,7 +71,6 @@ module.exports={
                         response.status(500).send('boo');
                     }
                     else{
-                        console.log(info);
                         response.status(200).send('yay')
                     }
                 })

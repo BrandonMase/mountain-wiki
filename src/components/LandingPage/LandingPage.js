@@ -30,7 +30,6 @@ export default class LandingPage extends Component {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
     axios.get('/api/getLandingEntries/').then(res => {
-      console.log(res.data)
       this.setState({entries:res.data})
     })
   }

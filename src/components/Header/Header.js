@@ -4,6 +4,8 @@ import logo from './../../images/MW.png'
 import {connect} from 'react-redux'; 
 import {Link} from 'react-router-dom';
 import magnify from './../../assets/magnify.png';
+import axios from 'axios';
+import {updateUser} from './../../ducks/reducer'
 
 class Header extends Component {
   constructor() {
@@ -12,11 +14,9 @@ class Header extends Component {
     this.state = {
       searchJumpBar: false,
       searchQuery: null,
-      req: { session: {user2:"hi"} },
       linkLocation:null,
     }
 
-    console.log("LOCALTION",window.location)
 
     
 
@@ -25,6 +25,14 @@ class Header extends Component {
   }
 
   componentDidMount() {
+   
+    axios.get('/api/getUser')
+    .then(res=>{
+      if(res.data.message){
+      this.props.updateUser({username:res.data.user.name,picture:res.data.user.picture,user_id:res.data.user.user_id,total_points:res.data.user.total_points})
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   toggleSearchBar(e) {
@@ -32,7 +40,13 @@ class Header extends Component {
     let jumpBar = !this.state.searchJumpBar;
     this.setState({searchJumpBar:jumpBar})
     
-  }  
+  }
+  
+  login(){
+    const redirectUri = encodeURIComponent(window.location.origin + '/auth/callback');
+    const link = `http://${process.env.REACT_APP_AUTH0_DOMAIN}/login?client=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}`;
+    window.location = link;
+  }
 
   searchBar() {
     let html = "";
@@ -45,20 +59,24 @@ class Header extends Component {
 
   displayProfileMobile() {
     
-    let html = <div className="account"><a href="#"><img src="/../../images/account.png" /></a></div>
+    let html = <div className="account"><Link to="/myProfile"><img src="/../../images/account.png" /></Link></div>
     if (!this.props.state.user_id) {
-      html = <div className="signUpAccount accentColor"><a href="#">SIGN UP / LOGIN</a></div>
+      html = <div onClick={() =>this.login()} className="signUpAccount accentColor"><a onClick={()=>this.login()}>SIGN UP / LOGIN</a></div>
     }
 
     return html;
   }
 
   displayProfile() {
-   
-    let html = [[<li className="whiteText"><a href="#">login</a></li>],[ <li><button>Sign up</button></li>]]
+    let html = <ul className="navLinks">
+      <li className="whiteText"><a href={()=>this.login()}>login</a></li>
+      <li><button onClick={()=>this.login()}>Sign up</button></li>
+      </ul>
+    // let html = [[<ul className="navLinks">],[<li className="whiteText"><a href="#">login</a></li>],[ <li><button onClick={()=>this.login()}>Sign up</button></li>],[</ul>]]
     if (this.props.state.user_id) {
-      console.log("PROPSPOSPOS",this.props)
-      html = <li><Link to={`/myProfile`}><button>{this.props.state.username}</button></Link></li>
+      html = <ul className="navLinks"><li className="whiteText"><Link to="/editEntry"><button className="greenColor dp1-bs">add New post</button></Link></li>
+          <li><Link to={`/myProfile`}><button>{this.props.state.username}</button></Link></li>
+          </ul>
     }
     return html;
   }
@@ -80,14 +98,10 @@ class Header extends Component {
           <div className="searchIcon"><a onClick={e => this.toggleSearchBar(e)} href="#"><img src="/../../images/magnify.png" /><span>...Search for a answer</span></a></div>
           <a onClick={e=> this.toggleSearchBar(e)} href="#"><img src="/../../images/magnify.png" /></a>
           {this.displayProfileMobile()}
-          <ul className="navLinks">
-            <li className="whiteText"><a href="#topQuestions">top questions</a></li>
-              <li className="whiteText"><a href="#newEntries">newest entries</a></li>
-              <li className="whiteText"><a href="#newSnippets">top snippets</a></li>  
+          
             {this.displayProfile()}
             {/* <li className="whiteText"><a href="#">login</a></li>
             <li><button>Sign up</button></li> */}
-          </ul>  
         </header>
         </div>  
       </div>  
@@ -101,4 +115,4 @@ const mapStateToProps = (state) =>{
   }
 }
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps,{updateUser})(Header)

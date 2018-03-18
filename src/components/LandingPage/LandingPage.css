@@ -83,12 +83,12 @@
    /* padding-top:10px !important; */
    display:none;
    flex:4;
-   border-right:solid #757575 1px;
+   border-right:solid #bcbcbc 1px;
   /* border:solid black 1px; */
 }
 
 .votesDiv > *:nth-child(1){
-  border-bottom:solid black 1px;
+  border-bottom:solid #bcbcbc 1px;
 }
 
 .votesDiv > * > *{

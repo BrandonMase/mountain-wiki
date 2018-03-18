@@ -3,6 +3,7 @@ import './Comments.css';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {NavLink} from 'react-router-dom'
+import decodeContent from './../NewEntry/decodeContent';
 
 class Reply extends Component {
   constructor(props) {
@@ -18,17 +19,13 @@ class Reply extends Component {
   }
 
   componentDidMount(props){
-    console.log("K:KER:LK:LWK",this.props.childProps)
     this.setState({newContent:this.props.childProps.content,content:this.props.childProps.content})
   }
 
   addEdit() {
-    let html =<p id="replyContent"> {this.props.childProps.content}</p>;
-    // console.log("THISPROPS",this.props)
+    let html ='';
     if (this.props.state.user_id == this.props.childProps.user_id) {
-      console.log("THISPROPS",this.props)
       html = <div className="bodyText">
-        <p id="replyContent"> {this.state.content}</p>
           {this.editContainer()}
       </div>
     }
@@ -39,7 +36,7 @@ class Reply extends Component {
     let html = <a className="editContent" href="#" onClick={(e)=>this.editComment(e)}>edit your comment</a>;
     if(this.state.show){
    html = <div id="mainReplyContainer">
-    <textarea className="bodyText" id="replyTextArea" onChange={e=>this.setState({newContent:e.target.value})}>{this.state.newContent}</textarea>
+    <textarea className="bodyText" id="replyTextArea" onChange={e=>this.setState({newContent:e.target.value})}>{decodeURI(this.state.newContent)}</textarea>
     <button onClick={e=>this.submitReply()} className="greenColor">submit reply</button>
     <button onClick={e=>this.cancelReply()} className="redColor">cancel reply</button>
     </div>
@@ -49,7 +46,7 @@ class Reply extends Component {
 
   submitReply(){
     if(this.state.newContent){
-      let obj = {auto_id:this.props.childProps.auto_id,newContent:this.state.newContent}
+      let obj = {auto_id:this.props.childProps.auto_id,newContent:encodeURI(this.state.newContent)}
       axios.put('/api/updateComment',obj);
       this.setState({show:false,content:this.state.newContent})
     }
@@ -70,8 +67,9 @@ class Reply extends Component {
             <div className="commentDetails headerText lightPrimaryColor">
           <div className="userName"><img src={this.props.childProps.picture}/><div className="actualUserName"><p><NavLink className="authorLink" to={`/u/${this.props.childProps.user_id}`}>{this.props.childProps.name}</NavLink></p></div></div>
             </div>
-
+            
             <div className="commentContent bodyText">
+            <div className="commentContent bodyText" dangerouslySetInnerHTML={{__html:decodeURI(decodeContent(this.props.childProps.content))}}></div>
             {this.addEdit()}
   
           </div>

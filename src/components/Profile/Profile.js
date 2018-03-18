@@ -23,8 +23,10 @@ export default class Profile extends Component {
     //GET THE BASIC USER INFORMATION
     axios.get(`/api/getUserInfo/${id}/false`)
       .then(res => {
-        const {name,total_points,picture,sign_up_date} = res.data[0];
-        this.setState({name:name,points:total_points,picture:picture,sign_up_date:sign_up_date})
+        const {name,total_points,picture} = res.data[0];
+        let date = res.data[0].sign_up_date.slice(0,10).split("-");
+        date = `${date[1]}/${date[2]}/${date[0]}`;
+        this.setState({name:name,points:total_points,picture:picture,sign_up_date:date})
       })
       .catch(err => console.log(err))
     
@@ -37,7 +39,6 @@ export default class Profile extends Component {
   getCount(){
     let postCount = 0;
     let commentCount = 0;
-    console.log("RAN")
     if(this.state.content){
       this.state.content.map(e =>{
         e.labels ? postCount++ : commentCount++
@@ -86,7 +87,6 @@ export default class Profile extends Component {
           html.push(<Post childProps={e} />);
         }
         else{
-          console.log("COMMENTS",e)
           html.push(<Comment childProps={e}/>)
         }
       })

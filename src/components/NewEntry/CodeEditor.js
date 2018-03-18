@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import marked from 'marked';
 import './../../Utility.css'
 import axios from 'axios'
+import decodeContent from './decodeContent';
 
 export default class CodeEditor extends Component {
   
@@ -13,6 +14,7 @@ export default class CodeEditor extends Component {
       content: '',
       labels: '',
       ran:false,
+      encodedContent:'',
     }
 
     this.updateTitle = this.updateTitle.bind(this);
@@ -26,15 +28,30 @@ export default class CodeEditor extends Component {
 
   }
   componentWillReceiveProps(props) {
-    // console.log(props)
     if (props.childProps !== null && !this.state.ran) {
-      console.log("PROPS",props.childProps)
       axios.get(`/api/getEntryUpdater/${props.childProps}`)
         .then(res => {
-          const { title, entry_type, content, seen,labels } = res.data[0]
-          this.setState({ title: title, typeOfEntry: entry_type, title: title, content: content, seen: seen,labels:labels,ran:true },()=>this.props.updateState(this.state));
+          const { title, entry_type,seen,labels } = res.data[0]
+          let content = decodeURI(res.data[0].content)
+          let encodedContent = res.data[0].content;
+          this.setState({ title: title, typeOfEntry: entry_type, title: title, content: content, seen: seen,labels:labels,ran:true,encodedContent:encodedContent },()=>this.props.updateState(this.state));
         })
     } 
+  }
+
+  componentDidUpdate(){
+    var textareas = document.getElementsByTagName('textarea');
+var count = textareas.length;
+for(var i=0;i<count;i++){
+    textareas[i].onkeydown = function(e){
+        if(e.keyCode==9 || e.which==9){
+            e.preventDefault();
+            var s = this.selectionStart;
+            this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+            this.selectionEnd = s+1; 
+        }
+    }
+}
   }
 
 
@@ -45,39 +62,13 @@ export default class CodeEditor extends Component {
   }
 
   handleContentChange(e) {
-    // console.log("before", e);
-    // e = encodeURI(e)
-    // e = e.replace(/%3C/gi, "&lt;")
-    // e = e.replace(/%3E/gi, "&gt;")
-    // e = e.replace(/%0A/gi, "<br />")
-    // e = e.replace(/%20/gi, " ")
-    // e = e.replace(/%7B/gi, "{")
-    // e = e.replace(/%20/gi, "}")
-    // e = decodeURI(e);
-
-    e = e.replace(/(::goodCode::)/gi, "<div class='goodCode'>")
-    e = e.replace(/(&gt;&lt;div class=\'goodCode\'&gt;)/gi, "<div class='goodCode'>");
-    
-    e = e.replace(/(::badCode::)/gi, "<div class='badCode'>")
-    e = e.replace(/(&gt;&lt;div class=\'badCode\'&gt;)/gi, "<div class='badCode'>");
-    
-    e = e.replace(/(::code::)/gi, "<div class='code'>")
-    e = e.replace(/(&gt;&lt;div class=\'code\'&gt;)/gi, "<div class='code'>");
-    
-
-
-    e = e.replace(/(&lt;br \/&gt;&lt;\/div&gt;)/gi, "<br /></div>")
-    e = e.replace(/(::end::)/gi,"<br /></div>")
-
-
-    // console.log(e)
-    this.setState({ content: e },()=>this.props.updateState(this.state))
+    this.setState({content:e,encodedContent:encodeURI(e)},()=>this.props.updateState(this.state))
 
   }
 
   updateContent() {
-    let content = this.state.content
-    return { __html: marked(content) };
+    let content = decodeURI(decodeContent(this.state.encodedContent));
+    return { __html: content };
   }
 
   updateLabels() {

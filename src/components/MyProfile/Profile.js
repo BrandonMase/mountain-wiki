@@ -5,6 +5,7 @@ import Post from './Post';
 import Comment from './Comment'
 import {connect} from 'react-redux'
 import magnify from './../../assets/magnify.png';
+import {Link} from 'react-router-dom'
 
 class Profile extends Component {
   constructor(props){
@@ -26,9 +27,12 @@ class Profile extends Component {
     //GET THE BASIC USER INFORMATION
     axios.get(`/api/getUserInfo/${id}/true`)
       .then(res => {
-        const {name,total_points,picture,sign_up_date,node_mailer_setting} = res.data[0];
+        const {name,total_points,picture,node_mailer_setting} = res.data[0];
+        let date = res.data[0].sign_up_date.slice(0,10).split("-")
+        date = `${date[1]}/${date[2]}/${date[0]}`;
         
-        this.setState({name:name,points:total_points,picture:picture,sign_up_date:sign_up_date,node_mailer:node_mailer_setting})
+        
+        this.setState({name:name,points:total_points,picture:picture,sign_up_date:date,node_mailer:node_mailer_setting})
       })
       .catch(err => console.log(err))
     
@@ -78,7 +82,6 @@ class Profile extends Component {
               return
             }
           }
-          console.log("CONTENTNTNTNT",e.content)
           html.push(<Post childProps={e} />);
         }
         else{
@@ -87,7 +90,6 @@ class Profile extends Component {
               return
             }
           }
-          console.log("CONTENTNTNTNT",e.content)
           html.push(<Comment childProps={e}/>)
         }
       })
@@ -137,6 +139,7 @@ class Profile extends Component {
         <div className="leftContainer">
           <div>
             <ul className="postSelector dp1-bs">
+              <li><Link to="/editEntry"><button className="greenColor dp1-bs">add New post</button></Link></li>
             <li className="searchBar bodyText"><input className="searchBarInput" placeholder="Search" onChange={e => this.setState({searchTerm:e.target.value})}/><div className="searchIcons"><img src={magnify}/></div></li>
               
               {this.postSelector()}

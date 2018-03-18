@@ -38,7 +38,7 @@ module.exports = {
     for (var i = 0; i < 30; i++){
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-    
+    console.log(req.body)
     db.add_entry([title, content, typeOfEntry, seen, date, userId, labels,text])
       .then(id =>{
 
@@ -52,10 +52,18 @@ module.exports = {
   },
   updateEntry: (req, res) => {
     const db = req.app.get('db');
-    console.log(req.body);
     const { title, content, typeOfEntry, seen, date, userId, labels,updateId } = req.body
+    console.log(req.body)
     db.update_entry([title, content, typeOfEntry, seen, labels, updateId])
       .then(() => res.status(200).end)
       .catch(() => { res.status(500).end(); console.log(e) })
+  },
+
+  addEntryView: (req,res) =>{
+    const db = req.app.get('db');
+    const {auto_id} = req.params;
+    db.add_entry_view([auto_id])
+      .then(response => res.status(200).end())
+      .catch(err=> console.log("entryController.addEntryView",err))
   }
 }

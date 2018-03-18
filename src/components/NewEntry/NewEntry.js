@@ -4,7 +4,7 @@ import './NewEntry.css';
 import axios from 'axios'
 import { checkUserStatus } from './../../utility'
 import { connect } from 'react-redux';
-
+import decodeContent from './decodeContent';
 class NewEntry extends Component {
   constructor() {
     super();
@@ -27,8 +27,8 @@ class NewEntry extends Component {
 
     //check if the window is in mobile mode
     //set the content editor to checked and hide the preview div
-  componentDidMount() {
-    // console.log("STATUS",response);
+  componentDidMount() { 
+    if(this.props.state.user_id){
     if (window.innerWidth <= 992) {
       document.getElementById('c1').checked = true;
       document.getElementById('cec').style.display = "initial";
@@ -46,6 +46,7 @@ class NewEntry extends Component {
     if (this.props.match.params.id) {
       this.setState({updateId:+this.props.match.params.id})
     }
+  }
     
   }
 
@@ -54,7 +55,6 @@ class NewEntry extends Component {
   //update the mobile display from content editor to preview mode depending on which mode is selected
   updateDisplay(e) {
     
-    // console.log(e.target.value)
     if (e.target.value == "preview") {
       document.getElementById('conp').style.display = "initial";
       document.getElementById('c2').checked = true;
@@ -118,7 +118,6 @@ class NewEntry extends Component {
     }
 
     if (count === 0) {
-      console.log("LKSJFLKJDKJSFD",this.state.date)
       if (this.state.updateId === null) {
         axios.post("/api/addEntry", this.state)
           .then(res => {
@@ -139,9 +138,9 @@ class NewEntry extends Component {
   }
 
   updateState(e) {
-    const { title, content, labels, seen, typeOfEntry } = e
-    console.log(typeOfEntry);
-    // console.log("updateSTATE",e)
+    const { title, labels, seen, typeOfEntry } = e
+    console.log(e)
+    let content = e.encodedContent
     if (this.state.seen !== null) {
       this.setState({ title: title, content: content, labels: labels,typeOfEntry: typeOfEntry })
     }
@@ -166,8 +165,11 @@ class NewEntry extends Component {
 
 
   render() {
+    let style = {textAlign:'center',marginTop:'10px'}
     return (
+      this.props.state.user_id ?
       <div id = 'mainEntryContainer'className="newEntryContainer dp1-bs">
+      
         <div className="newEntryHeader accentColor headerText ">
           <div>
             Entry Editor
@@ -200,8 +202,9 @@ class NewEntry extends Component {
             <label for="c2">Preview</label>
           </div>
           <CodeEditor updateState={this.updateState} checkSubmission={this.checkSubmission} childProps={this.state.updateId} />
-      </div>
-    );
+      </div> : 
+      <div style={style} className="headerText">You must be logged in to add a post.</div>
+    ) 
   }
 }
 

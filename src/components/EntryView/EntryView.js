@@ -12,6 +12,8 @@ import approval from './../../assets/approval.png';
 import { connect } from 'react-redux';
 import {logValidator} from './../../ducks/reducer';
 import {Link} from 'react-router-dom'
+import './../../console';
+import decodeContent from './../NewEntry/decodeContent';
 class EntryView extends Component {
 
   constructor(props) {
@@ -21,6 +23,7 @@ class EntryView extends Component {
       entry: '',
       comments: [],
       newAnswer: null,
+      newAnswerEncoded:'',
       user_id: 0,
       entry_id: null,
       newDate: new Date(),
@@ -36,7 +39,6 @@ class EntryView extends Component {
     this.showContainer = this.showContainer.bind(this);
     this.soAPI = this.soAPI.bind(this);
     this.addSO = this.addSO.bind(this);
-      
   }
 
   //GET THE ENTRY_ID AND THE USER_ID IF THE A USER IS LOGGED IN
@@ -60,6 +62,14 @@ class EntryView extends Component {
       this.setState({user_id:0,entry_id:id},() => this.runInitialAxiosCall())
     }
 
+    axios.put(`/api/addEntryView/${id}`).then().catch();
+
+    // console.big([1,2,3,4,56,7,8,90,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,4,56,7,8,90,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,4,56,7,8,90,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+    // console.big(this.props)
+    // console.look("this is how I am proactively procrastinating.")
+    // console.big([1,2,3,4,5,6,7,8,9,1,1,1,1,1,1,])
+    console.big(this.props)
+  
   }
 
   
@@ -75,7 +85,6 @@ class EntryView extends Component {
   //GETS THE ENTRY ONCE THE THE ENTRY IS SET IN STATE
   getEntry() {
     if (this.state.entry) {
-      console.log("ENTRY",this.state.entry)
       return <Entry childProps={this.state.entry} />
     }
   }
@@ -112,7 +121,6 @@ class EntryView extends Component {
         })
       })
 
-      console.log("ENTRY STATE",this.state)
       //CREATES THE PARENTS ANSWERS
       parentComments.map(e => {
      
@@ -134,8 +142,7 @@ class EntryView extends Component {
 
     //PUSHS THE NEW ANSWER TO STATE
     let comments = this.state.comments;
-    console.log(this.state.newDate)
-    let newAnswer = {content:this.state.newAnswer,name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.newDate,picture:"http://lorempixel.com/400/200/",user_total_points:0,auto_id:this.props.state.user_id,total_points:1,vote_upvote:1,vote_downvote:0}
+    let newAnswer = {content:encodeURI(this.state.newAnswer),name:this.props.state.username,user_id:this.props.state.user_id,date:this.state.newDate,picture:this.props.state.picture,user_total_points:this.props.state.total_points,auto_id:this.props.state.user_id,total_points:1,vote_upvote:1,vote_downvote:0}
     
     newAnswer.date = JSON.stringify(newAnswer.date).replace('"',"")
     comments.push(newAnswer)
@@ -163,7 +170,10 @@ class EntryView extends Component {
           <div className="accentColor">
             Know the answer? Share with others!
           </div>
-          <textarea className="bodyText" onChange={e => this.setState({newAnswer:e.target.value})} ></textarea>
+          <div className="contentCreator">
+          <textarea className="bodyText" onChange={e => this.setState({newAnswer:e.target.value,newAnswerEncoded:encodeURI(e.target.value)})} ></textarea>
+          <div className="contentPreview bodyText" dangerouslySetInnerHTML={{__html:decodeURI(decodeContent(this.state.newAnswerEncoded))}} ></div>
+          </div>
           <div><button className="greenColor" onClick={this.state.user_id !== 0 ? this.addAnswer : (e) => {
     
             logValidator({mousePosX:e.clientX,mousePosY:e.clientY+window.pageYOffset})}
@@ -207,7 +217,7 @@ class EntryView extends Component {
 
   addSO(){
     let html = [];
-    if(this.state.soAPI){
+    if(this.state.soAPI && this.state.entry.entry_type !== "entry"){
       try{
     if(this.state.soAPI.items.length !== 0){
       let end = this.state.soAPI.length < 10 ? this.state.soAPI.length : 10;
@@ -266,7 +276,7 @@ class EntryView extends Component {
     return (
       <div className="fullEntryContainer">
         {this.showContainer()}
-         {this.state.soAPI ? this.state.soAPI.items.length !== 0 ? <div className="soAPI dp1-bs">
+         {this.state.soAPI && this.state.entry.entry_type !== "entry" ? this.state.soAPI.items.length !== 0 ? <div className="soAPI dp1-bs">
           <div className="accentColor headerText">Didn't answer your question? Here are some similar questions from stackoverflow</div>
           <div className="SOQuestionMainContainer">
           {this.addSO()} 

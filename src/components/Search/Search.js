@@ -171,7 +171,6 @@ return html
     }
     
     if(!this.state.searchResults){html =  <div>Nothing Found</div>}
-    console.log("STATETATAAGAGA",this.state.searchResults);
     return html;
   }
   render() {

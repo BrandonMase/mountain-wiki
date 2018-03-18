@@ -11,6 +11,7 @@ const checkUserStatus = require('./middlewares/checkUserStatus');
 const voteController = require('./controllers/voteController');
 const searchController = require('./controllers/searchController');
 const reportController = require('./controllers/reportController');
+const authController = require('./controllers/authController')
 const mailController = require('./controllers/mailController')
 var stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 
@@ -56,7 +57,9 @@ app.post('/api/addEntry',entryController.addEntry)
 app.put('/api/updateEntry/', entryController.updateEntry);
   //delete an entry
   //only a master contributor or an admi can delete
-app.delete('/api/deleteEntry/:id')
+app.delete('/api/deleteEntry/:id');
+
+app.put('/api/addEntryView/:auto_id',entryController.addEntryView);
 
 //VOTE STUFF
 app.post('/api/voter',voteController.voter,voteController.update_entry,voteController.update_comment)
@@ -81,6 +84,18 @@ app.delete('/api/deleteComment')
   app.post('/api/updateNodeMailer/:user_id/:mailer',userController.nodeMailer)
 
   app.get('/api/sendMail',mailController.sendMail)
+
+//AUTH STUFF
+// app.post('/api/logout/', userController.logout);
+
+app.get('/auth/callback',authController.setUser);
+
+app.get('/api/getUser',authController.getUser);
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy();
+  res.send();
+});
 
 const port = 4000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

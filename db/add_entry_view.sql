@@ -1,0 +1,1 @@
+UPDATE mw_entry SET view_count = view_count + 1 WHERE auto_id = $1;
