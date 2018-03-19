@@ -1,5 +1,6 @@
 .logVal{
     width:250px;
+    height:100px ;
     /* padding:10px; */
     font-size:15px;
     position:absolute;
@@ -20,13 +21,13 @@
 }
 
 @keyframes moveLogUp{
-    from{height:100px;}
+    from{height:50px;}
     to {height:0px;}
 }
 
 @keyframes moveLog{
     from{height:0;}
-    to {height:100px;}
+    to {height:40px;}
 }
 .once{
     display:flex;

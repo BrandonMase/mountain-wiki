@@ -1,0 +1,98 @@
+.mainPrivateMessageContainer{
+    width:100%;
+    margin:0;
+    padding:0;
+    display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
+}
+
+.mainPrivateMessageContainer button{
+    margin-left:10px;
+    margin-bottom:10px;
+}
+
+.mainPrivateMessageContainer > .accentColor{
+    margin:0;
+}
+
+.mainPrivateMessageContainer .searchUser{
+    /* margin-top:10px;
+    margin-left:10px; */
+}
+
+.searchUser input{
+    /* width:98%; */
+}
+
+.mainPrivateMessageContainer input, .mainPrivateMessageContainer textarea{
+    box-sizing: border-box;
+    width:95%;
+    margin:10px;
+    resize:none;
+}
+
+.userContainer{
+    /* padding:10px; */
+    border-radius: 5px;
+    /* background-color:rgb(115, 250, 115); */
+    border:solid #bcbcbc 1px;
+}
+
+.userPicture{
+    display:inline;
+    padding:0;
+    margin:0;
+    border-radius: 50%;
+}
+
+.userContainer .headerText{
+    display:inline;
+    /* margin-top:10px; */
+}
+
+.mainUserContainer{
+    display:flex;
+    margin:10px;
+    
+}
+
+.removeUser{
+    background-color:red;
+    display:inline;
+    vertical-align: 50%;
+    padding:5px;
+    /* border-radius: 50%; */
+    margin:0;
+    margin-left:10px;
+    padding-bottom:10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.mainMailContainer .accentColor{
+    text-align:left;
+}
+
+.mainPrivateMessageContainer .userContainer:hover{
+    background-color:white;
+    cursor: default;
+}
+
+.removeUser:hover{
+    cursor: pointer;
+    background-color:rgb(221, 4, 4)
+}
+
+.removeUser img{
+    vertical-align: -25%;
+    display:inherit;
+    width:20px;
+    padding:0;
+    margin:0;
+    
+}
+

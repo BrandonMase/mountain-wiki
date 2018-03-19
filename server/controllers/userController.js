@@ -5,6 +5,7 @@ module.exports = {
   getUserInfo:(req,res) =>{
     const db = req.app.get('db');
     const {id} = req.params;
+    console.log(req.params)
 
     db.get_user_info([id])
       .then(user=> res.status(200).send(user))

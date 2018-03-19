@@ -19,6 +19,10 @@
     background-color:#f3f1f1 !important
 }
 
+.postRightContainer .entryLink{
+    color:White;
+}
+
  .accentColor{
 padding:10px;
 color:white !important;
@@ -158,6 +162,16 @@ a:hover{
     text-align:left;
     font-size:19px;
     padding:5px;
+}
+
+.mailIcon{
+    width:30px !important;
+    height:10% !important;
+    padding:0 !important;
+    margin:0 !important;
+    /* margin-top:-10px !important; */
+    margin-left:45% !important;
+    filter:invert(1)
 }
 
 .accentColor{
@@ -322,5 +336,21 @@ a:hover{
 
     .mainProfilePostContainer .bodyText{
         font-size:14px;
+    }
+
+    .mailIcon{
+        width:30px !important;
+        height:10% !important;
+        padding:0 !important;
+        margin:0 !important;
+        margin-top:-20px !important;
+        margin-left:45% !important;
+        filter:invert(1)
+    }
+
+    .rightContainer button{
+        padding:10px;
+        margin: 0 auto;
+        margin-top:10px;
     }
 }

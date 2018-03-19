@@ -1,0 +1,1 @@
+SELECT * FROM mw_users WHERE LOWER(name) LIKE LOWER(concat('%',$1,'%'));

@@ -6,6 +6,7 @@ import Comment from './Comment'
 import {connect} from 'react-redux'
 import magnify from './../../assets/magnify.png';
 import {Link} from 'react-router-dom'
+import mail from './../../assets/email-outline.png';
 
 class Profile extends Component {
   constructor(props){
@@ -19,6 +20,7 @@ class Profile extends Component {
 
     this.getContent = this.getContent.bind(this);
     this.postSelector = this.postSelector.bind(this)
+    this.logoutUser = this.logoutUser.bind(this)
   }
   
   componentDidMount(){
@@ -78,7 +80,7 @@ class Profile extends Component {
       content.map(e =>{
         if(e.labels){
           if(this.state.searchTerm){
-            if(!e.title.includes(this.state.searchTerm) || !e.content.includes(this.state.searchTerm)){
+            if(e.title.toLowerCase().indexOf(this.state.searchTerm.toLowerCase()) === -1 || e.content.toLowerCase().indexOf(this.state.searchTerm.toLowerCase()) === -1){
               return
             }
           }
@@ -86,7 +88,7 @@ class Profile extends Component {
         }
         else{
           if(this.state.searchTerm){
-            if(!e.content.includes(this.state.searchTerm)){
+            if(e.content.toLowerCase().indexOf(this.state.searchTerm.toLowerCase()) === -1){
               return
             }
           }
@@ -133,6 +135,19 @@ class Profile extends Component {
       this.setState({node_mailer:mailer})
   }
 
+  sendMail(){
+    axios.get('/api/sendMail')
+      .then().catch();
+  }
+
+  logoutUser(){
+    axios.post('/api/logout')
+      .then(res=>{
+        window.location = "/"
+      })
+      .catch(err=>console.log(err));
+  }
+
   render() {
     return (
       <div className="profileContainer">
@@ -140,6 +155,7 @@ class Profile extends Component {
           <div>
             <ul className="postSelector dp1-bs">
               <li><Link to="/editEntry"><button className="greenColor dp1-bs">add New post</button></Link></li>
+              
             <li className="searchBar bodyText"><input className="searchBarInput" placeholder="Search" onChange={e => this.setState({searchTerm:e.target.value})}/><div className="searchIcons"><img src={magnify}/></div></li>
               
               {this.postSelector()}
@@ -151,6 +167,15 @@ class Profile extends Component {
           <div className="rightContainer dp1-bs">
             <div className="accentColor headerText">
               <span>{this.state.name}</span><img src={this.state.picture}/>
+              <div>
+              <Link to='/myProfile/mail'><img className="mailIcon" src={mail} /></Link>
+              <button onClick={() =>this.props.history.push("/pm/")} className="greenColor">Send message to a user</button>
+              <br/>
+              {this.props.state.user_id == 11 ?
+              
+              <button onClick={()=>this.sendMail()} className="redColor">Send weekly email</button>
+              : ''}
+              </div>
             </div>
             <ul className="bodyText">
               <li>points <strong>{this.state.points}</strong></li>
@@ -161,7 +186,8 @@ class Profile extends Component {
               <input type="checkbox" onChange={()=>this.nodeMailer()} checked="checked"/>
               : <input type="checkbox" onChange={()=>this.nodeMailer()}/>}
               
-              <label className="bodyText">Yes, send me weekly best ofs</label> 
+              <label className="bodyText">Yes, send me weekly best ofs</label>
+              <button onClick={()=>this.logoutUser()}>Logout</button> 
             </div>
           </div>
         

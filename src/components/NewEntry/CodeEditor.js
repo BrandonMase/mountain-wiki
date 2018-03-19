@@ -25,7 +25,15 @@ export default class CodeEditor extends Component {
   }
 
   componentDidMount() { 
-
+    if (this.props.childProps !== null && !this.state.ran) {
+      axios.get(`/api/getEntryUpdater/${this.props.childProps}`)
+        .then(res => {
+          const { title, entry_type,seen,labels } = res.data[0]
+          let content = decodeURI(res.data[0].content)
+          let encodedContent = res.data[0].content;
+          this.setState({ title: title, typeOfEntry: entry_type, title: title, content: content, seen: seen,labels:labels,ran:true,encodedContent:encodedContent },()=>this.props.updateState(this.state));
+        })
+    } 
   }
   componentWillReceiveProps(props) {
     if (props.childProps !== null && !this.state.ran) {

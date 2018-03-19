@@ -1,0 +1,22 @@
+.mainMailContainer{
+    padding:0;
+    margin-bottom:10px;
+}
+
+.mainMailContainer .link{
+    color:black;
+}
+
+.mainMailContainer .bodyText{
+    /* margin-left:10px; */
+    padding:10px;
+}
+
+.mainMailContainer .mailDetailsContainer{
+    padding:5px;
+    padding-left:10px;
+    font-size:12px;
+}
+.wholeMainMailContainer button{
+    margin: 10px 0;
+}

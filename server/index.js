@@ -13,6 +13,8 @@ const searchController = require('./controllers/searchController');
 const reportController = require('./controllers/reportController');
 const authController = require('./controllers/authController')
 const mailController = require('./controllers/mailController')
+const messageController = require('./controllers/messageController');
+
 var stripe = require("stripe")("sk_test_BQokikJOvBiI2HlWgH4olfQ2");
 
 require('dotenv').config();
@@ -92,10 +94,17 @@ app.get('/auth/callback',authController.setUser);
 
 app.get('/api/getUser',authController.getUser);
 
+//PRIVATE MESSAGES
+app.post('/api/addPrivateMessage',messageController.addPrivateMessage);
+app.get('/api/getAllPMs/:id',messageController.getAllPMs);
+
 app.post('/api/logout', (req, res) => {
+  console.log("hi")
   req.session.destroy();
-  res.send();
+  res.status(200).send();
 });
+
+app.get('/api/searchForUser/:name',searchController.searchForUser)
 
 const port = 4000;
 app.listen(port, () => console.log(`Listening on port ${port}`));

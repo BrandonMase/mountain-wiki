@@ -1,0 +1,67 @@
+.mainSearchUserContainer{
+    /* border:solid black 1px; */
+    width:90%;
+    position: absolute;
+    background-color:white;
+    padding:0;
+    z-index: 10;
+    margin-left:10px;
+    margin-top:-10px;
+    /* border:solid #bcbcbc 1px; */
+    /* animation:dropdown .5s; */
+}
+
+@keyframes dropdown{
+    from{height:0px;overflow:hidden}
+    to{height:100%;overflow:hidden}
+}
+
+.userContainer .userPicture{
+    display:inline;
+}
+
+.mainSearchUserContainer .userContainer{
+    border:none;
+    border-radius: none;
+    border-bottom:solid #bcbcbc 1px;
+    background-color:white;
+    padding:10px 0;
+}
+
+.mainSearchUserContainer .userContainer:hover{
+    background-color:#f3f0f0 !important;
+    cursor: pointer !important;
+}
+
+
+.userContainer img{
+    padding:0;
+    margin:0;
+    vertical-align: -10%;
+    margin-left:10px;
+    border-radius: 50%;
+}
+
+.userContainer .headerText{
+    display:inline-block;
+    margin:auto;
+    font-size:14px;
+    vertical-align:50%;
+    margin-left:10px;
+}
+
+@media (min-width:992px){
+    .mainSearchUserContainer{
+        /* border:solid black 1px; */
+        width:50%;
+        position: absolute;
+        background-color:white;
+        padding:0;
+        z-index: 10;
+        margin-left:10px;
+        margin-top:-10px;
+        /* border:solid #bcbcbc 1px; */
+        /* animation:dropdown .5s; */
+    }
+
+}

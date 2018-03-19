@@ -93,7 +93,7 @@ export default class LandingPage extends Component {
     return (
       <div className="landingPageContainer">
         <MobileTopHeader />
-        {this.loadHeroSignUp()}
+        {/* {this.loadHeroSignUp()} */}
         <div className="fullQuestionContainer">
 
           <div className="questionContainer">

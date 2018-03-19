@@ -11,7 +11,7 @@ class NewEntry extends Component {
 
     this.state = {
       typeOfEntry: null,
-      seen: true,
+      seen: null,
       title:null,
       content: null,
       labels: null,
@@ -139,20 +139,19 @@ class NewEntry extends Component {
 
   updateState(e) {
     const { title, labels, seen, typeOfEntry } = e
-    console.log(e)
     let content = e.encodedContent
     if (this.state.seen !== null) {
-      this.setState({ title: title, content: content, labels: labels,typeOfEntry: typeOfEntry })
+      this.setState({ title: title, content: content, labels: labels,typeOfEntry: typeOfEntry,seen:seen })
     }
     else {
       this.setState({ title: title, content: content, labels: labels, seen: seen, typeOfEntry: typeOfEntry});
-      if (seen) {
+      if (this.state.seen == true) {
         document.getElementById('s1').checked = false;
         document.getElementById('s2').checked = true;
       }
-      else {
-        document.getElementById('s2').checked =false;
+      if(this.state.seen == false){
         document.getElementById('s1').checked = true;
+        document.getElementById('s2').checked =false;
       }
         
     }

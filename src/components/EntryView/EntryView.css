@@ -176,6 +176,10 @@
   margin-bottom:10px;
 }
 
+#entryContentP{
+  line-break: strict;
+}
+
 
 
 .reportIcon{
@@ -188,6 +192,7 @@
 
 .entryBottom .authorLink{
   text-align:right;
+  color:#bcbcbc
 }
 
 .votesContainer{

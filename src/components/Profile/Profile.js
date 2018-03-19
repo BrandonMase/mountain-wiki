@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Profile.css'
 import Post from './Post';
 import Comment from './Comment'
+import {Link} from 'react-router-dom'
+import mail from './../../assets/email-outline.png';
 
 export default class Profile extends Component {
   constructor(props){
@@ -138,8 +140,10 @@ export default class Profile extends Component {
           <div className="rightContainer dp1-bs">
             <div className="accentColor headerText">
               <span>{this.state.name}</span><img src={this.state.picture}/>
+              <Link to={`/pm/${this.props.match.params.id}`}><button className="greenColor">Send message</button></Link>
             </div>
             <ul className="bodyText">
+              
               <li>points <strong>{this.state.points}</strong></li>
               <li>{`member since ${this.state.sign_up_date}`}</li>
             </ul>

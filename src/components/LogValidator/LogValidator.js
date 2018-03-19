@@ -23,8 +23,6 @@ class LogValidator extends Component {
                 <img src={close}/>
                 <p className=" primaryColor headerText">You must be logged in to do that.</p>
                 </div>
-                <button className="greenColor">Login</button>
-                <button>Sign Up</button>
             </div>
         );
     }

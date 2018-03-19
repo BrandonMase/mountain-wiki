@@ -10,6 +10,8 @@ import Profile from './components/Profile/Profile';
 import LogValidator from './components/LogValidator/LogValidator';
 import MyProfile from './components/MyProfile/Profile'
 import Search from './components/Search/Search';
+import PrivateMessage from './components/PrivateMessage/PrivateMessage';
+import Mail from './components/MyProfile/Mail/Mail';
 import {logValidator} from './ducks/reducer';
 import {Switch,Route} from 'react-router-dom'
 import {connect} from 'react-redux';
@@ -31,7 +33,10 @@ class App extends Component {
           <Route path="/editEntry/:id" component={NewEntry} />
           <Route path="/u/:id" component={Profile}/>
           <Route path="/s" component={Search} />
-          <Route path="/myProfile" component={MyProfile} />
+          <Route exact path="/myProfile" component={MyProfile} />
+          <Route exact path="/myProfile/mail" component={Mail} />
+          <Route exact path="/pm/" component={PrivateMessage} />
+          <Route path="/pm/:id" component={PrivateMessage} />
           </Switch>
           
           </div>

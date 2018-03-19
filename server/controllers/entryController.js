@@ -38,7 +38,6 @@ module.exports = {
     for (var i = 0; i < 30; i++){
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-    console.log(req.body)
     db.add_entry([title, content, typeOfEntry, seen, date, userId, labels,text])
       .then(id =>{
 

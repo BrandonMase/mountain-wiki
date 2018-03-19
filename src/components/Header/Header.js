@@ -69,8 +69,8 @@ class Header extends Component {
 
   displayProfile() {
     let html = <ul className="navLinks">
-      <li className="whiteText"><a href={()=>this.login()}>login</a></li>
-      <li><button onClick={()=>this.login()}>Sign up</button></li>
+      
+      <li><button onClick={()=>this.login()}>Sign up / login</button></li>
       </ul>
     // let html = [[<ul className="navLinks">],[<li className="whiteText"><a href="#">login</a></li>],[ <li><button onClick={()=>this.login()}>Sign up</button></li>],[</ul>]]
     if (this.props.state.user_id) {

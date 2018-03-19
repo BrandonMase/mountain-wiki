@@ -217,14 +217,14 @@ class EntryView extends Component {
 
   addSO(){
     let html = [];
-    if(this.state.soAPI && this.state.entry.entry_type !== "entry"){
+    if(this.state.soAPI){
       try{
     if(this.state.soAPI.items.length !== 0){
       let end = this.state.soAPI.length < 10 ? this.state.soAPI.length : 10;
       for(let i = 0;i<end;i++){
         let item = this.state.soAPI.items[i];
         html.push(<div className="SOQuestionContainer dp1-bs">
-                  <div className="primaryColor headerText"><a href={item.link} dangerouslySetInnerHTML={{__html:item.title}}></a></div>
+                  <div className="primaryColor headerText"><a target='blank' href={item.link} dangerouslySetInnerHTML={{__html:item.title}}></a></div>
                   <div className="soQuestionDetails bodyText">
                     <div className=""><span>{item.view_count}<br/>views</span></div>
                     <div className=""><span>{item.score}<br/>score</span></div>
@@ -276,7 +276,7 @@ class EntryView extends Component {
     return (
       <div className="fullEntryContainer">
         {this.showContainer()}
-         {this.state.soAPI && this.state.entry.entry_type !== "entry" ? this.state.soAPI.items.length !== 0 ? <div className="soAPI dp1-bs">
+         {this.state.soAPI ? this.state.soAPI.items.length !== 0 ? <div className="soAPI dp1-bs">
           <div className="accentColor headerText">Didn't answer your question? Here are some similar questions from stackoverflow</div>
           <div className="SOQuestionMainContainer">
           {this.addSO()} 

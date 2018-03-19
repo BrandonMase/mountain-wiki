@@ -70,7 +70,7 @@ class Entry extends Component {
     let html = '';
     if (this.state.entry_id) {
       html = <div className="entryDesc headerText greenColor">
-        <NavLink to={`/entry/${this.state.user_id}`}>This question has an entry<div><img src={approval} /></div></NavLink>
+        <Link onClick={() => this.props.history.push(`/entry/${this.state.entry_id}`)} to={`/entry/${this.state.entry_id}`}>This question has an entry<div><img src={approval} /></div></Link>
       </div>
     }  
   
@@ -168,6 +168,10 @@ class Entry extends Component {
 
   }
 
+  hideOutShowoff(){
+    alert("hi");
+  }
+
   render() {
     let style = {fontFamily:'Fjalla One',textTransform:'uppercase',fontSize:'20px',color:'#212121',padding:'5px',textAlign:'right',paddingRight:'10px'};
     // {this.props.childProps.entry_type === "entry" ? '': ''}
@@ -187,11 +191,13 @@ class Entry extends Component {
         {this.hasEntry()}
 
         <div className="entryContent bodyText">
-          <div id="entryContentP" dangerouslySetInnerHTML={{__html:this.state.content}}></div>
+          <p id="entryContentP" dangerouslySetInnerHTML={{__html:this.state.content}}></p>
         </div>
 
         <div className="entryBottom primaryText">
+          {this.props.state.user_id ?
         <img className="reportIcon" src={alert} onClick={()=>this.setState({report:!this.state.report})}/>
+        : <img className="reportIcon" src={alert} onClick={(e) => this.props.logValidator({mousePosX:e.clientX,mousePosY:e.clientY+window.pageYOffset})}/>}
         <div className="mainVoteContainer">
           <div className="votesContainer">  
             {this.voteIconChanger()}

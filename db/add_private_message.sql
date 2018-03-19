@@ -1,0 +1,1 @@
+INSERT into mw_pms (to_user,from_user,title,content,date,secret) VALUES( $1,$2,$3,$4,$5,$6);
