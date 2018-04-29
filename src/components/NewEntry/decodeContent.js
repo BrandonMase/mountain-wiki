@@ -39,6 +39,7 @@ export default function decodeContent(content){
     
     content = content.replace(/#%20/gi,"<h1>");
     content = content.replace(/%20#/gi,"</h1>");
+    
     content = content.replace(/::a/gi,"<a target='blank' class='entryLink'")
     content = content.replace(/href:/gi,"href=")
     content = content.replace(/name:/gi,">")

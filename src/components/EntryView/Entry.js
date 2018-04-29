@@ -11,6 +11,8 @@ import {NavLink,Link} from 'react-router-dom'
 import edit from './../../assets/pencil.png'
 import alert from './../../assets/alert.png';
 import {check} from './../../utility';
+
+
 import decodeContent from './../NewEntry/decodeContent';
 
 class Entry extends Component {
@@ -37,6 +39,7 @@ class Entry extends Component {
   }
 
   componentDidMount(props) {
+   
     const { title,total_points, answers,entry_id,name,master_contributor,auto_id } = this.props.childProps;
     let date = this.props.childProps.date
     date = date.slice(0,10).split("-");

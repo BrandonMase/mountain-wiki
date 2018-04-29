@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import magnify from './../../assets/magnify.png';
 import axios from 'axios';
 import {updateUser} from './../../ducks/reducer'
-
+import {excon} from './../../excon2'
 class Header extends Component {
   constructor() {
     super()
@@ -20,12 +20,11 @@ class Header extends Component {
 
     
 
-    
     this.toggleSearchBar = this.toggleSearchBar.bind(this)
   }
 
   componentDidMount() {
-   
+    excon.pink("hi")
     axios.get('/api/getUser')
     .then(res=>{
       if(res.data.message){

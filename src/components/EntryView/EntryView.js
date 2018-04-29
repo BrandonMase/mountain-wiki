@@ -12,10 +12,9 @@ import approval from './../../assets/approval.png';
 import { connect } from 'react-redux';
 import {logValidator} from './../../ducks/reducer';
 import {Link} from 'react-router-dom'
-import './../../console';
+import {excon} from './../../excon2'
 import decodeContent from './../NewEntry/decodeContent';
 class EntryView extends Component {
-
   constructor(props) {
     super(props);
 
@@ -32,6 +31,8 @@ class EntryView extends Component {
       soAPI:null,
     }
 
+    excon.hide("red","pink")
+    // excon.timer("hi")
     this.getEntry = this.getEntry.bind(this);
     this.addAnswer = this.addAnswer.bind(this)
     this.addAnswerHTML = this.addAnswerHTML.bind(this)
@@ -54,22 +55,26 @@ class EntryView extends Component {
 
   componentDidMount(props) {
     const { id } = this.props.match.params
-    
     if(this.props.state.user_id){
       this.setState({user_id:this.props.state.user_id,entry_id:id},() =>this.runInitialAxiosCall())
     }
     else{
       this.setState({user_id:0,entry_id:id},() => this.runInitialAxiosCall())
     }
-
     axios.put(`/api/addEntryView/${id}`).then().catch();
+    excon.red("hi")
+    excon.blue("hi2","hi2");
+    excon.pink('tableExample',{message:2,hi:7})
+    excon.purple("Object example",this.state)
+    excon.orange("[Objects without a string in the first position will display as [Object] as their group name]")
+    excon.grey(this.state)
+    excon.green("wow",this.state,this.state)
+    excon.navy("Array Example",[1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,])
+    excon.fuchsia("Multi-Nested Object Example"
+    ,{hi:{fj:4,ds:32,dsw:{hi:{fj:4,ds:32,dsw:"do"}}},wow:"it works"})
+    excon.aqua("hi")
+    excon.navy("hi")
 
-    // console.big([1,2,3,4,56,7,8,90,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,4,56,7,8,90,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,4,56,7,8,90,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
-    // console.big(this.props)
-    // console.look("this is how I am proactively procrastinating.")
-    // console.big([1,2,3,4,5,6,7,8,9,1,1,1,1,1,1,])
-    console.big(this.props)
-  
   }
 
   
@@ -93,6 +98,7 @@ class EntryView extends Component {
   //SORTS THE COMMENTS
   //GETS THE PARENTS COMMENTS AND PUSHES THE REPLIES TO THAT PARENT
   hasAnswers() {
+
     let html = [];
     if (this.state.comments !== []) {
       let comments = this.state.comments;
@@ -269,7 +275,6 @@ class EntryView extends Component {
     
     }
 
-
     return html;
   }
   render() {
@@ -285,6 +290,7 @@ class EntryView extends Component {
       </div>  
     );
   }
+
 }
 
 const mapStateToProps = (state) => {
